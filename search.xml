@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>hexo</title>
+    <url>/2019/10/17/hexo/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>git命令</title>
+    <url>/2019/10/17/git%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="command"><a href="#command" class="headerlink" title="command"></a>command</h1><h2 id="设置用户名密码"><a href="#设置用户名密码" class="headerlink" title="设置用户名密码"></a>设置用户名密码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;elfdemonster&quot;</span><br><span class="line">git config --global user.email &quot;elfdemonster001@gmail.com&quot;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>GIT</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>maven命令</title>
+    <url>/2019/10/16/maven%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
+<li><p>查看包依赖<br>mvn dependency:tree  -Dverbose</p>
+</li>
+<li><p>跳过测试<br>mvn clean install -Dmaven.test.skip</p>
+</li>
+<li><p>mvn compile –debug<br>mvn -Dfile.encoding=UTF-8 compile</p>
+</li>
+<li><p>mvn mybatis-generator:generate</p>
+</li>
+<li><p>手动安装jar包</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mvn install:install-file -DgroupId=asiainfo -DartifactId=appserv -Dversion=V0.0.1-SNAPSHOT -Dpackaging=jar -Dfile=D:/Eclipse_self_workspace/appserv/target/appserv.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动发布Jar包</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=org.apache.rocketmq -DartifactId=rocketmq-client -Dversion=4.1.0-incubating-SNAPSHOT -Dpackaging=jar -Dfile=E:\MavenRep\org\apache\rocketmq\rocketmq-client\4.1.0-incubating-SNAPSHOT\rocketmq-client-4.1.0-incubating-SNAPSHOT.jar -Durl=http://10.1.253.238:8081/nexus/content/repositories/thirdparty/ -DrepositoryId=thirdparty</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h2><ul>
+<li><p>compile 默认的scope，表示  dependency 都可以在生命周期中使用。而且，这些</p>
+</li>
+<li><p>dependencies 会传递到依赖的项目中。适用于所有阶段，会随着项目一起发布  </p>
+</li>
+<li><p>provided 跟compile相似，但是表明了dependency 由JDK或者容器提供，例如Servlet  AP和一些Java EE APIs。这个scope 只能作用在编译和测试时，同时没有传递性。          </p>
+</li>
+<li><p>runtime 表示dependency不作用在编译时，但会作用在运行和测试时，如JDBC驱动，适用运行和测试阶段。  </p>
+</li>
+<li><p>test 表示dependency作用在测试时，不作用在运行时。  只在测试时使用，用于编译和运行测试代码。不会随项目发布。  </p>
+</li>
+<li><p>system 跟provided  相似，但是在系统中要以外部JAR包的形式提供，maven不会在repository查找它。 </p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Maven</category>
+      </categories>
+      <tags>
+        <tag>Maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql命令</title>
+    <url>/2019/10/16/Mysql%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show variables like &apos;%log_bin%&apos;;</span><br><span class="line"></span><br><span class="line">show variables like &apos;%binlog%&apos;;</span><br><span class="line"></span><br><span class="line">show binary logs;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>强制修改root密码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ SET PASSWORD = PASSWORD(&apos;root&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表操作</p>
+</li>
+</ul>
+<h2 id="DBA"><a href="#DBA" class="headerlink" title="DBA"></a>DBA</h2><ul>
+<li><p>创建用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$  create user &apos;imapp&apos;@&apos;%&apos; identified by &apos;imapp&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看权限</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ show grants for imapp;</span><br><span class="line">$ show grants for &apos;imapp&apos;@&apos;172.17.138.%&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>授权</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ grant all on imtest1.* to &apos;imapp&apos;@&apos;%&apos;;</span><br><span class="line">$ flush privileges;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>权限回收</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ revoke all on imtest1.* from imapp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编码格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ SHOW VARIABLES WHERE Variable_name LIKE &apos;character_set_%&apos; OR Variable_name LIKE &apos;collation%&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看当前连接数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ show full processlist;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看mysql状态</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ show status;</span><br><span class="line">$ show status like &apos;%变量名%&apos;;</span><br></pre></td></tr></table></figure>
+<p>查用变量</p>
+<p>Aborted_clients 由于客户没有正确关闭连接已经死掉，已经放弃的连接数量。</p>
+<p>Aborted_connects 尝试已经失败的MySQL服务器的连接的次数。</p>
+<p>Connections 试图连接MySQL服务器的次数。</p>
+<p>Created_tmp_tables 当执行语句时，已经被创造了的隐含临时表的数量。</p>
+<p>Delayed_insert_threads 正在使用的延迟插入处理器线程的数量。</p>
+<p>Delayed_writes 用INSERT DELAYED写入的行数。</p>
+<p>Delayed_errors 用INSERT DELAYED写入的发生某些错误(可能重复键值)的行数。</p>
+<p>Flush_commands 执行FLUSH命令的次数。</p>
+<p>Handler_delete 请求从一张表中删除行的次数。</p>
+<p>Handler_read_first 请求读入表中第一行的次数。</p>
+<p>Handler_read_key 请求数字基于键读行。</p>
+<p>Handler_read_next 请求读入基于一个键的一行的次数。</p>
+<p>Handler_read_rnd 请求读入基于一个固定位置的一行的次数。</p>
+<p>Handler_update 请求更新表中一行的次数。</p>
+<p>Handler_write 请求向表中插入一行的次数。</p>
+<p>Key_blocks_used 用于关键字缓存的块的数量。</p>
+<p>Key_read_requests 请求从缓存读入一个键值的次数。</p>
+<p>Key_reads 从磁盘物理读入一个键值的次数。</p>
+<p>Key_write_requests 请求将一个关键字块写入缓存次数。</p>
+<p>Key_writes 将一个键值块物理写入磁盘的次数。</p>
+<p>Max_used_connections 同时使用的连接的最大数目。</p>
+<p>Not_flushed_key_blocks 在键缓存中已经改变但是还没被清空到磁盘上的键块。</p>
+<p>Not_flushed_delayed_rows 在INSERT DELAY队列中等待写入的行的数量。</p>
+<p>Open_tables 打开表的数量。</p>
+<p>Open_files 打开文件的数量。</p>
+<p>Open_streams 打开流的数量(主要用于日志记载）</p>
+<p>Opened_tables 已经打开的表的数量。</p>
+<p>Questions 发往服务器的查询的数量。</p>
+<p>Slow_queries 要花超过long_query_time时间的查询数量。</p>
+<p>Threads_connected 当前打开的连接的数量。</p>
+<p>Threads_running 不在睡眠的线程数量。</p>
+<p>Uptime 服务器工作了多少秒。</p>
+</li>
+<li></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Mysql</category>
+      </categories>
+      <tags>
+        <tag>Mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux常用命令</title>
+    <url>/2019/10/16/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><ul>
+<li><p>修改目录属主</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#  把目录/home/test及其下的所有文件以及子目录的属主改为tester，属组改为test </span><br><span class="line">$ chown -R test:test /home/test</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#把文件 test.ko的所有者改为test</span><br><span class="line">$ chown test test.ko</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>chmod</p>
+</li>
+<li><p>修改文件句柄</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查看信息</span><br><span class="line">$ ulimit -a</span><br></pre></td></tr></table></figure>
+<p>open file=65535</p>
+<p>stack=unlimited</p>
+<p><code>vi /etc/security/limits.conf</code></p>
+<p>增加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">soft nofile 65535</span><br><span class="line">hard nofile 65535</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ctrl+r,输入命令起始，可以查找之前已经执行过的命令</p>
+</li>
+</ul>
+<h2 id="gourp-amp-user"><a href="#gourp-amp-user" class="headerlink" title="gourp&amp;user"></a>gourp&amp;user</h2><ul>
+<li><p>groups  goupname 查看组内所有用户</p>
+</li>
+<li><p>groups gliethttp 查看gliethttp用户所在的组,以及组内成员</p>
+</li>
+<li><p>查看组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat /etc/group | grep sql</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改用户密码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ passwd username</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>群组用户增加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ groupadd -r groupname</span><br><span class="line">$ useradd -r -g groupname username</span><br></pre></td></tr></table></figure>
+<p><em>新增的用户切换时如果只是进入bash操作行，则拷贝 .bash_profile .bashrc .bash_logout 到用户目录下 /home/username/</em></p>
+</li>
+</ul>
+<h2 id="压缩建压缩"><a href="#压缩建压缩" class="headerlink" title="压缩建压缩"></a>压缩建压缩</h2><ul>
+<li><p>查看压缩包中内容</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar -tf xx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar zxf ...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h2><ul>
+<li><p>新建命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ln -s $basedir $upbasedir/mysql</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新软连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ln –snf  $basedir $upbasedir/mysql</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="vi-amp-vim"><a href="#vi-amp-vim" class="headerlink" title="vi&amp;vim"></a>vi&amp;vim</h2><ul>
+<li><p>在Vim中可以直接查看文件编码<br>:set fileencoding</p>
+</li>
+<li><p>查看其它编码格式的文件或者想解决用Vim查看文件乱码的问题，那么你可以在<br>~/.vimrc 文件中添加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>查找命令</p>
+<p><code>grep -rn &quot;appCfg&quot; ./</code></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springboot</title>
+    <url>/2019/10/15/springboot/</url>
+    <content><![CDATA[<h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h2 id="Auto-config"><a href="#Auto-config" class="headerlink" title="Auto-config"></a>Auto-config</h2><ul>
+<li><p><code>@SpringBootApplication</code></p>
+<p>SpringBootAppication一个注解相当于以下三个注解</p>
+<ul>
+<li><code>@EnableAutoConfiguration</code>: enable <a href="https://docs.spring.io/spring-boot/docs/2.1.10.BUILD-SNAPSHOT/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Spring Boot’s auto-configuration mechanism</a></li>
+<li><code>@ComponentScan</code>: enable <code>@Component</code> scan on the package where the application is located (see <a href="https://docs.spring.io/spring-boot/docs/2.1.10.BUILD-SNAPSHOT/reference/html/using-boot-structuring-your-code.html" target="_blank" rel="noopener">the best practices</a>)</li>
+<li><code>@Configuration</code>：allow to register extra beans in the context or import additional configuration classes</li>
+</ul>
+</li>
+<li><p><code>@Configuration</code></p>
+<ul>
+<li><p>禁止指定配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import org.springframework.boot.autoconfigure.*;</span><br><span class="line">import org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line">import org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableAutoConfiguration(exclude=&#123;DataSourceAutoConfiguration.class&#125;)</span><br><span class="line">public class MyConfiguration &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>导入外部xml，@ImportResource({“classpath:abc.xml”})</p>
+</li>
+<li><p><code>@Qualifier</code>限定描述符，用于细粒度选择候选者。使用场景Spring上下文中同一个接口有多个实现，即一个类型bean有多个</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Autowired   </span><br><span class="line">@Qualifier(&quot;userServiceImpl&quot;)   </span><br><span class="line">public IUserService userService;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JAVA</category>
+        <category>spring</category>
+        <category>springboot</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>webservice</title>
+    <url>/2019/10/13/webservice/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Web service是一个低耦合的、自包含的、跨平台的、跨语言的web应用程序，可使用开放的XML标准来描述、发布、发现、协调和配置这些应用程序。Web Service为整个企业甚至多个组织之间的业务流程的集成提供了一个通用机制。（<em>参考百度百科</em>）</p>
+<h1 id="wsdl"><a href="#wsdl" class="headerlink" title="wsdl"></a>wsdl</h1><h1 id="wsdl2java"><a href="#wsdl2java" class="headerlink" title="wsdl2java"></a>wsdl2java</h1><p><a href="https://cxf.apache.org/docs/wsdl-to-java.html" target="_blank" rel="noopener">CXF官网地址-wsdl2java</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Usage : wsdl2java -fe|-frontend &lt;front-end-name&gt; -db|-databinding &lt;data-binding-name&gt; </span><br><span class="line">-wv &lt;wsdl-version&gt; -p &lt;[wsdl-namespace =]package-name&gt;* -sn &lt;service-name&gt; </span><br><span class="line">-b &lt;binding-file-name&gt;* -reserveClass &lt;class-name&gt;* -catalog &lt;catalog-file-name&gt; </span><br><span class="line">-d &lt;output-directory&gt; -compile -classdir &lt;compile-classes-directory&gt; -impl -server</span><br><span class="line">-client -clientjar &lt;jar-file-name&gt; -all -autoNameResolution -allowElementReferences|-aer&lt;=true&gt; </span><br><span class="line">-defaultValues&lt;=class-name-for-DefaultValueProvider&gt; -ant </span><br><span class="line">-nexclude &lt;schema-namespace [= java-package-name]&gt;* -exsh &lt;(true, false)&gt; -noTypes</span><br><span class="line">-dns &lt;(true, false&gt; -dex &lt;(true, false)&gt; -validate -keep </span><br><span class="line">-wsdlLocation &lt;wsdlLocation&gt; -xjc&lt;xjc-arguments&gt;* -asyncMethods&lt;[=method1,method2,...]&gt;* </span><br><span class="line">-bareMethods&lt;[=method1,method2,...]&gt;* -mimeMethods&lt;[=method1,method2,...]&gt;* -noAddressBinding </span><br><span class="line">-faultSerialVersionUID &lt;fault-serialVersionUID&gt; -exceptionSuper &lt;exceptionSuper&gt; </span><br><span class="line">-mark-generated -suppress-generated-date -maxExtensionStackDepth &lt;maxExtensionStackDepth&gt;</span><br><span class="line">-h|-?|-help -version|-v -verbose|-V -quiet|-q|-Q </span><br><span class="line">-wsdlList &lt;wsdlurl&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>命令行生成java代码</p>
+<ol>
+<li><p>cfx</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; wsdl2java -client -p com.unionpay.spdbuim.user.esb -d F:\spdb\unionpay\code\spdbuim\user\src\main\java -verbose F:\spdb\unionpay\code\spdbuim\user\src\main\resources\WeatherWebService.wsdl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>axis</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; wsdl2java -t -or -g -o D:\programfiles\axis2-1.7.9\bin\test -p com.elf -uri http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl -sp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>wsimport(maven插件执行的命令，直接在命令行需要修改)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wsimport -keep, -s, &apos;F:\spdb\unionpay\code\spdbuim\user\target\generated-sources\wsimport&apos;, -d, &apos;F:\spdb\unionpay\code\spdbuim\user\target\classes&apos;, -encoding, UTF-8, -Xnocompile, -b, http://www.w3.org/2001/XMLSchema.xsd, -verbose, -s, F:\spdb\unionpay\code\spdbuim\user/src/main/java, -p, com.esb.ws, &quot;file:/F:/spdb/unionpay/code/spdbuim/user/src/main/resources/WeatherWebService-old.wsdl&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="cxf"><a href="#cxf" class="headerlink" title="cxf"></a>cxf</h2><h2 id="axis"><a href="#axis" class="headerlink" title="axis"></a>axis</h2><h3 id="idea插件生成代码"><a href="#idea插件生成代码" class="headerlink" title="idea插件生成代码"></a>idea插件生成代码</h3><ul>
+<li><p>Caused by: java.lang.ClassNotFoundException: org.apache.commons.discovery.tools.DiscoverSingleton</p>
+<p>缺少包，导入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;commons-discovery&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;commons-discovery&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;0.5&lt;/version&gt;</span><br><span class="line">			&lt;scope&gt;&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>xfire</p>
+<p>wsimport </p>
+<p>wsimport -b  <a href="http://www.w3.org/2001/XMLSchema.xsd" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema.xsd</a>  -b  customization.xjb  something.wsdl</p>
+<hr>
+<h2 id="maven插件"><a href="#maven插件" class="headerlink" title="maven插件"></a>maven插件</h2><ul>
+<li>mvn -X generate-sources</li>
+</ul>
+<ol>
+<li><p>wsimport</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;jaxws-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.4.1&lt;/version&gt;</span><br><span class="line">            &lt;executions&gt;</span><br><span class="line">                &lt;execution&gt;</span><br><span class="line">                    &lt;id&gt;periodictableaccessws&lt;/id&gt;</span><br><span class="line">                    &lt;goals&gt;</span><br><span class="line">                        &lt;goal&gt;wsimport&lt;/goal&gt;</span><br><span class="line">                    &lt;/goals&gt;</span><br><span class="line">                    &lt;configuration&gt;</span><br><span class="line">                        &lt;wsdlDirectory&gt;$&#123;basedir&#125;/src/main/resources/wsdl&lt;/wsdlDirectory&gt;</span><br><span class="line">                        &lt;args&gt;</span><br><span class="line">                            &lt;arg&gt;-b&lt;/arg&gt;&lt;arg&gt;http://www.w3.org/2001/XMLSchema.xsd&lt;/arg&gt;</span><br><span class="line">                        &lt;/args&gt;</span><br><span class="line">                        &lt;wsdlFiles&gt;</span><br><span class="line">                            &lt;wsdlFile&gt;doosdaas.wsdl&lt;/wsdlFile&gt;</span><br><span class="line">                        &lt;/wsdlFiles&gt;</span><br><span class="line">                        &lt;packageName&gt;com.dss.doosdaas&lt;/packageName&gt;</span><br><span class="line">                        &lt;vmArgs&gt;</span><br><span class="line">                            &lt;vmArg&gt;-Djavax.xml.accessExternalDTD=all&lt;/vmArg&gt;</span><br><span class="line">                            &lt;vmArg&gt;-Djavax.xml.accessExternalSchema=all&lt;/vmArg&gt;</span><br><span class="line">                        &lt;/vmArgs&gt;</span><br><span class="line">                     &lt;!--   &lt;bindingDirectory&gt;$&#123;basedir&#125;/src/main/resources/jaxb&lt;/bindingDirectory&gt;</span><br><span class="line">                        &lt;bindingFiles&gt;</span><br><span class="line">                            &lt;bindingFile&gt;jaxb_binding.xjb&lt;/bindingFile&gt;</span><br><span class="line">                        &lt;/bindingFiles&gt;--&gt;</span><br><span class="line">                    &lt;/configuration&gt;</span><br><span class="line">                &lt;/execution&gt;</span><br><span class="line">            &lt;/executions&gt;</span><br><span class="line">        &lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>cfx</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;plugin&gt;   </span><br><span class="line">    &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;   </span><br><span class="line">    &lt;artifactId&gt;cxf-codegen-plugin&lt;/artifactId&gt;   </span><br><span class="line">    &lt;!--&lt;version&gt;$&#123;cxf.version&#125;&lt;/version&gt;--&gt;   </span><br><span class="line">    &lt;executions&gt;      </span><br><span class="line">        &lt;execution&gt;         </span><br><span class="line">            &lt;id&gt;generate-sources&lt;/id&gt;         </span><br><span class="line">            &lt;phase&gt;generate-sources&lt;/phase&gt;         </span><br><span class="line">            &lt;configuration&gt;           </span><br><span class="line">           &lt;sourceRoot&gt;$&#123;basedir&#125;/src/main/java/&lt;/sourceRoot&gt;            </span><br><span class="line">               &lt;wsdlOptions&gt;               </span><br><span class="line">                   &lt;wsdlOption&gt;                  </span><br><span class="line">                       &lt;wsdl&gt;$&#123;basedir&#125;/src/main/resources/WeatherWebService.wsdl&lt;/wsdl&gt;                  </span><br><span class="line">                       &lt;extraargs&gt;</span><br><span class="line">                           &lt;extraarg&gt;-impl&lt;/extraarg&gt;                            </span><br><span class="line">                           &lt;extraarg&gt;-verbose&lt;/extraarg&gt;                  </span><br><span class="line">                       &lt;/extraargs&gt;               </span><br><span class="line">                  &lt;/wsdlOption&gt;            </span><br><span class="line">              &lt;/wsdlOptions&gt;         </span><br><span class="line">          &lt;/configuration&gt;         </span><br><span class="line">          &lt;goals&gt;            </span><br><span class="line">              &lt;goal&gt;wsdl2java&lt;/goal&gt;         </span><br><span class="line">          &lt;/goals&gt;      </span><br><span class="line">      &lt;/execution&gt;   </span><br><span class="line">   &lt;/executions&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h1><h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><ol>
+<li><p>Cannot find any registered HttpDestinationFactory from the Bus.</p>
+<p>通常可能是因为没有引用cxf-rt-transports-http-jetty，pom文件中引入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;cxf-rt-transports-http-jetty&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;3.3.3&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p><a href="https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http-jetty" target="_blank" rel="noopener">maven respository</a></p>
+</li>
+</ol>
+<h2 id="client"><a href="#client" class="headerlink" title="client"></a>client</h2><ol>
+<li><p>使用cfx wsdl2java时报：undefined element declaration ‘s:schema’</p>
+<p>s:schema 引用问题，网上资料提示需要将wsdl保存到本地，将其替换为&lt;s:any minOccurs=”2” maxOccurs=”2”/&gt;确实可行，但不知问题的本质</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>webservice</category>
+      </categories>
+      <tags>
+        <tag>webservice</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HashMap</title>
+    <url>/2018/02/27/HashMap/</url>
+    <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><em>JDK1.8 HashMap学习</em><br>集合中List与Set都继承自Collection接口，而Map并没有继承Collenction接口，它是一种key-value映射形式的数据结构，不能有重复的key，并且一个key只能有一个value。</p>
+<blockquote>
+<p>An object that maps keys to values.  A map cannot contain duplicate keys;<br> each key can map to at most one value.</p>
+</blockquote>
+<p><strong>HashMap是Map中最常用的实现。</strong> </p>
+<ol>
+<li>它包含了map接口提供的所有操作，并且允许 NULL 作为key和value；</li>
+<li>不是线程安全的，并且无序；</li>
+<li>HashMap与HashTbale相似，区别仅在于HashMap非线程安全，且允许null；</li>
+</ol>
+<p>JDK1.8对哈希碰撞后的拉链算法进行了优化， 当拉链上entry数量太多（默认为超过8个）时，将链表重构为红黑树。当entry数量减少到一定数量（默认值为6）时，数据结构会重新变成链表。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* This map usually acts as a binned (bucketed) hash table, but</span><br><span class="line">* when bins get too large, they are transformed into bins of</span><br><span class="line">* TreeNodes, each structured similarly to those in</span><br><span class="line">* java.util.TreeMap. Most methods try to use normal bins, but</span><br><span class="line">* relay to TreeNode methods when applicable (simply by checking</span><br><span class="line">* instanceof a node).  Bins of TreeNodes may be traversed and</span><br><span class="line">* used like any others, but additionally support faster lookup</span><br><span class="line">* when overpopulated. However, since the vast majority of bins in</span><br><span class="line">* normal use are not overpopulated, checking for existence of</span><br><span class="line">* tree bins may be delayed in the course of table methods.</span><br><span class="line"></span><br><span class="line">* Because TreeNodes are about twice the size of regular nodes, we</span><br><span class="line">* use them only when bins contain enough nodes to warrant use</span><br><span class="line">* (see TREEIFY_THRESHOLD). And when they become too small (due to</span><br><span class="line">* removal or resizing) they are converted back to plain bins.  In</span><br><span class="line">* usages with well-distributed user hashCodes, tree bins are</span><br><span class="line">* rarely used.  Ideally, under random hashCodes, the frequency of</span><br><span class="line">* nodes in bins follows a Poisson distribution</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<hr>
+<h2 id="静态默认值"><a href="#静态默认值" class="headerlink" title="静态默认值"></a>静态默认值</h2><h5 id="默认初始化容量位16，并且容量只能是2的倍数"><a href="#默认初始化容量位16，并且容量只能是2的倍数" class="headerlink" title="默认初始化容量位16，并且容量只能是2的倍数"></a>默认初始化容量位16，并且容量只能是2的倍数</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">     * The default initial capacity - MUST be a power of two.</span><br><span class="line">     */</span><br><span class="line">    static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16</span><br></pre></td></tr></table></figure>
+<h5 id="最大允许容量"><a href="#最大允许容量" class="headerlink" title="最大允许容量"></a>最大允许容量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</span><br></pre></td></tr></table></figure>
+<h5 id="默认装载因子0-75"><a href="#默认装载因子0-75" class="headerlink" title="默认装载因子0.75"></a>默认装载因子0.75</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">     * The load factor used when none specified in constructor.</span><br><span class="line">     */</span><br><span class="line">    static final float DEFAULT_LOAD_FACTOR = 0.75f;</span><br></pre></td></tr></table></figure>
+<p>即默认的HashMap实例在插入第13个数据时，会扩容为32。<br>类注释中明确说明了影响Map性能的两个元素,一个是过高的初始容量，一个是过低的装载因子。而0.75是时间和空间上的一个最佳实践。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* &lt;p&gt;This implementation provides constant-time performance for the basic</span><br><span class="line">* operations (&lt;tt&gt;get&lt;/tt&gt; and &lt;tt&gt;put&lt;/tt&gt;), assuming the hash function</span><br><span class="line">* disperses the elements properly among the buckets.  Iteration over</span><br><span class="line">* collection views requires time proportional to the &quot;capacity&quot; of the</span><br><span class="line">* &lt;tt&gt;HashMap&lt;/tt&gt; instance (the number of buckets) plus its size (the number</span><br><span class="line">* of key-value mappings).  Thus, it&apos;s very important not to set the initial</span><br><span class="line">* capacity too high (or the load factor too low) if iteration performance is</span><br><span class="line">* important.</span><br></pre></td></tr></table></figure></p>
+<h5 id="由链表重构为红黑树阈值，默认为8"><a href="#由链表重构为红黑树阈值，默认为8" class="headerlink" title="由链表重构为红黑树阈值，默认为8"></a>由链表重构为红黑树阈值，默认为8</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">    * The bin count threshold for using a tree rather than list for a</span><br><span class="line">    * bin.  Bins are converted to trees when adding an element to a</span><br><span class="line">    * bin with at least this many nodes. The value must be greater</span><br><span class="line">    * than 2 and should be at least 8 to mesh with assumptions in</span><br><span class="line">    * tree removal about conversion back to plain bins upon</span><br><span class="line">    * shrinkage.</span><br><span class="line">    */</span><br><span class="line">   static final int TREEIFY_THRESHOLD = 8;</span><br></pre></td></tr></table></figure>
+<h5 id="由红黑树变为链表阈值，默认为6"><a href="#由红黑树变为链表阈值，默认为6" class="headerlink" title="由红黑树变为链表阈值，默认为6"></a>由红黑树变为链表阈值，默认为6</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">     * The bin count threshold for untreeifying a (split) bin during a</span><br><span class="line">     * resize operation. Should be less than TREEIFY_THRESHOLD, and at</span><br><span class="line">     * most 6 to mesh with shrinkage detection under removal.</span><br><span class="line">     */</span><br><span class="line">    static final int UNTREEIFY_THRESHOLD = 6;</span><br></pre></td></tr></table></figure>
+<h5 id="树形结构的最小容量，默认为64"><a href="#树形结构的最小容量，默认为64" class="headerlink" title="树形结构的最小容量，默认为64"></a>树形结构的最小容量，默认为64</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">    * The smallest table capacity for which bins may be treeified.</span><br><span class="line">    * (Otherwise the table is resized if too many nodes in a bin.)</span><br><span class="line">    * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts</span><br><span class="line">    * between resizing and treeification thresholds.</span><br><span class="line">    */</span><br><span class="line">   static final int MIN_TREEIFY_CAPACITY = 64;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="主要属性"><a href="#主要属性" class="headerlink" title="主要属性"></a>主要属性</h2><h5 id="table，数据表，在初次使用时初始化，length是2的倍数"><a href="#table，数据表，在初次使用时初始化，length是2的倍数" class="headerlink" title="table，数据表，在初次使用时初始化，length是2的倍数"></a>table，数据表，在初次使用时初始化，length是2的倍数</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">    * The table, initialized on first use, and resized as</span><br><span class="line">    * necessary. When allocated, length is always a power of two.</span><br><span class="line">    * (We also tolerate length zero in some operations to allow</span><br><span class="line">    * bootstrapping mechanics that are currently not needed.)</span><br><span class="line">    */</span><br><span class="line">   transient Node&lt;K,V&gt;[] table;</span><br></pre></td></tr></table></figure>
+<h5 id="table开始装载的值"><a href="#table开始装载的值" class="headerlink" title="table开始装载的值"></a>table开始装载的值</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">    * The next size value at which to resize (capacity * load factor).</span><br><span class="line">    *</span><br><span class="line">    * @serial</span><br><span class="line">    */</span><br><span class="line">   int threshold;</span><br></pre></td></tr></table></figure>
+<h5 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</span><br><span class="line">transient int size;</span><br><span class="line">transient int modCount;</span><br><span class="line">final float loadFactor;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><h5 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h5><p>HashMap中有四类构造方法，分别是不传参，传递初始化容量，传递初始化容量和装载因子，传入map<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public HashMap() &#123;</span><br><span class="line">       this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">public HashMap(int initialCapacity) &#123;</span><br><span class="line">       this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">   &#125;</span><br><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">       if (initialCapacity &lt; 0)</span><br><span class="line">           throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                              initialCapacity);</span><br><span class="line">       if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">           initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">       if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</span><br><span class="line">           throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                              loadFactor);</span><br><span class="line">       this.loadFactor = loadFactor;</span><br><span class="line">       this.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">   &#125;</span><br><span class="line">public HashMap(Map&lt;? extends K, ? extends V&gt; m) &#123;</span><br><span class="line">       this.loadFactor = DEFAULT_LOAD_FACTOR;</span><br><span class="line">       putMapEntries(m, false);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="put"><a href="#put" class="headerlink" title="put"></a>put</h5><p>通常我们使用put(key, value)方法来设置值，其实内部实现是putVal方法<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">        return putVal(hash(key), key, value, false, true);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>putVal方法为final方法，有更多的参数<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">     * Implements Map.put and related methods</span><br><span class="line">     *</span><br><span class="line">     * @param hash hash for key</span><br><span class="line">     * @param key the key</span><br><span class="line">     * @param value the value to put</span><br><span class="line">     * @param onlyIfAbsent if true, don&apos;t change existing value</span><br><span class="line">     * @param evict if false, the table is in creation mode.</span><br><span class="line">     * @return previous value, or null if none</span><br><span class="line">     */</span><br><span class="line">    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">                   boolean evict) &#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br></pre></td></tr></table></figure></p>
+<p>putVal第一个if即如果table为空，则通过resize方法初始化table<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">           n = (tab = resize()).length;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">final Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">     Node&lt;K,V&gt;[] oldTab = table;</span><br><span class="line">       int oldCap = (oldTab == null) ? 0 : oldTab.length;</span><br><span class="line">       int oldThr = threshold;</span><br><span class="line">       int newCap, newThr = 0;</span><br><span class="line">       </span><br><span class="line">       ....</span><br><span class="line">       else &#123;               // zero initial threshold signifies using defaults</span><br><span class="line">           newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">           newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">       &#125;</span><br><span class="line">       ....</span><br><span class="line">       </span><br><span class="line">       threshold = newThr;</span><br><span class="line">       @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br><span class="line">           Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</span><br><span class="line">       table = newTab;</span><br><span class="line">       </span><br><span class="line">       ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>putVal第二个if则是通过key的hash值判断当前的hash所在数组位置是否有值，如果为null，则直接newNode<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">            tab[i] = newNode(hash, key, value, null);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>putVal接下来的else是该方法中的主要部分，else开始时，p为putVal方法开始根据key的hash值所得的数组位置的内容</p>
+<ol>
+<li>如果p的hash，key与参数列表中的相同，则直接将p赋值个e，条件判断结束；</li>
+<li>1不成立，则判断p是否为树形结构，如果为树形结构，则走树形结果方法，条件判断结束；</li>
+<li>如果1、2都成立，则循环所有列表数据。如果结束前，找到符合条件1的，则走1同样的流程，直至最后p.next为null，此时新建节点插入，并赋值给e，条件判断结束；</li>
+<li>如果e不为null，并且onlyIfAbsent为false(即允许覆盖原值)，或者原值为null，则覆盖原来的value为新value，回原来的value值；afterNodeAccess该方法为LinkedHashMap的后续操作;<br><strong>注意：循环中binCount &gt;= TREEIFY_THRESHOLD - 1表示，当哈希表大小超过最小树限制时，将map转为树，进行树操作，这样当下次在put时，直接走上述第2条数操作</strong>  </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"> else &#123;</span><br><span class="line">            Node&lt;K,V&gt; e; K k;</span><br><span class="line">            if (p.hash == hash &amp;&amp;</span><br><span class="line">                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                e = p;</span><br><span class="line">            else if (p instanceof TreeNode)</span><br><span class="line">                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">            else &#123;</span><br><span class="line">                for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                    if ((e = p.next) == null) &#123;</span><br><span class="line">                        p.next = newNode(hash, key, value, null);</span><br><span class="line">                        if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                            treeifyBin(tab, hash);</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                    if (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                        break;</span><br><span class="line">                    p = e;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (e != null) &#123; // existing mapping for key</span><br><span class="line">                V oldValue = e.value;</span><br><span class="line">                if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                    e.value = value;</span><br><span class="line">                afterNodeAccess(e);</span><br><span class="line">                return oldValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>方法最后，主要判断如果数组大小超过转载值，则扩充容量<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">        ++modCount;</span><br><span class="line">        if (++size &gt; threshold)</span><br><span class="line">            resize();</span><br><span class="line">        afterNodeInsertion(evict);</span><br><span class="line">        return null;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h5 id="get"><a href="#get" class="headerlink" title="get"></a>get</h5><p>通常我们使用的都是通过key来get value的方法，其实内部都是使用getNode方法<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public V get(Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        return (e = getNode(hash(key), key)) == null ? null : e.value;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>getNode方法主要完成以下几步：</p>
+<ol>
+<li>根据key的has值得到map数组位置的node，如果node的key与传入的key相同，则返回node；</li>
+<li>node.next为空，则返回null，否则如果树，则走树形方法，不是树，则开始循环查找；</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">final Node&lt;K,V&gt; getNode(int hash, Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; int n; K k;</span><br><span class="line">        if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">            (first = tab[(n - 1) &amp; hash]) != null) &#123;</span><br><span class="line">            if (first.hash == hash &amp;&amp; // always check first node</span><br><span class="line">                ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                return first;</span><br><span class="line">            if ((e = first.next) != null) &#123;</span><br><span class="line">                if (first instanceof TreeNode)</span><br><span class="line">                    return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">                do &#123;</span><br><span class="line">                    if (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                        return e;</span><br><span class="line">                &#125; while ((e = e.next) != null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JAVA</category>
+        <category>基础</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>阿里巴巴Java开发手册学习</title>
+    <url>/2018/02/08/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="一、编程规约"><a href="#一、编程规约" class="headerlink" title="一、编程规约"></a>一、编程规约</h2><h4 id="（一）命名风格"><a href="#（一）命名风格" class="headerlink" title="（一）命名风格"></a>（一）命名风格</h4><ol>
+<li>下划线和美元符号不能作为起始也不能结束；</li>
+<li>禁止拼音与英文混合，禁止直接使用中文；</li>
+<li>类名必须驼峰，除DO/BO/DTO/VO/AO外；</li>
+<li>方法名、参数名、成员变量、局部变量必须使用lowerCameCase;</li>
+<li>常量全部大写，单词间用下划线，为了表达清楚，可以长一些；</li>
+<li>抽象类名使用Abstract或Base开头；异常类名使用Exception结尾；测试类名以它要测试的类的名称开始，以Test结尾；</li>
+<li>POJO类中布尔类型不加IS，可能引起部分框架序列化错误；</li>
+<li>包名用小写，包名使用单数形式，但类名如果有负数含义，类型可以使用复数形式；</li>
+<li>杜绝少用不规范缩写；命名时，使用完整单词；</li>
+<li>命名时体现设计模式；</li>
+<li>接口中方法和属性不加任何修饰符，加上Javadoc注释；接口中只定义与接口有关的变量；JDK8允许的default方法，是对所有实现类都有价值的默认实现；</li>
+<li>枚举类名带上Enum后缀，成员名称全大写，单词间用下划线隔开；</li>
+</ol>
+<a id="more"></a>
+<h4 id="（二）常量定义"><a href="#（二）常量定义" class="headerlink" title="（二）常量定义"></a>（二）常量定义</h4><ol>
+<li>不允许任何魔法值出现；</li>
+<li>如意混淆的字符少用，如long或者Long初始值时，使用L，不用l；</li>
+<li>不使用大而全的常量类，按功能归类；</li>
+<li>常量的复用层次 </li>
+</ol>
+<ul>
+<li>跨应用共享常量：放置在二方库中，通常是client.jar中的constant目录下； </li>
+<li>应用内共享常量：放置在一方库中，通常是modules中的constant目录下；</li>
+<li>子工程内部共享常量：在当前子工程的constant目录下；</li>
+<li>包内共享常量：在当前包下单独的constant目录下；</li>
+<li>类内共享常量：直接在类内部private static final定义。<br>5.变量值若果在一个范围内变化，且带有名称外的延申属性，定义为枚举类。<h4 id="（三）代码格式"><a href="#（三）代码格式" class="headerlink" title="（三）代码格式"></a>（三）代码格式</h4></li>
+</ul>
+<ol>
+<li>大括号。如果内为空，则可以直接写成{}</li>
+</ol>
+<ul>
+<li>左大括号前不换行；</li>
+<li>左大括号后换行；</li>
+<li>又大括号前换行；</li>
+<li>又大括号后还有else等代码则不换行；表示终止的又大括号必须换行。</li>
+</ul>
+<ol start="2">
+<li>if/for/while/switch/do等保留字与括号之间必须加空格；</li>
+<li>任何二目、三目运算符左右两边必须加一个空格；</li>
+<li>缩进采用4个空格；</li>
+<li>注释的双斜线与注释内容之间有且仅有一个空格；</li>
+<li>单行字符不超过120，否则换行。</li>
+<li>方法参数定义和传入时，多个参数逗号后边必须加空格；</li>
+<li>IDE的text file encoding设置为UTF-8；IDE中文件的换行符使用Unixgeshi ;<h4 id="（4）OOP规约"><a href="#（4）OOP规约" class="headerlink" title="（4）OOP规约"></a>（4）OOP规约</h4></li>
+<li>避免通过一个类的对象引用访问此类的静态变量或静态方法，无畏增加编译器的解析成本，直接用类名访问；</li>
+<li>所有复写方法，必须加@override注解；</li>
+<li>相同参数类型，相同业务含义才可以使用Java的可变参数，放在参数列表最后，禁止使用Object，尽量不使用可变参数；</li>
+<li>外部正在调用或者二方库依赖的接口，不允许修改方法签名，避免对接口调用方产生影响。接口过时必须加@Deprecated注解，并清晰地说明采用的新接口或者新服务是什么；</li>
+<li>不使用过时的类或方法；</li>
+<li>Object的equals方法容易抛空指针异常，应使用常量或确定有值的对象调用equals；</li>
+<li>所有相同类型的包装类对象之间值比较，全部使用equals方法（<em>对于Integer var = ? 在-128值127范围内的赋值，Integer对象是在IntegerCache.cache产生，会复用已有对象，这个区间内的Integer值可以直接使用==进行判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，推荐使用equals方法进行判断</em>）；</li>
+<li>基本数据类型与包装数据类型使用标准</li>
+</ol>
+<ul>
+<li>所有的POJO类属性必须使用包装数据类型；</li>
+<li>RPC方法返回值和参数必须使用包装数据类型；</li>
+<li>所有局部变量使用基本数据类型；</li>
+</ul>
+<ol start="9">
+<li>定义DO/DTO/VO等POJO类时，不允许设置任何属性默认值；</li>
+<li>序列化类新增属性时，请不要修改serialVersionUID字段，避免反序列化失败；如果完全不兼容升级，避免发序列化混乱，请修改serialVersionUID值；</li>
+<li>构造方法禁止出现业务逻辑，如果有初始化逻辑，放在init方法中；</li>
+<li>POJO必须有toString方法；<h4 id="（5）集合处理"><a href="#（5）集合处理" class="headerlink" title="（5）集合处理"></a>（5）集合处理</h4></li>
+<li>关于hashCode和equals的处理，必须遵循：</li>
+</ol>
+<ul>
+<li>只要重写equals，必须重写hashCode；</li>
+<li>因为Set存储的是不重复的对象，依据hashCode和equals进行判断，所以Set存储的对象必须冲洗这两个方法；</li>
+<li>如果自定义对象作为Map的key，则必须重写hashCode和equals方法；</li>
+</ul>
+<ol start="2">
+<li>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常：java.util.RandomAccessSubList cannot be cast to java.util.ArrayList;</li>
+<li>在subList场景中，高度注意对原集合元素个数的修改，会导致子列表的遍历、增加、删除均产生ConcurrentModificationException异常；</li>
+<li>使用集合转数组的方法，必须使用集合的toArray（T[] array），传入的是类型完全一样的数组，大小就是list.size()；</li>
+<li>使用工具类Arrays.asList()把数组转成集合时，不能使用其修改集合相关的方法，它的add/remove/clear方法会抛出UnsupportedOperationException异常；</li>
+<li>泛型通配符&lt;? extends T&gt;来接收返回的数据，次写法的集合不能使用add方法，而&lt;? super T&gt;不能使用get方法，作为接口调用赋值时容易出错；</li>
+<li>不允许在foreach循环里进行元素的remove/add操作。remove元素请使用Iterator方式，如果兵法操作，需要对Iterator对象加锁。<h4 id="（6）并发处理"><a href="#（6）并发处理" class="headerlink" title="（6）并发处理"></a>（6）并发处理</h4></li>
+<li>获取单例对象需要保证线程安全，其中的方法也要保证线程安全；</li>
+<li>创建线程或线程池时，指定有意义的线程名称，方便出错时回溯；</li>
+<li>线程资源必须通过线程池提供，不允许在应用中自行显式创建线程；</li>
+<li>线程池不允许使用Executors去创建，而是通过ThreadPoolExecutor的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险；（说明：Executors返回的线程池对象的弊端：1 FixedThreadPool和SingleThreadPool 允许的请求队列长度为Integer.MAX_VALUE,可能会堆积大量请求，导致OOM；2 CachedThreadPool和ScheduledThreadPool 允许的创建线程数量为Integer.MAX_VALUE,可能会创建大量的线程，导致OOM）</li>
+<li>SimpleDateFormat是线程不安全的，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类；<blockquote>
+<p>注意线程安全使用DateUtils。亦推荐如下方式<br>private static final ThreadLocal<dateformat> df = new ThreadLocal<dateformat>() {<br>@Override<br>protected DateFormat initialValue() {<br>return new SimpleDateFormat(“yyyy-MM-dd”);<br>}<br>};<br>JDK8的应用，可以使用Instant代替Date，LocalDateTime代替Calendar，DateTimeFormatter代替Simpledateformatter,官方给出的解释：simplebeautiful strong immutable thread-sage；</dateformat></dateformat></p>
+</blockquote>
+</li>
+<li>高并发时，同步调用应该考量锁的性能损耗。能用无锁数据结构，就不要用锁；能锁区块，就不要锁整个方法体；能用对象锁，就不要用类锁；避免在锁代码块中调用RPC方法；</li>
+<li>对多个资源、数据库表、对象同时加锁时，需要保持一致的加锁顺序，否则可能会造成死锁；</li>
+<li>并发修改统一记录时，避免更新丢失，需要加锁。要么在应用层加锁，要么在缓存加锁，要么在数据库层使用乐观锁，使用version作为更新依据；</li>
+<li>多线程并行处理定时任务时，Time运行多个TimeTask时，只要其中之一没有捕获抛出的异常，其他任务便会自动终止运行，使用ScheduleExecutorService则没有这个问题；<h4 id="（7）"><a href="#（7）" class="headerlink" title="（7）"></a>（7）</h4></li>
+<li>Math.random()这个方法返回的是dubble类型，注意取值的范围0&lt;= x &lt;=1（能够取到零值，注意除零异常），如果想获取整数类型的随机数，不允许将X放大10的若干倍数然后取整，直接使用Random对象的nextInt或者nextLong方法；</li>
+<li>获取当前毫秒数System.currentTimeMillis();而不是new Date().getTime();</li>
+</ol>
+<hr>
+<h2 id="二、异常日志"><a href="#二、异常日志" class="headerlink" title="二、异常日志"></a>二、异常日志</h2><h4 id="（1）异常处理"><a href="#（1）异常处理" class="headerlink" title="（1）异常处理"></a>（1）异常处理</h4><ol>
+<li>Java类库中定义的一类RuntimeException可以通过预先检查进行规避，而不应该通过catch来处理；</li>
+<li>不允许用异常做流程控制，条件控制，因为异常的处理效率比条件分支低；</li>
+<li>不允许对打断代码进行try-catch，只对非稳定代码进行异常处理；</li>
+<li>不允许在finally块中使用return，finally块中的return返回后方法结束执行，不会再执行try块中的return语句；</li>
+</ol>
+<hr>
+<h2 id="三、MySQL数据库"><a href="#三、MySQL数据库" class="headerlink" title="三、MySQL数据库"></a>三、MySQL数据库</h2><h4 id="（1）建表规约"><a href="#（1）建表规约" class="headerlink" title="（1）建表规约"></a>（1）建表规约</h4><ol>
+<li>表达是与否概念的字段，必须使用is_xxx的方式命名，数据类型是unsigned tinyint（1表示是，0表示否）；</li>
+<li>表名、字段名必须使用小写字母或数字，禁止出现数字开头，禁止两个下划线中间只出现数字。数据库字段名的修改代价很大，因为无法进行预发布，所以字段名称需要慎重考虑；</li>
+<li>不允许表名使用复数名词；</li>
+<li>禁用保留字；</li>
+<li>主键索引名为pk_字段名；唯一索引名为uk_字段名；普通索引名则为inx_字段名；</li>
+<li>小数类型为decimal，禁止使用float和duoble；</li>
+<li>如果存储的字符串长度几乎相等，使用char定长字符串类型；</li>
+<li>varchar是可变字符串，不预先分配存储空间，长度不要超过5000，如果存储长度大于此值，定义字段类型为text，独立出来一张表，用主键来对应，避免影响其他字段索引效率；<h4 id="（2）索引规约"><a href="#（2）索引规约" class="headerlink" title="（2）索引规约"></a>（2）索引规约</h4></li>
+<li>业务上具有唯一特性的字段，即使是多个字段的组合，也必须建成唯一索引；</li>
+<li>超过三个表禁止join，需要join的字段，数据类型必须绝对一致；多表关联查询时，保证被关联的字段需要有索引；</li>
+<li>在varchar字段上建立所以时，必须指定索引长度，没必要对全字段建立索引，根据实际文本区分度决定索引长度即可；</li>
+<li>页面所有禁止左模糊或者全模糊，如果需要请走搜索引擎来解决；</li>
+<li>如果有order by的场景，请注意利用索引的有序性。order by最后的字段是组合索引的一部分，并且放在组合顺序的最后，避免出现file_sort的情况，影响查询性能；<h4 id="（3）SQL语句"><a href="#（3）SQL语句" class="headerlink" title="（3）SQL语句"></a>（3）SQL语句</h4></li>
+<li>不要使用count(列名)或count(常量)来代替count(*)，count(*)是SQL92定义的标准统计行数的语法，跟数据库无关，跟null和非null无关；</li>
+<li>count(distinct col)计算改列除null之外的不重复行数，注意**count(distinct col1, col2)若果其中一列全为null，那么即使另一列有不同值，也返回0；</li>
+<li>当某列的值全是null时，count(col)的返回结果为0，但sum(col)的返回结果为null，因此sum()需注意NPE问题；</li>
+<li>使用ISNULL()来判断是否为NULL值。NULL与任何值比较结果都为NULL；</li>
+<li>代码中写分页查询逻辑时，若count不为0应直接返回，避免执行后面的分页语句；<h4 id="（4）ORM映射"><a href="#（4）ORM映射" class="headerlink" title="（4）ORM映射"></a>（4）ORM映射</h4></li>
+<li>在表查询中，一律禁止使用*作为查询字段列表，需要哪些字段必须明确写明；</li>
+<li>POJO类的布尔属性不能加is，而数据库字段必须加is_，要求在resultMap中进行字段和属性之间的映射；</li>
+<li>不要使用resultClass当返回参数，即使所有类属性名与数据库字段一一对应，也需要定义，反过来，每一个表也必然有一个与之对应；</li>
+<li>sql.xml配置参数使用：#{}， #param#，不要使用${}，此种方法容易出现sql注入；</li>
+<li>iBatis自带的queryForList(String statementName,int start,int size)不推荐使用；</li>
+<li>不允许直接拿HashMap与Hashtable作为查询结果集的输出；</li>
+<li>更新数据库记录时，必须同时更新记录对应的gmt_modified字段值为当前时间；</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JAVA</category>
+        <category>基础</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JDK与JRE的区别</title>
+    <url>/2018/02/07/JDK%E4%B8%8EJRE%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><p>Java Development Kit，是Java开发工具包，它提供了Java的开发环境(提供了编译器javac等工具，用于将java文件编译为class文件)和运行环境(提 供了JVM和Runtime辅助包，用于解析class文件使其得到运行)。如果你下载并安装了JDK，那么你不仅可以开发Java程序，也同时拥有了运 行Java程序的平台。JDK是整个Java的核心，<strong>包括了Java运行环境(JRE)</strong>，一堆Java工具tools.jar和Java标准类库 (rt.jar)。</p>
+<h3 id="JRE"><a href="#JRE" class="headerlink" title="JRE"></a>JRE</h3><p>Java Runtime Enviroment，是Java的运行环境。面向Java程序的使用者，而不是开发者。如果你仅下载并安装了JRE，那么你的系统只能运行Java程序。JRE是运行Java程序所必须环境的集合，包含JVM标准实现及 Java核心类库。它包括Java虚拟机、Java平台核心类和支持文件。它不包含开发工具(编译器、调试器等)。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JAVA</category>
+        <category>基础</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>断舍离读后感</title>
+    <url>/2018/01/10/%E6%96%AD%E8%88%8D%E7%A6%BB%E8%AF%BB%E5%90%8E%E6%84%9F/</url>
+    <content><![CDATA[<p><em>断舍离创始人山下英子，作者山下英子。</em></p>
+<h5 id="1、断舍离的概念"><a href="#1、断舍离的概念" class="headerlink" title="1、断舍离的概念"></a>1、断舍离的概念</h5><ol>
+<li>断=断绝想要进入自己家的不需要的东西；</li>
+<li>舍=舍弃家里到处泛滥的破烂儿；</li>
+<li>离=脱离对物品的执念，处于游刃有余的自在空间。<br><strong>通过对物质的断舍离，最终能够达到精神、心灵的断舍离，是自己的生活更简单，更轻松。</strong>  </li>
+</ol>
+<a id="more"></a>
+<hr>
+<h5 id="2、认知"><a href="#2、认知" class="headerlink" title="2、认知"></a>2、认知</h5><p>粗略的读了一遍，中间也因为各种事打断，断断续续，总共大概在20天内看完，可能有些东西自己已经不太能记得，印象比较深的就是主对象的以及时间轴的转变。  </p>
+<hr>
+<p>我们习惯的思维在整理物品，或者看到物品，通常是以物品为主语：XXX还有用，XXX以后还有用，XXX可能在XXX时间要用到，而从来没有以自己或者使用物品的人为主语，比如我要用XXX，我现在就可以用到XXX，而对于以前的物品，无论是别人送的，还是自己买到的，如果只是让它躺在某一些角落里发霉，那不如让它去到它可以发挥作用的地方。 </p>
+<hr>
+<p>时间轴是同理的，我们总是在准备着，在留恋着，对于一些物品，总是会以一种在某某时刻我要用到的心里留着它，或者曾经我使用过是如何如何的好，以后还可以使用，然而，我们却将这些物品堆积埋没在深入，基本上再也不会动。我们应当以当下为时间轴，思维上应该是认为我要在现在用到这物品，我用XXX可以如何如何，这样挑选留下的才是我们真正需要的东西。</p>
+<hr>
+<h5 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h5><p>虽然《断舍离》是以物品入手，引导我们如何断舍离，实际最终还是深化到精神、心灵，从本质上改变我们的思维，生活。<br>自我感觉仍然是一个“度”的问题，所有的事情只要能够把握何时“度”，达到平衡的状态，最终都会让我们有一个没好的结局。<br>读一遍，感觉有一些认识，应该再读至少两遍，应该会有不一样的思考。</p>
+]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>读后感</tag>
+        <tag>断舍离</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java位运算符学习</title>
+    <url>/2017/12/27/Java%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="Java中的位运算符有如下几类"><a href="#Java中的位运算符有如下几类" class="headerlink" title="Java中的位运算符有如下几类"></a>Java中的位运算符有如下几类</h2><ul>
+<li>左移 &lt;&lt;</li>
+<li>又移 &gt;&gt;</li>
+<li>无符号右移 &gt;&gt;&gt;</li>
+<li>位与 &amp;</li>
+<li>位或 |</li>
+<li>位非 ~</li>
+<li>位异或 ^</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h4 id="左移-lt-lt"><a href="#左移-lt-lt" class="headerlink" title="左移 &lt;&lt;"></a>左移 &lt;&lt;</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(Integer.toBinaryString(10));</span><br><span class="line">		System.out.println(10 &lt;&lt; 2);</span><br><span class="line">		System.out.println(Integer.toBinaryString(10 &lt;&lt; 2));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>在java中对一个数字左移n位，其实就是给该数字乘以2的n次方，比如10&lt;&lt;2，就是给10乘以2的平方，得到40。</strong><br>那么二进制的方式是怎么实现的呢？上述代码输出结果如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1010</span><br><span class="line">40</span><br><span class="line">101000</span><br><span class="line">//补全 int 32位十进制，如下</span><br><span class="line">0000 0000 0000 0000 0000 0000 0000 1010</span><br><span class="line">40</span><br><span class="line">0000 0000 0000 0000 0000 0000 0010 1000</span><br></pre></td></tr></table></figure></p>
+<h6 id="可以看出是将1010左移两位，低位补零所得。"><a href="#可以看出是将1010左移两位，低位补零所得。" class="headerlink" title="可以看出是将1010左移两位，低位补零所得。"></a>可以看出是将1010左移两位，低位补零所得。</h6><p><strong>因为Java中，int数字有符号，并且有长度限制，所能表示的范围为-2^31 ~ 2^31 -1（-2147483648~2147483647），因此如果左移所得结果超过2^37 - 1，将会变成负数；负数左移超过 -2^37 之后将会变成0，-2^37无论左移多少（除过32以及32的倍数位）位，结果始终为0。</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(Integer.toBinaryString(2147483647));</span><br><span class="line">		System.out.println(2147483647 &lt;&lt; 1);</span><br><span class="line">		System.out.println(Integer.toBinaryString(2147483647 &lt;&lt; 1));</span><br><span class="line">		System.out.println(&quot;-------------------------------------&quot;);</span><br><span class="line">		System.out.println(Integer.toBinaryString(-2147483648));</span><br><span class="line">		System.out.println(-2147483648 &lt;&lt; 1);</span><br><span class="line">		System.out.println(-2147483648 &lt;&lt; 100);</span><br><span class="line">		System.out.println(Integer.toBinaryString(-2147483648 &lt;&lt; 100));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1111111111111111111111111111111</span><br><span class="line">-2</span><br><span class="line">11111111111111111111111111111110</span><br><span class="line">-------------------------------------</span><br><span class="line">10000000000000000000000000000000</span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<p><strong>注意1左移31位所得既是int所能表示的做小整数，但是1左移32位不会得到0，而是1，不同于直接将-2147483648左移1位</strong><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(1 &lt;&lt; 31);</span><br><span class="line">		System.out.println(Integer.toBinaryString(1 &lt;&lt; 31));</span><br><span class="line">		System.out.println(-2147483648 &lt;&lt; 1);</span><br><span class="line">		System.out.println(1 &lt;&lt; 32);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-2147483648</span><br><span class="line">10000000000000000000000000000000</span><br><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p><strong>任一数字左移32（或者32倍数）位将得到其本身</strong><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(1 &lt;&lt; 32);</span><br><span class="line">		System.out.println(2147483647 &lt;&lt; 32);</span><br><span class="line">		System.out.println(-1 &lt;&lt; 32);</span><br><span class="line">		System.out.println(-2147483648 &lt;&lt; 64);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2147483647</span><br><span class="line">-1</span><br><span class="line">-2147483648</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="右移-gt-gt"><a href="#右移-gt-gt" class="headerlink" title="右移 &gt;&gt;"></a>右移 &gt;&gt;</h4><p><strong>在java中对一个数字右移n位，其实就是给该数字除以2的n次方，向下取整。正整数右移取到0之后，右移任何（除了32以及32的倍数）位，都是0；负整数右移得到-1之后，右移任何（除了32以及32的倍数）位，都是-1。</strong><br><strong>任一数字右移32（或者32的倍数）位将得到其本身</strong><br>比如10&gt;&gt;2，就是10除以2的平方，取整得到2，-10&gt;&gt;2，就是-10除以2的平方向下取整，得到-3。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;1 &gt;&gt; 1 : &quot; + (1 &gt;&gt; 1));</span><br><span class="line">		System.out.println(&quot;1 &gt;&gt; 20 : &quot; + (1 &gt;&gt; 20));</span><br><span class="line">		System.out.println(&quot;1 &gt;&gt; 32 : &quot; + (1 &gt;&gt; 32));</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt; 2 : &quot; + (10 &gt;&gt; 2));</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt; 4 : &quot; + (10 &gt;&gt; 4));</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt; 30 : &quot; + (10 &gt;&gt; 30));</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt; 64 : &quot; + (10 &gt;&gt; 64));</span><br><span class="line">		System.out.println(&quot;---------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;-1 &gt;&gt; 2 : &quot; + (-1 &gt;&gt; 2));</span><br><span class="line">		System.out.println(&quot;-1 &gt;&gt; 20 : &quot; + (-1 &gt;&gt; 20));</span><br><span class="line">		System.out.println(&quot;-1 &gt;&gt; 32 : &quot; + (-1 &gt;&gt; 32));</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt; 2 : &quot; + (-10 &gt;&gt; 2));</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt; 3 : &quot; + (-10 &gt;&gt; 3));</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt; 4 : &quot; + (-10 &gt;&gt; 4));</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt; 30 : &quot; + (-10 &gt;&gt; 30));</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt; 96 : &quot; + (-10 &gt;&gt; 96));</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 &gt;&gt; 1 : 0</span><br><span class="line">1 &gt;&gt; 20 : 0</span><br><span class="line">1 &gt;&gt; 32 : 1</span><br><span class="line">10 &gt;&gt; 2 : 2</span><br><span class="line">10 &gt;&gt; 4 : 0</span><br><span class="line">10 &gt;&gt; 30 : 0</span><br><span class="line">10 &gt;&gt; 64 : 10</span><br><span class="line">---------------------------------------</span><br><span class="line">-1 &gt;&gt; 2 : -1</span><br><span class="line">-1 &gt;&gt; 20 : -1</span><br><span class="line">-1 &gt;&gt; 32 : -1</span><br><span class="line">-10 &gt;&gt; 2 : -3</span><br><span class="line">-10 &gt;&gt; 3 : -2</span><br><span class="line">-10 &gt;&gt; 4 : -1</span><br><span class="line">-10 &gt;&gt; 30 : -1</span><br><span class="line">-10 &gt;&gt; 96 : -10</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="无符号右移-gt-gt-gt"><a href="#无符号右移-gt-gt-gt" class="headerlink" title="无符号右移 &gt;&gt;&gt;"></a>无符号右移 &gt;&gt;&gt;</h4><p>通常所说的右移即有符号右移，对于正整数来说，有符号右移与无符号右移是一样的，对于负整数来说，有符号右移高位补1，无符号右移高位补0。<br><strong>任一数字无符号右移32（或者32的倍数）位，得到其本身</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;10 :       &quot; + Integer.toBinaryString(10));</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt; 1  : &quot; + Integer.toBinaryString(10 &gt;&gt; 1) + &quot; : &quot; + (10 &gt;&gt; 1));</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt;&gt; 1 : &quot; + Integer.toBinaryString(10 &gt;&gt;&gt; 1) + &quot; : &quot; +  (10 &gt;&gt;&gt; 1) );	</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt; 2 :  &quot; + Integer.toBinaryString(10 &gt;&gt; 2) + &quot; : &quot; +  (10 &gt;&gt; 2) );	</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt;&gt; 2 : &quot; + Integer.toBinaryString(10 &gt;&gt;&gt; 2) + &quot; : &quot; +  (10 &gt;&gt;&gt; 2) );	</span><br><span class="line">		System.out.println(&quot;10 &gt;&gt;&gt; 32 : &quot; + Integer.toBinaryString(10 &gt;&gt;&gt; 32) + &quot; : &quot; +  (10 &gt;&gt;&gt; 32) );	</span><br><span class="line">		System.out.println(&quot;--------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;-10 :       &quot; + Integer.toBinaryString(-10));</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt; 1  : &quot; + Integer.toBinaryString(-10 &gt;&gt; 1) + &quot; : &quot; + (-10 &gt;&gt; 1));</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt;&gt; 1 : &quot; + Integer.toBinaryString(-10 &gt;&gt;&gt; 1) + &quot; : &quot; +  (-10 &gt;&gt;&gt; 1) );	</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt; 2 :  &quot; + Integer.toBinaryString(-10 &gt;&gt; 2) + &quot; : &quot; +  (-10 &gt;&gt; 2) );		</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt;&gt; 2 : &quot; + Integer.toBinaryString(-10 &gt;&gt;&gt; 2) + &quot; : &quot; +  (-10 &gt;&gt;&gt; 2) );		</span><br><span class="line">		System.out.println(&quot;-10 &gt;&gt;&gt; 32 :&quot; + Integer.toBinaryString(-10 &gt;&gt;&gt; 32) + &quot; : &quot; +  (-10 &gt;&gt;&gt; 32) );		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">10 :       1010</span><br><span class="line">10 &gt;&gt; 1  : 101 : 5</span><br><span class="line">10 &gt;&gt;&gt; 1 : 101 : 5</span><br><span class="line">10 &gt;&gt; 2 :  10 : 2</span><br><span class="line">10 &gt;&gt;&gt; 2 : 10 : 2</span><br><span class="line">10 &gt;&gt;&gt; 32 : 1010 : 10</span><br><span class="line">--------------------------------------------------</span><br><span class="line">-10 :       11111111111111111111111111110110</span><br><span class="line">-10 &gt;&gt; 1  : 11111111111111111111111111111011 : -5</span><br><span class="line">-10 &gt;&gt;&gt; 1 : 1111111111111111111111111111011 : 2147483643</span><br><span class="line">-10 &gt;&gt; 2 :  11111111111111111111111111111101 : -3</span><br><span class="line">-10 &gt;&gt;&gt; 2 : 111111111111111111111111111101 : 1073741821</span><br><span class="line">-10 &gt;&gt;&gt; 32 :11111111111111111111111111110110 : -10</span><br></pre></td></tr></table></figure>
+<p>如上实验，-10&gt;&gt;1位，与-10&gt;&gt;&gt;1所得二进制码相差一位，其实是高位补0，补全32位如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-10 :       11111111111111111111111111110110</span><br><span class="line">-10 &gt;&gt; 1  : 11111111111111111111111111111011 : -5</span><br><span class="line">-10 &gt;&gt;&gt; 1 : 01111111111111111111111111111011 : 2147483643</span><br><span class="line">-10 &gt;&gt; 2 :  11111111111111111111111111111101 : -3</span><br><span class="line">-10 &gt;&gt;&gt; 2 : 00111111111111111111111111111101 : 1073741821</span><br><span class="line">-10 &gt;&gt;&gt; 32 :11111111111111111111111111110110 : -10</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h5 id="位与-amp"><a href="#位与-amp" class="headerlink" title="位与 &amp;"></a>位与 &amp;</h5><p>位与，是将数字在二进制形式下，并且都补齐到32位，然后逐一对两个数的每一位进行比较，相同则得1，否则得0，最终得到的二进制为结果。</p>
+<ol>
+<li>所有数字与0位与运算都得到0；</li>
+<li>所有数字与-1位与运算都得到数字本身；</li>
+<li>所有正数与2^31-1位与运算都得到本身，与-2^31位与都得到0；</li>
+<li>所有负数与2^31-1位与运算都得到2^31+负数，与-2^31位与都得到-2^31；</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;2147483647    :       &quot; + Integer.toBinaryString(2147483647));</span><br><span class="line">		System.out.println(&quot;-2147483648   :       &quot; + Integer.toBinaryString(-2147483648));</span><br><span class="line">		System.out.println(&quot;-1            :       &quot; + Integer.toBinaryString(-1));</span><br><span class="line">		System.out.println(&quot;0             :       &quot; + Integer.toBinaryString(0));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		</span><br><span class="line">		System.out.println(&quot;10   :       &quot; + Integer.toBinaryString(10));</span><br><span class="line">		System.out.println(&quot;1    :       &quot; + Integer.toBinaryString(1));</span><br><span class="line">		System.out.println(&quot;10&amp;1 :       &quot; + Integer.toBinaryString(10&amp;1) + &quot;|&quot; + (10&amp;1));</span><br><span class="line">		System.out.println(&quot;10&amp;-8:       &quot; + Integer.toBinaryString(10&amp;-8) + &quot;|&quot; + (10&amp;-8));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;-10   :       &quot; + Integer.toBinaryString(-10));</span><br><span class="line">		System.out.println(&quot;-2    :       &quot; + Integer.toBinaryString(-2));</span><br><span class="line">		System.out.println(&quot;1     :       &quot; + Integer.toBinaryString(1));</span><br><span class="line">		System.out.println(&quot;-10&amp;-2:       &quot; + Integer.toBinaryString(-10&amp;-2) + &quot;|&quot; + (-10&amp;-2));</span><br><span class="line">		System.out.println(&quot;-10&amp;1 :       &quot; + Integer.toBinaryString(-10&amp;1) + &quot;|&quot; + (-10&amp;1));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;10&amp;-1:       &quot; + Integer.toBinaryString(10&amp;-1) + &quot;|&quot; + (10&amp;-1));</span><br><span class="line">		System.out.println(&quot;100&amp;-1:       &quot; + Integer.toBinaryString(100&amp;-1) + &quot;|&quot; + (100&amp;-1));</span><br><span class="line">		System.out.println(&quot;2147483647&amp;-1:       &quot; + Integer.toBinaryString(2147483647&amp;-1) + &quot;|&quot; + (2147483647&amp;-1));</span><br><span class="line">		System.out.println(&quot;-2147483648&amp;-1:       &quot; + Integer.toBinaryString(-2147483648&amp;-1) + &quot;|&quot; + (-2147483648&amp;-1));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;10&amp;0:       &quot; + Integer.toBinaryString(10&amp;0) + &quot;|&quot; + (10&amp;0));</span><br><span class="line">		System.out.println(&quot;-10&amp;0:       &quot; + Integer.toBinaryString(-10&amp;0) + &quot;|&quot; + (-10&amp;0));</span><br><span class="line">		System.out.println(&quot;2147483647&amp;0:       &quot; + Integer.toBinaryString(2147483647&amp;0) + &quot;|&quot; + (2147483647&amp;0));</span><br><span class="line">		System.out.println(&quot;-2147483648&amp;0:       &quot; + Integer.toBinaryString(-2147483648&amp;0) + &quot;|&quot; + (-2147483648&amp;0));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;2147483647&amp;-2147483648:       &quot; + Integer.toBinaryString(2147483647&amp;-2147483648) + &quot;|&quot; + (2147483647&amp;-2147483648));</span><br><span class="line">		System.out.println(&quot;-10&amp;2147483647 :       &quot; + Integer.toBinaryString(-10&amp;2147483647) + &quot;|&quot; + (-10&amp;2147483647));</span><br><span class="line">		System.out.println(&quot;-123&amp;2147483647 :       &quot; + Integer.toBinaryString(-123&amp;2147483647) + &quot;|&quot; + (-123&amp;2147483647));</span><br><span class="line">		System.out.println(&quot;10&amp;2147483647 :       &quot; + Integer.toBinaryString(10&amp;2147483647) + &quot;|&quot; + (10&amp;2147483647));</span><br><span class="line">		System.out.println(&quot;-10&amp;-2147483648 :       &quot; + Integer.toBinaryString(-10&amp;-2147483648) + &quot;|&quot; + (-10&amp;-2147483648));</span><br><span class="line">		System.out.println(&quot;-123&amp;-2147483648 :       &quot; + Integer.toBinaryString(-123&amp;-2147483648) + &quot;|&quot; + (-123&amp;-2147483648));</span><br><span class="line">		System.out.println(&quot;10&amp;-2147483648 :       &quot; + Integer.toBinaryString(10&amp;-2147483648) + &quot;|&quot; + (10&amp;-2147483648));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2147483647    :       1111111111111111111111111111111</span><br><span class="line">-2147483648   :       10000000000000000000000000000000</span><br><span class="line">-1            :       11111111111111111111111111111111</span><br><span class="line">0             :       0</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10   :       1010</span><br><span class="line">1    :       1</span><br><span class="line">10&amp;1 :       0|0</span><br><span class="line">10&amp;-8:       1000|8</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">-10   :       11111111111111111111111111110110</span><br><span class="line">-2    :       11111111111111111111111111111110</span><br><span class="line">1     :       1</span><br><span class="line">-10&amp;-2:       11111111111111111111111111110110|-10</span><br><span class="line">-10&amp;1 :       0|0</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10&amp;-1:       1010|10</span><br><span class="line">100&amp;-1:       1100100|100</span><br><span class="line">2147483647&amp;-1:       1111111111111111111111111111111|2147483647</span><br><span class="line">-2147483648&amp;-1:       10000000000000000000000000000000|-2147483648</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10&amp;0:       0|0</span><br><span class="line">-10&amp;0:       0|0</span><br><span class="line">2147483647&amp;0:       0|0</span><br><span class="line">-2147483648&amp;0:       0|0</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">2147483647&amp;-2147483648:       0|0</span><br><span class="line">-10&amp;2147483647 :       1111111111111111111111111110110|2147483638</span><br><span class="line">-123&amp;2147483647 :       1111111111111111111111110000101|2147483525</span><br><span class="line">10&amp;2147483647 :       1010|10</span><br><span class="line">-10&amp;-2147483648 :       10000000000000000000000000000000|-2147483648</span><br><span class="line">-123&amp;-2147483648 :       10000000000000000000000000000000|-2147483648</span><br><span class="line">10&amp;-2147483648 :       0|0</span><br></pre></td></tr></table></figure>
+<hr>
+<h6 id="位或"><a href="#位或" class="headerlink" title="位或 |"></a>位或 |</h6><p>位或，是将数字在二进制形式下，并且都补齐到32位，然后逐一对两个数的每一位进行比较，任一数字该位为1则得1，否则得0，最终得到的二进制为结果。<br><strong>注意以下结果与&amp;的不同</strong></p>
+<ol>
+<li>所有数字与0位或运算都得到数字本身；</li>
+<li>所有数字与-1位或运算都得到-1；</li>
+<li>所有正数与2^31-1位或运算都得到2^31-1，与-2^31位或都得到-2^31+数字；</li>
+<li>所有负数与2^31-1位或运算都得到-1，与-2^31位或都得到数字本身；</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;2147483647    :       &quot; + Integer.toBinaryString(2147483647));</span><br><span class="line">		System.out.println(&quot;-2147483648   :       &quot; + Integer.toBinaryString(-2147483648));</span><br><span class="line">		System.out.println(&quot;-1            :       &quot; + Integer.toBinaryString(-1));</span><br><span class="line">		System.out.println(&quot;0             :       &quot; + Integer.toBinaryString(0));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		</span><br><span class="line">		System.out.println(&quot;10   :       &quot; + Integer.toBinaryString(10));</span><br><span class="line">		System.out.println(&quot;1    :       &quot; + Integer.toBinaryString(1));</span><br><span class="line">		System.out.println(&quot;10|1 :       &quot; + Integer.toBinaryString(10|1) + &quot;|&quot; + (10|1));</span><br><span class="line">		System.out.println(&quot;10|-8:       &quot; + Integer.toBinaryString(10|-8) + &quot;|&quot; + (10|-8));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;-10   :       &quot; + Integer.toBinaryString(-10));</span><br><span class="line">		System.out.println(&quot;-2    :       &quot; + Integer.toBinaryString(-2));</span><br><span class="line">		System.out.println(&quot;1     :       &quot; + Integer.toBinaryString(1));</span><br><span class="line">		System.out.println(&quot;-10|-2:       &quot; + Integer.toBinaryString(-10|-2) + &quot;|&quot; + (-10|-2));</span><br><span class="line">		System.out.println(&quot;-10|1 :       &quot; + Integer.toBinaryString(-10|1) + &quot;|&quot; + (-10|1));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;10|-1:       &quot; + Integer.toBinaryString(10|-1) + &quot;|&quot; + (10|-1));</span><br><span class="line">		System.out.println(&quot;100|-1:       &quot; + Integer.toBinaryString(100|-1) + &quot;|&quot; + (100|-1));</span><br><span class="line">		System.out.println(&quot;2147483647|-1:       &quot; + Integer.toBinaryString(2147483647|-1) + &quot;|&quot; + (2147483647|-1));</span><br><span class="line">		System.out.println(&quot;-2147483648|-1:       &quot; + Integer.toBinaryString(-2147483648|-1) + &quot;|&quot; + (-2147483648|-1));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;10|0:       &quot; + Integer.toBinaryString(10|0) + &quot;|&quot; + (10|0));</span><br><span class="line">		System.out.println(&quot;-10|0:       &quot; + Integer.toBinaryString(-10|0) + &quot;|&quot; + (-10|0));</span><br><span class="line">		System.out.println(&quot;2147483647|0:       &quot; + Integer.toBinaryString(2147483647|0) + &quot;|&quot; + (2147483647|0));</span><br><span class="line">		System.out.println(&quot;-2147483648|0:       &quot; + Integer.toBinaryString(-2147483648|0) + &quot;|&quot; + (-2147483648|0));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;2147483647|-2147483648:       &quot; + Integer.toBinaryString(2147483647|-2147483648) + &quot;|&quot; + (2147483647|-2147483648));</span><br><span class="line">		System.out.println(&quot;-10|2147483647 :       &quot; + Integer.toBinaryString(-10|2147483647) + &quot;|&quot; + (-10|2147483647));</span><br><span class="line">		System.out.println(&quot;-123|2147483647 :       &quot; + Integer.toBinaryString(-123|2147483647) + &quot;|&quot; + (-123|2147483647));</span><br><span class="line">		System.out.println(&quot;10|2147483647 :       &quot; + Integer.toBinaryString(10|2147483647) + &quot;|&quot; + (10|2147483647));</span><br><span class="line">		System.out.println(&quot;-10|-2147483648 :       &quot; + Integer.toBinaryString(-10|-2147483648) + &quot;|&quot; + (-10|-2147483648));</span><br><span class="line">		System.out.println(&quot;-123|-2147483648 :       &quot; + Integer.toBinaryString(-123|-2147483648) + &quot;|&quot; + (-123|-2147483648));</span><br><span class="line">		System.out.println(&quot;10|-2147483648 :       &quot; + Integer.toBinaryString(10|-2147483648) + &quot;|&quot; + (10|-2147483648));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2147483647    :       1111111111111111111111111111111</span><br><span class="line">-2147483648   :       10000000000000000000000000000000</span><br><span class="line">-1            :       11111111111111111111111111111111</span><br><span class="line">0             :       0</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10   :       1010</span><br><span class="line">1    :       1</span><br><span class="line">10|1 :       1011|11</span><br><span class="line">10|-8:       11111111111111111111111111111010|-6</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">-10   :       11111111111111111111111111110110</span><br><span class="line">-2    :       11111111111111111111111111111110</span><br><span class="line">1     :       1</span><br><span class="line">-10|-2:       11111111111111111111111111111110|-2</span><br><span class="line">-10|1 :       11111111111111111111111111110111|-9</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10|-1:       11111111111111111111111111111111|-1</span><br><span class="line">100|-1:       11111111111111111111111111111111|-1</span><br><span class="line">2147483647|-1:       11111111111111111111111111111111|-1</span><br><span class="line">-2147483648|-1:       11111111111111111111111111111111|-1</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10|0:       1010|10</span><br><span class="line">-10|0:       11111111111111111111111111110110|-10</span><br><span class="line">2147483647|0:       1111111111111111111111111111111|2147483647</span><br><span class="line">-2147483648|0:       10000000000000000000000000000000|-2147483648</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">2147483647|-2147483648:       11111111111111111111111111111111|-1</span><br><span class="line">-10|2147483647 :       11111111111111111111111111111111|-1</span><br><span class="line">-123|2147483647 :       11111111111111111111111111111111|-1</span><br><span class="line">10|2147483647 :       1111111111111111111111111111111|2147483647</span><br><span class="line">-10|-2147483648 :       11111111111111111111111111110110|-10</span><br><span class="line">-123|-2147483648 :       11111111111111111111111110000101|-123</span><br><span class="line">10|-2147483648 :       10000000000000000000000000001010|-2147483638</span><br></pre></td></tr></table></figure>
+<hr>
+<h6 id="位异或"><a href="#位异或" class="headerlink" title="位异或 ^"></a>位异或 ^</h6><p>位异或，是将数字在二进制形式下，并且都补齐到32位，然后逐一对两个数的每一位进行比较，两个数字该位有一个为1另一个为0则得1，否则得0，最终得到的二进制为结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;2147483647    :       &quot; + Integer.toBinaryString(2147483647));</span><br><span class="line">		System.out.println(&quot;-2147483648   :       &quot; + Integer.toBinaryString(-2147483648));</span><br><span class="line">		System.out.println(&quot;-1            :       &quot; + Integer.toBinaryString(-1));</span><br><span class="line">		System.out.println(&quot;0             :       &quot; + Integer.toBinaryString(0));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		</span><br><span class="line">		System.out.println(&quot;10   :       &quot; + Integer.toBinaryString(10));</span><br><span class="line">		System.out.println(&quot;1    :       &quot; + Integer.toBinaryString(1));</span><br><span class="line">		System.out.println(&quot;10^1 :       &quot; + Integer.toBinaryString(10^1) + &quot;|&quot; + (10^1));</span><br><span class="line">		System.out.println(&quot;10^-8:       &quot; + Integer.toBinaryString(10^-8) + &quot;|&quot; + (10^-8));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;-10   :       &quot; + Integer.toBinaryString(-10));</span><br><span class="line">		System.out.println(&quot;-2    :       &quot; + Integer.toBinaryString(-2));</span><br><span class="line">		System.out.println(&quot;1     :       &quot; + Integer.toBinaryString(1));</span><br><span class="line">		System.out.println(&quot;-10^-2:       &quot; + Integer.toBinaryString(-10^-2) + &quot;|&quot; + (-10^-2));</span><br><span class="line">		System.out.println(&quot;-10^1 :       &quot; + Integer.toBinaryString(-10^1) + &quot;|&quot; + (-10^1));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;10^-1:       &quot; + Integer.toBinaryString(10^-1) + &quot;|&quot; + (10^-1));</span><br><span class="line">		System.out.println(&quot;100^-1:       &quot; + Integer.toBinaryString(100^-1) + &quot;|&quot; + (100^-1));</span><br><span class="line">		System.out.println(&quot;2147483647^-1:       &quot; + Integer.toBinaryString(2147483647^-1) + &quot;|&quot; + (2147483647^-1));</span><br><span class="line">		System.out.println(&quot;-2147483648^-1:       &quot; + Integer.toBinaryString(-2147483648^-1) + &quot;|&quot; + (-2147483648^-1));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;10^0:       &quot; + Integer.toBinaryString(10^0) + &quot;|&quot; + (10^0));</span><br><span class="line">		System.out.println(&quot;-10^0:       &quot; + Integer.toBinaryString(-10^0) + &quot;|&quot; + (-10^0));</span><br><span class="line">		System.out.println(&quot;2147483647^0:       &quot; + Integer.toBinaryString(2147483647^0) + &quot;|&quot; + (2147483647^0));</span><br><span class="line">		System.out.println(&quot;-2147483648^0:       &quot; + Integer.toBinaryString(-2147483648^0) + &quot;|&quot; + (-2147483648^0));</span><br><span class="line">		System.out.println(&quot;---------------------------------------------------------&quot;);</span><br><span class="line">		System.out.println(&quot;2147483647^-2147483648:       &quot; + Integer.toBinaryString(2147483647^-2147483648) + &quot;|&quot; + (2147483647^-2147483648));</span><br><span class="line">		System.out.println(&quot;-10^2147483647 :       &quot; + Integer.toBinaryString(-10^2147483647) + &quot;|&quot; + (-10^2147483647));</span><br><span class="line">		System.out.println(&quot;-123^2147483647 :       &quot; + Integer.toBinaryString(-123^2147483647) + &quot;|&quot; + (-123^2147483647));</span><br><span class="line">		System.out.println(&quot;10^2147483647 :       &quot; + Integer.toBinaryString(10^2147483647) + &quot;|&quot; + (10^2147483647));</span><br><span class="line">		System.out.println(&quot;-10^-2147483648 :       &quot; + Integer.toBinaryString(-10^-2147483648) + &quot;|&quot; + (-10^-2147483648));</span><br><span class="line">		System.out.println(&quot;-123^-2147483648 :       &quot; + Integer.toBinaryString(-123^-2147483648) + &quot;|&quot; + (-123^-2147483648));</span><br><span class="line">		System.out.println(&quot;10^-2147483648 :       &quot; + Integer.toBinaryString(10^-2147483648) + &quot;|&quot; + (10^-2147483648));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2147483647    :       1111111111111111111111111111111</span><br><span class="line">-2147483648   :       10000000000000000000000000000000</span><br><span class="line">-1            :       11111111111111111111111111111111</span><br><span class="line">0             :       0</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10   :       1010</span><br><span class="line">1    :       1</span><br><span class="line">10^1 :       1011|11</span><br><span class="line">10^-8:       11111111111111111111111111110010|-14</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">-10   :       11111111111111111111111111110110</span><br><span class="line">-2    :       11111111111111111111111111111110</span><br><span class="line">1     :       1</span><br><span class="line">-10^-2:       1000|8</span><br><span class="line">-10^1 :       11111111111111111111111111110111|-9</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10^-1:       11111111111111111111111111110101|-11</span><br><span class="line">100^-1:       11111111111111111111111110011011|-101</span><br><span class="line">2147483647^-1:       10000000000000000000000000000000|-2147483648</span><br><span class="line">-2147483648^-1:       1111111111111111111111111111111|2147483647</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">10^0:       1010|10</span><br><span class="line">-10^0:       11111111111111111111111111110110|-10</span><br><span class="line">2147483647^0:       1111111111111111111111111111111|2147483647</span><br><span class="line">-2147483648^0:       10000000000000000000000000000000|-2147483648</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">2147483647^-2147483648:       11111111111111111111111111111111|-1</span><br><span class="line">-10^2147483647 :       10000000000000000000000000001001|-2147483639</span><br><span class="line">-123^2147483647 :       10000000000000000000000001111010|-2147483526</span><br><span class="line">10^2147483647 :       1111111111111111111111111110101|2147483637</span><br><span class="line">-10^-2147483648 :       1111111111111111111111111110110|2147483638</span><br><span class="line">-123^-2147483648 :       1111111111111111111111110000101|2147483525</span><br><span class="line">10^-2147483648 :       10000000000000000000000000001010|-2147483638</span><br></pre></td></tr></table></figure>
+<hr>
+<h6 id="位非"><a href="#位非" class="headerlink" title="位非 ~"></a>位非 ~</h6><p>位非是单目运算符，是将数字在二进制形式下，并且都补齐到32位，然后逐一对每一位进行运算，1则的0，0则得1，最终得到的二进制为结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;2147483647    :       &quot; + Integer.toBinaryString(2147483647));</span><br><span class="line">		System.out.println(&quot;~2147483647   :       &quot; + Integer.toBinaryString(~2147483647) + &quot;|&quot; + ~2147483647);</span><br><span class="line">		System.out.println(&quot;-2147483648   :       &quot; + Integer.toBinaryString(-2147483648));</span><br><span class="line">		System.out.println(&quot;~-2147483648  :       &quot; + Integer.toBinaryString(~-2147483648) + &quot;|&quot; + ~-2147483648);</span><br><span class="line">		System.out.println(&quot;-1            :       &quot; + Integer.toBinaryString(-1));</span><br><span class="line">		System.out.println(&quot;~-1           :       &quot; + Integer.toBinaryString(~-1) + &quot;|&quot; + ~-1);</span><br><span class="line">		System.out.println(&quot;0             :       &quot; + Integer.toBinaryString(0));</span><br><span class="line">		System.out.println(&quot;~0            :       &quot; + Integer.toBinaryString(~0) + &quot;|&quot; + ~0);</span><br><span class="line">		System.out.println(&quot;10            :       &quot; + Integer.toBinaryString(10));</span><br><span class="line">		System.out.println(&quot;~10           :       &quot; + Integer.toBinaryString(~10) + &quot;|&quot; + ~10);</span><br><span class="line">		System.out.println(&quot;-10           :       &quot; + Integer.toBinaryString(-10));</span><br><span class="line">		System.out.println(&quot;~-10          :       &quot; + Integer.toBinaryString(~-10) + &quot;|&quot; + ~-10);</span><br><span class="line">		System.out.println(&quot;-100          :       &quot; + Integer.toBinaryString(-100) );</span><br><span class="line">		System.out.println(&quot;~-100         :       &quot; + Integer.toBinaryString(~-100) + &quot;|&quot; + ~-100);</span><br><span class="line">		System.out.println(&quot;100           :       &quot; + Integer.toBinaryString(100) );</span><br><span class="line">		System.out.println(&quot;~100          :       &quot; + Integer.toBinaryString(~100) + &quot;|&quot; + ~100);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2147483647    :       1111111111111111111111111111111</span><br><span class="line">~2147483647   :       10000000000000000000000000000000|-2147483648</span><br><span class="line">-2147483648   :       10000000000000000000000000000000</span><br><span class="line">~-2147483648  :       1111111111111111111111111111111|2147483647</span><br><span class="line">-1            :       11111111111111111111111111111111</span><br><span class="line">~-1           :       0|0</span><br><span class="line">0             :       0</span><br><span class="line">~0            :       11111111111111111111111111111111|-1</span><br><span class="line">10            :       1010</span><br><span class="line">~10           :       11111111111111111111111111110101|-11</span><br><span class="line">-10           :       11111111111111111111111111110110</span><br><span class="line">~-10          :       1001|9</span><br><span class="line">-100          :       11111111111111111111111110011100</span><br><span class="line">~-100         :       1100011|99</span><br><span class="line">100           :       1100100</span><br><span class="line">~100          :       11111111111111111111111110011011|-101</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="自学试验，如有错误，欢迎拍砖。"><a href="#自学试验，如有错误，欢迎拍砖。" class="headerlink" title="自学试验，如有错误，欢迎拍砖。"></a>自学试验，如有错误，欢迎拍砖。</h2>]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JAVA</category>
+        <category>基础</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>位运算符</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>logic-1</title>
+    <url>/2017/12/20/logic-1/</url>
+    <content><![CDATA[<h2 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h2><ul>
+<li>A(前)=&gt;B(后) 前真后必真，后假前必假，前假后不定，后真前不定</li>
+<li>矛盾关系 1-&gt;1’ 2-&gt;3’ 2’-&gt;3</li>
+</ul>
+<hr>
+<ul>
+<li>只要A，就B = 如果A，那么B = 如果A，则B  = A=&gt;B</li>
+<li>只有A，才能B = B=&gt;A</li>
+<li>除非A，否则B = 或者A，或者B = A+B</li>
+<li>等价：A=&gt;B = Bbar=&gt;Abar = Abar+B</li>
+<li>矛盾：A=&gt;B的矛盾 A·Bbar 即 A但（并且）Bbar</li>
+<li>不可能 A·Bbar 就是A·Bbar的矛盾，即 不可能A·Bbar === A=&gt;B  <h6 id="双箭头可以自由逆否，不能自由调向"><a href="#双箭头可以自由逆否，不能自由调向" class="headerlink" title="双箭头可以自由逆否，不能自由调向"></a>双箭头可以自由逆否，不能自由调向</h6></li>
+<li>所有的A都是B = A必然是B === A=&gt;B</li>
+<li>所有的A都不是B = A必然不是B === A=&gt;Bbar</li>
+<li>有的A是B = A可能是B ===  A -&gt; B </li>
+<li>有的A不是B = A可能不是B === A-&gt;Bbar<h6 id="反驳-一定为假-找矛盾-箭头级别换，指向边否定"><a href="#反驳-一定为假-找矛盾-箭头级别换，指向边否定" class="headerlink" title="反驳/一定为假 找矛盾 箭头级别换，指向边否定"></a>反驳/一定为假 找矛盾 箭头级别换，指向边否定</h6></li>
+<li>E -&gt; A 的矛盾 E =&gt; Abar</li>
+<li>A =&gt; Dbar 的矛盾 A -&gt; D <h6 id="思维链条，如果有单箭头，只能第一个是单箭头"><a href="#思维链条，如果有单箭头，只能第一个是单箭头" class="headerlink" title="思维链条，如果有单箭头，只能第一个是单箭头"></a>思维链条，如果有单箭头，只能第一个是单箭头</h6></li>
+</ul>
+<h6 id="已知题目全为真，求有哪些，用划线法，条件均化为加法式"><a href="#已知题目全为真，求有哪些，用划线法，条件均化为加法式" class="headerlink" title="已知题目全为真，求有哪些，用划线法，条件均化为加法式"></a>已知题目全为真，求有哪些，用划线法，条件均化为加法式</h6><a id="more"></a>
+<hr>
+<h2 id="论证逻辑"><a href="#论证逻辑" class="headerlink" title="论证逻辑"></a>论证逻辑</h2><h6 id="统计推理"><a href="#统计推理" class="headerlink" title="统计推理"></a>统计推理</h6><ul>
+<li>含义：论据小范围，个体，局部；论点：大范围，整体，一般</li>
+<li>命题点：代表性</li>
+<li>加强/支持/假设：指出具有代表性</li>
+<li>削弱/质疑/反驳：指出不具有代表性<h6 id="类比推理"><a href="#类比推理" class="headerlink" title="类比推理"></a>类比推理</h6></li>
+<li>含义：论据：A与B相似；A具有特征P；论点：B也具有特征P</li>
+<li>命题：相似性</li>
+<li>加强/支持/假设：指出具有相似性</li>
+<li>削弱/质疑/反驳：指出没有相似性<h6 id="因果推理"><a href="#因果推理" class="headerlink" title="因果推理"></a>因果推理</h6></li>
+<li>含义：A导致B，（A是B的原因）</li>
+<li>加强/支持/假设：实验组与对照组在其他方面基本相同</li>
+<li>削弱/质疑/反驳：因果倒置/存在他因/有因无果，无果有因<h6 id="措施目标型推理"><a href="#措施目标型推理" class="headerlink" title="措施目标型推理"></a>措施目标型推理</h6></li>
+<li>含义：为了达到某个目标，而采取某个措施/建议/方案</li>
+<li>加强/支持：措施能够实现目标</li>
+<li>假设：目前缺乏有效措施</li>
+<li>削弱/质疑/反驳：1.措施达不到目标；2.措施达不到目标；3.措施有困难<h6 id="竞争共存性推理"><a href="#竞争共存性推理" class="headerlink" title="竞争共存性推理"></a>竞争共存性推理</h6></li>
+<li>含义：A与B在功能作用上相同，A要取代B</li>
+<li>命题点：替代性与依赖性</li>
+<li>加强/支持/假设：A能够替代B</li>
+<li>削弱/质疑/反驳：A依赖于B</li>
+</ul>
+<hr>
+<ul>
+<li>比例题找比例</li>
+<li>加强：在一个更大的范围内找一个更小的百分比</li>
+<li>削弱：在一个更大的范围内找一个更大的百分比</li>
+</ul>
+<hr>
+<h6 id="对偶词"><a href="#对偶词" class="headerlink" title="对偶词"></a>对偶词</h6><ul>
+<li>所有 — 有的</li>
+<li>必然 — 可能</li>
+<li>并且 — 可能</li>
+<li>肯定 — 否定</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>math-1</title>
+    <url>/2017/12/19/math-1/</url>
+    <content><![CDATA[<h2 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h2><ol>
+<li>举例假设（有代表性，尽量全情况）</li>
+<li>质数方程，设2</li>
+<li>积固定，越极端和越大</li>
+<li>裂项求和，取首尾</li>
+<li>见比设K，分数比化整数（乘以分母的最小公倍数）</li>
+<li>同构即等（分数要注意分母不等于0）</li>
+<li>多比化连比</li>
+<li>单独不充分，不能明确联合情况，则认为联合正确</li>
+<li>y=|x-a| + |x-b|, y(min)=|a-b|</li>
+<li>|xy| + ab = a|x| + b|y|,围成图形的面积s=4ab</li>
+</ol>
+<a id="more"></a>
+<ol start="11">
+<li>a|x| + b|y| = c ,菱形，s=2c*c/ab</li>
+<li>条件充分性，举反例</li>
+<li>x^3 + y^3 = (x+y)(x^2 - xy + y^2)</li>
+<li>恒等式取特值</li>
+<li>两个条件一个复杂，一个简单，从简单的入手，简单的可行则复杂的也可以</li>
+<li>以下条件都推出：a = b = c</li>
+</ol>
+<ul>
+<li>a^2 + b^2 + c^2 = ab + ac + bc</li>
+<li>a,b,c等差且a^2,b^2,c^2等差</li>
+<li>3x^2 + [2b - 4(a+c)]x + (4ac-b^2)=0,有两个相等的实根</li>
+</ul>
+<ol start="17">
+<li>格点 方形：s = N + L/2 - 1 三角形： s = 2(N + L/2 - 1)</li>
+<li>凸行弧 s = Apai - B, 凹型图 s = B - Apai</li>
+<li>打包计数法：</li>
+</ol>
+<ul>
+<li>4-3 36 </li>
+<li>5-3 150 </li>
+<li>5-4 240 </li>
+<li>6-3 540 </li>
+<li>6-4 1560 </li>
+<li>6-5 1800</li>
+</ul>
+<ol start="20">
+<li>环形染色： m色n区  (m-1)^n + (-1)^n*(m-1)</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title>pie-chart</title>
+    <url>/2017/12/15/pie-chart/</url>
+    <content><![CDATA[<h6 id="The-pie-chart-above-distinctly-crystalizes-the-diffrent-travel-modes-for-inhabitants-in-a-certain-city-In-the-light-of-the-typical-statistics-of-the-chart-one-may-find-that-driving-private-cars-ranks-the-first-among-all-the-five-categories-accounting-for-as-high-as-50-Surprisingly-however-next-to-it-are-all-those-green-and-healthy-travel-behaviors-particularly-riding-bicycles-which-is-responsible-for-merely-1"><a href="#The-pie-chart-above-distinctly-crystalizes-the-diffrent-travel-modes-for-inhabitants-in-a-certain-city-In-the-light-of-the-typical-statistics-of-the-chart-one-may-find-that-driving-private-cars-ranks-the-first-among-all-the-five-categories-accounting-for-as-high-as-50-Surprisingly-however-next-to-it-are-all-those-green-and-healthy-travel-behaviors-particularly-riding-bicycles-which-is-responsible-for-merely-1" class="headerlink" title="The pie chart above distinctly crystalizes the diffrent travel modes for inhabitants in a certain city. In the light of the typical statistics of the chart, one may find that driving private cars ranks the first among all the five categories, accounting for as high as 50%. Surprisingly, however, next to it are all those green and healthy travel behaviors, particularly riding bicycles, which is responsible for merely 1%."></a>The pie chart above distinctly crystalizes the diffrent travel modes for inhabitants in a certain city. In the light of the typical statistics of the chart, one may find that driving private cars ranks the first among all the five categories, accounting for as high as 50%. Surprisingly, however, next to it are all those green and healthy travel behaviors, particularly riding bicycles, which is responsible for merely 1%.</h6><h6 id="The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-can-be-listed-as-follows-First-and-foremost-is-the-backward-public-transport-system-What’s-more-there-is-no-denying-that-the-scenario-at-the-moment-to-a-certain-degree-derives-from-the-public’s-poor-environment-consciousness-Finally-it-cannot-be-overemphasized-that-the-convenience-flexibility-and-comfort-peculiar-to-private-cars-also-contributes-a-lot-to-the-present-condition"><a href="#The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-can-be-listed-as-follows-First-and-foremost-is-the-backward-public-transport-system-What’s-more-there-is-no-denying-that-the-scenario-at-the-moment-to-a-certain-degree-derives-from-the-public’s-poor-environment-consciousness-Finally-it-cannot-be-overemphasized-that-the-convenience-flexibility-and-comfort-peculiar-to-private-cars-also-contributes-a-lot-to-the-present-condition" class="headerlink" title="The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, can be listed as follows. First and foremost is the backward public transport system. What’s more, there is no denying that the scenario at the moment, to a certain degree, derives from the public’s poor environment consciousness. Finally, it cannot be overemphasized that the convenience, flexibility and comfort peculiar to private cars also contributes a lot to the present condition."></a>The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, can be listed as follows. First and foremost is the backward public transport system. What’s more, there is no denying that the scenario at the moment, to a certain degree, derives from the public’s poor environment consciousness. Finally, it cannot be overemphasized that the convenience, flexibility and comfort peculiar to private cars also contributes a lot to the present condition.</h6><h6 id="Given-the-arguments-so-far-drastic-measures-must-be-taken-as-soon-as-possible-to-reverse-or-at-least-alleviate-the-deterioration-And-I-firmly-believe-that-our-combined-efforts-well-surely-translate-into-a-brighter-futuer"><a href="#Given-the-arguments-so-far-drastic-measures-must-be-taken-as-soon-as-possible-to-reverse-or-at-least-alleviate-the-deterioration-And-I-firmly-believe-that-our-combined-efforts-well-surely-translate-into-a-brighter-futuer" class="headerlink" title="Given the arguments so far, drastic measures must be taken as soon as possible to reverse or at least alleviate the deterioration. And I firmly believe that our combined efforts well surely translate into a brighter futuer."></a>Given the arguments so far, drastic measures must be taken as soon as possible to reverse or at least alleviate the deterioration. And I firmly believe that our combined efforts well surely translate into a brighter futuer.</h6>]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+        <tag>chart</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tourism-industry</title>
+    <url>/2017/12/15/tourism-industry/</url>
+    <content><![CDATA[<h6 id="The-table-above-distinctly-crystalizes-the-vast-changes-that-have-arisen-in-respect-of-tourism-industry-in-a-certain-city-In-the-light-of-the-typical-statistics-of-the-table-one-may-find-that-this-industry-has-been-on-a-constant-growth-all-these-years-In-2010-the-revenue-of-this-industry-for-example-was-at-the-bottom-merely-380-million-RMB-surprisingly-it-soared-to-1-5-billion-just-six-years-latter-In-the-meantime-however-tourists-complaints-have-witnessed-a-startling-increase-as-well-reaching-3-600-times-in-2016"><a href="#The-table-above-distinctly-crystalizes-the-vast-changes-that-have-arisen-in-respect-of-tourism-industry-in-a-certain-city-In-the-light-of-the-typical-statistics-of-the-table-one-may-find-that-this-industry-has-been-on-a-constant-growth-all-these-years-In-2010-the-revenue-of-this-industry-for-example-was-at-the-bottom-merely-380-million-RMB-surprisingly-it-soared-to-1-5-billion-just-six-years-latter-In-the-meantime-however-tourists-complaints-have-witnessed-a-startling-increase-as-well-reaching-3-600-times-in-2016" class="headerlink" title="The table above distinctly crystalizes the vast changes that have arisen in respect of tourism industry in a certain city. In the light of the typical statistics of the table, one may find that this industry has been on a constant growth all these years. In 2010, the revenue of this industry, for example, was at the bottom, merely 380 million RMB; surprisingly, it soared to 1.5 billion just six years latter. In the meantime, however, tourists complaints have witnessed a startling increase as well, reaching 3,600 times in 2016."></a>The table above distinctly crystalizes the vast changes that have arisen in respect of tourism industry in a certain city. In the light of the typical statistics of the table, one may find that this industry has been on a constant growth all these years. In 2010, the revenue of this industry, for example, was at the bottom, merely 380 million RMB; surprisingly, it soared to 1.5 billion just six years latter. In the meantime, however, tourists complaints have witnessed a startling increase as well, reaching 3,600 times in 2016.</h6><h6 id="The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-it-can-be-listed-as-follows-First-and-foremost-is-most-scenic-spots’-backward-facilities-and-service-system-What’s-more-there-is-no-denying-that-the-scenario-at-the-moment-to-a-certain-degree-derives-from-the-inadequacy-of-the-relevant-departments’-regulation-and-supervision-Finally-it-cannot-be-overemphasized-that-tourist-agencies’-poor-service-also-contributes-a-lot-to-the-present-condition"><a href="#The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-it-can-be-listed-as-follows-First-and-foremost-is-most-scenic-spots’-backward-facilities-and-service-system-What’s-more-there-is-no-denying-that-the-scenario-at-the-moment-to-a-certain-degree-derives-from-the-inadequacy-of-the-relevant-departments’-regulation-and-supervision-Finally-it-cannot-be-overemphasized-that-tourist-agencies’-poor-service-also-contributes-a-lot-to-the-present-condition" class="headerlink" title="The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, it can be listed as follows. First and foremost is most scenic spots’ backward facilities and service system. What’s more, there is no denying that the scenario at the moment, to a certain degree, derives from the inadequacy of the relevant departments’ regulation and supervision. Finally, it cannot be overemphasized that tourist agencies’ poor service also contributes a lot to the present condition."></a>The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, it can be listed as follows. First and foremost is most scenic spots’ backward facilities and service system. What’s more, there is no denying that the scenario at the moment, to a certain degree, derives from the inadequacy of the relevant departments’ regulation and supervision. Finally, it cannot be overemphasized that tourist agencies’ poor service also contributes a lot to the present condition.</h6><h6 id="Given-the-arguments-so-far-drastic-measures-must-be-taken-as-soon-as-possible-to-reverse-or-at-least-alleviate-the-deterioration-And-I-firmly-believe-that-our-conbined-efforts-well-surely-translate-into-a-brighter-future"><a href="#Given-the-arguments-so-far-drastic-measures-must-be-taken-as-soon-as-possible-to-reverse-or-at-least-alleviate-the-deterioration-And-I-firmly-believe-that-our-conbined-efforts-well-surely-translate-into-a-brighter-future" class="headerlink" title="Given the arguments so far, drastic measures must be taken as soon as possible to reverse or at least alleviate the deterioration. And I firmly believe that our conbined efforts well surely translate into a brighter future."></a>Given the arguments so far, drastic measures must be taken as soon as possible to reverse or at least alleviate the deterioration. And I firmly believe that our conbined efforts well surely translate into a brighter future.</h6>]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>travel-frequency</title>
+    <url>/2017/12/15/travel-frequency/</url>
+    <content><![CDATA[<h6 id="The-line-chart-above-distinctly-crystalizes-the-vast-changes-that-have-arisen-in-repect-of-the-Chinese-people’s-travel-frequency-In-the-light-of-typical-statistics-of-the-chart-one-may-find-that-the-average-number-of-leisure-trips-for-both-urban-and-rural-residents-has-been-on-a-constant-rise-all-these-years-In-2001-the-number-of-trips-for-city-dwellers-for-example-was-merely-1-8-times-surprisingly-however-it-soared-to-fourteen-years-later"><a href="#The-line-chart-above-distinctly-crystalizes-the-vast-changes-that-have-arisen-in-repect-of-the-Chinese-people’s-travel-frequency-In-the-light-of-typical-statistics-of-the-chart-one-may-find-that-the-average-number-of-leisure-trips-for-both-urban-and-rural-residents-has-been-on-a-constant-rise-all-these-years-In-2001-the-number-of-trips-for-city-dwellers-for-example-was-merely-1-8-times-surprisingly-however-it-soared-to-fourteen-years-later" class="headerlink" title="The line chart above distinctly crystalizes the vast changes that have arisen in repect of the Chinese people’s travel frequency. In the light of typical statistics of the chart, one may find that the average number of leisure trips for both urban and rural residents has been on a constant rise all these years. In 2001, the number of trips for city dwellers, for example was merely 1.8 times; surprisingly, however, it soared to fourteen years later."></a>The line chart above distinctly crystalizes the vast changes that have arisen in repect of the Chinese people’s travel frequency. In the light of typical statistics of the chart, one may find that the average number of leisure trips for both urban and rural residents has been on a constant rise all these years. In 2001, the number of trips for city dwellers, for example was merely 1.8 times; surprisingly, however, it soared to fourteen years later.</h6><h6 id="The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-can-be-listed-as-follows-First-and-foremost-is-the-considerable-improvement-of-the-Chinese-quality-of-life-What’s-more-there-is-no-denying-that-derives-from-people’s-desire-to-relieve-stress-Base-unpon-a-latest-survey-conducted-by-the-Chinese-Academy-of-Social-Sciences-around-86-of-respondents-claim-that-touring-have-evolved-into-an-indispensable-part-of-their-life-Finally-it-cannot-be-overemphasized-that-the-substantial-enhancement-of-the-transport-infrastructure-also-contributes-a-lot-to-the-present-condition"><a href="#The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-can-be-listed-as-follows-First-and-foremost-is-the-considerable-improvement-of-the-Chinese-quality-of-life-What’s-more-there-is-no-denying-that-derives-from-people’s-desire-to-relieve-stress-Base-unpon-a-latest-survey-conducted-by-the-Chinese-Academy-of-Social-Sciences-around-86-of-respondents-claim-that-touring-have-evolved-into-an-indispensable-part-of-their-life-Finally-it-cannot-be-overemphasized-that-the-substantial-enhancement-of-the-transport-infrastructure-also-contributes-a-lot-to-the-present-condition" class="headerlink" title="The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, can be listed as follows. First and foremost is the considerable improvement of the Chinese quality of life. What’s more, there is no denying that derives from people’s desire to relieve stress. Base unpon a latest survey conducted by the Chinese Academy of Social Sciences, around 86% of respondents claim that touring  have evolved into an indispensable part of their life. Finally, it cannot be overemphasized that the substantial enhancement of the transport infrastructure also contributes a lot to the present condition."></a>The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, can be listed as follows. First and foremost is the considerable improvement of the Chinese quality of life. What’s more, there is no denying that derives from people’s desire to relieve stress. Base unpon a latest survey conducted by the Chinese Academy of Social Sciences, around 86% of respondents claim that touring  have evolved into an indispensable part of their life. Finally, it cannot be overemphasized that the substantial enhancement of the transport infrastructure also contributes a lot to the present condition.</h6><h6 id="Given-the-arguments-so-far-it’s-nothing-but-understandable-to-see-such-an-emerging-trend-in-the-current-ever-changing-hi-tech-era"><a href="#Given-the-arguments-so-far-it’s-nothing-but-understandable-to-see-such-an-emerging-trend-in-the-current-ever-changing-hi-tech-era" class="headerlink" title="Given the arguments so far, it’s nothing but understandable to see such an emerging trend in the current ever-changing hi-tech era."></a>Given the arguments so far, it’s nothing but understandable to see such an emerging trend in the current ever-changing hi-tech era.</h6>]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>life-expectancy</title>
+    <url>/2017/12/14/life-expectancy/</url>
+    <content><![CDATA[<p>The table above distinctly crystalizes the vast changes that have arisen in respect of the average life expectancy in recent decades. In the light of the typical statistics of the table, one may find that the life expectancy in China has been on a constant rise all these years. In 1949, the expected life span was at the bottom, merely 35; surprisingly, however, it soared to 75 in 2015.</p>
+<p>The driving influences behind the picture might vary form case to case. Yet the universal ones, for my part, can be listed as follows. First and foremost is the considerable improvement of the Chinese people’s quality of life. What’s more, there is no denying that the scenario at the moment, to a certain degree, derives from the enhancement of the public’s health consciousness. Based upon a latest survey conducted by the Chinese Academy of Social Sciences, around 86% of the respondents claim that regular physical exminations have be evolved into an indispensable part of their life. Finally, it cannot be overemphasized that the perfection of the health service system also contributes a lot to the present condition.</p>
+<p>Given the arguments so far, it’s nothing but understandable to see such an emering trend in the current society of prosperity and effluence.</p>
+]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+        <tag>chart</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bar-chart</title>
+    <url>/2017/12/13/bar-chart/</url>
+    <content><![CDATA[<h5 id="The-bar-chart-above-distinctly-crystalizes-the-vast-changes-that-have-arisen-in-respect-of-the-transaction-size-of-online-shopping-of-China-In-the-light-of-the-typical-statistics-of-the-chart-one-may-find-that-the-volume-of-transaction-has-been-on-a-constant-rise-all-these-year-In-2011-the-trading-size-was-at-the-bottom-merely-860-billion-RMB-surprisingly-however-it-soared-to-3-800-billion-4-years-later"><a href="#The-bar-chart-above-distinctly-crystalizes-the-vast-changes-that-have-arisen-in-respect-of-the-transaction-size-of-online-shopping-of-China-In-the-light-of-the-typical-statistics-of-the-chart-one-may-find-that-the-volume-of-transaction-has-been-on-a-constant-rise-all-these-year-In-2011-the-trading-size-was-at-the-bottom-merely-860-billion-RMB-surprisingly-however-it-soared-to-3-800-billion-4-years-later" class="headerlink" title="The bar chart above distinctly crystalizes the vast changes that have arisen in respect of the transaction size of online shopping of China. In the light of the typical statistics of the chart, one may find that the volume of transaction has been on a constant rise all these year. In 2011, the trading size was at the bottom, merely 860 billion RMB; surprisingly, however, it soared to 3,800 billion 4 years later."></a>The bar chart above distinctly crystalizes the vast changes that have arisen in respect of the transaction size of online shopping of China. In the light of the typical statistics of the chart, one may find that the volume of transaction has been on a constant rise all these year. In 2011, the trading size was at the bottom, merely 860 billion RMB; surprisingly, however, it soared to 3,800 billion 4 years later.</h5><h5 id="The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-can-be-listed-as-follows-First-and-foremost-is-the-rapid-popularization-of-the-Internet-What’s-more-there-is-no-denying-that-the-senario-at-the-moment-to-a-certain-degree-derives-from-the-convenience-flexibility-and-comfort-peculiar-to-online-shopping-Finally-it-cannnot-be-overemphasized-that-the-lower-prices-of-the-items-in-the-online-stores-also-contributes-a-lot-to-the-present-condition-Base-upon-a-lasted-survey-conducted-by-the-Chinese-Academy-of-Social-Sciences-around-68-of-the-respondents-choose-to-surf-online-shops-for-the-favorable-price"><a href="#The-driving-influences-behind-the-picture-might-vary-from-case-to-case-Yet-the-universal-ones-for-my-part-can-be-listed-as-follows-First-and-foremost-is-the-rapid-popularization-of-the-Internet-What’s-more-there-is-no-denying-that-the-senario-at-the-moment-to-a-certain-degree-derives-from-the-convenience-flexibility-and-comfort-peculiar-to-online-shopping-Finally-it-cannnot-be-overemphasized-that-the-lower-prices-of-the-items-in-the-online-stores-also-contributes-a-lot-to-the-present-condition-Base-upon-a-lasted-survey-conducted-by-the-Chinese-Academy-of-Social-Sciences-around-68-of-the-respondents-choose-to-surf-online-shops-for-the-favorable-price" class="headerlink" title="The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, can be listed as follows. First and foremost is the rapid popularization of the Internet. What’s more, there is no denying that the senario at the moment, to a certain degree, derives from the convenience, flexibility and comfort peculiar to online shopping. Finally, it cannnot be overemphasized that the lower prices of the items in the online stores also contributes a lot to the present condition. Base upon a lasted survey conducted by the Chinese Academy of Social Sciences, around 68% of the respondents choose to surf online shops for the favorable price."></a>The driving influences behind the picture might vary from case to case. Yet the universal ones, for my part, can be listed as follows. First and foremost is the rapid popularization of the Internet. What’s more, there is no denying that the senario at the moment, to a certain degree, derives from the convenience, flexibility and comfort peculiar to online shopping. Finally, it cannnot be overemphasized that the lower prices of the items in the online stores also contributes a lot to the present condition. Base upon a lasted survey conducted by the Chinese Academy of Social Sciences, around 68% of the respondents choose to surf online shops for the favorable price.</h5><h5 id="Given-the-arguments-so-far-it’s-nothing-but-understandable-to-see-such-an-emerging-trend-in-the-current-ever-changing-hi-tech-era"><a href="#Given-the-arguments-so-far-it’s-nothing-but-understandable-to-see-such-an-emerging-trend-in-the-current-ever-changing-hi-tech-era" class="headerlink" title="Given the arguments so far, it’s nothing but understandable to see such an emerging trend in the current ever-changing hi-tech era."></a>Given the arguments so far, it’s nothing but understandable to see such an emerging trend in the current ever-changing hi-tech era.</h5><p><img src="/2017/12/13/bar-chart/bar-chart.png" alt="bar-chart"></p>
+]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+        <tag>chart</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>invite-email</title>
+    <url>/2017/12/12/invite-email/</url>
+    <content><![CDATA[<p>Dear Sir,<br>    As a number of the Students’ Union of the English Department, I am writing the email on its behalf to cordially invite you to deliver a speech for the upcoming symposium on college English study.<br>    The symposium is to be held in our university main hall on Jan 20th. It will begain at 9 a.m. and last roughly three hours. There will be six experts present, each to deliver a speech within 20 minutes on how to improve college students’ English skills. Following the presentation of the lectures will be a question-and-answer period for the audience.<br>    Thanks a lot for your due attention to the email. Looing forward to your reply at you earlist convenience.</p>
+<pre><code>Yours sincerely,
+        Li Ming
+</code></pre><p><img src="/2017/12/12/invite-email/invite-email.jpg" alt="a email of invitation"></p>
+]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>recommend-email</title>
+    <url>/2017/12/11/recommend-email/</url>
+    <content><![CDATA[<p>Dear judy,<br>    Hope this email finds you and your family well. The letter I am writing is meant to recommend for your sightseeing in China a tourist resort, Beijing, the capital of six dynasties in history.<br>    This ancient city is well worth visiting for its following virtues. The reasons for the recommendation are as follows. The first point I’d like to highlight is that Beijing is the political, economic and cultural center of our nation, namely, the epitome of the contemporary China. In addition, it must be pointed out that the historic city enjoys a long and splendid civilization, which, I’m convinced, is quite to your taste. Last but not the least, the fact cannot be ignored that through travelling this famous city, you can learn more about China’s glorious past and latest development, thus enhancing your acquaintance of the mysterious land.<br>    Please never hesitate to contact me whenever you are in need of help. Wish you a pleasant stay in China.</p>
+<pre><code>Yours sincerely,
+       Li Ming
+</code></pre><p><img src="/2017/12/11/recommend-email/recommend-email.png" alt="a email of tourist resort recommondation"></p>
+]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>application-email</title>
+    <url>/2017/12/11/application-email/</url>
+    <content><![CDATA[<p>Dear Sir or Madam,<br>    I am a student to-be graduate from Sichuan University of China, majoring in English literature. This email is meant to express my strongest wish to pursue my postgraduate education at you prestigious university.<br>    The reasons for my applications are as follows. At the top of the list, to study at an elite university like yours is a long established goal for me. In the second, your graduate courses, as far as I am concerned, are the best globally and therefore quite to my taste. Last but not the least, I have to admit that I am stuck by the thick academic atmosphere on you campus.<br>    Thanks a lot for your due attention to the letter. I am looking forward to you reply at you earlist convenience.</p>
+<pre><code>Yours sincerely, 
+      Li  Ming   
+</code></pre><p><img src="/2017/12/11/application-email/application-email.jpg" alt="a email of abroad university application"></p>
+]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+        <tag>email</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jvm参数总结</title>
+    <url>/2017/12/07/jvm%E5%8F%82%E6%95%B0%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<ul>
+<li>jvm参数较多，不容易分清楚，稍作总结 *</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JAVA</category>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>jvm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>windows创建github_sshkey</title>
+    <url>/2017/12/07/windows%E5%88%9B%E5%BB%BAgithub-sshkey/</url>
+    <content><![CDATA[<ol>
+<li>打开git_bash</li>
+<li>ssh-keygen -t rsa -C “<a href="mailto:XXXX@gmail.com" target="_blank" rel="noopener">XXXX@gmail.com</a>“</li>
+<li>eval  “ssh-agent -s”<blockquote>
+<p>此时如果出现“Could not open a connection to your authentication agent.”，执行 ssh-agent bash，再次执行eval  “ssh-agent -s”</p>
+</blockquote>
+</li>
+<li>ssh-add ~/.ssh/id_rsa<blockquote>
+<p>出现<br>“Identityadded:/c/Users/xx/.ssh/id_rsa(/c/Users/xx/.ssh/id_rsa)”表示成功。</p>
+</blockquote>
+</li>
+<li>vim ~/.ssh/id_rsa.pub<blockquote>
+<p>拷贝内容到github,增加sshkey设置。</p>
+</blockquote>
+</li>
+<li>ssh <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a><blockquote>
+<p>出现以下内容表示成功</p>
+<ul>
+<li>Hi XXXX! You’ve successfully authenticated, but GitHub does not provide shell access.<br>Connection to github.com closed.</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>GIT</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+        <tag>sshkey</tag>
+      </tags>
+  </entry>
+</search>
