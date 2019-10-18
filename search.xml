@@ -112,6 +112,7 @@ at Pipe._handle.close (net.js:606:12)
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=org.apache.rocketmq -DartifactId=rocketmq-client -Dversion=4.1.0-incubating-SNAPSHOT -Dpackaging=jar -Dfile=E:\MavenRep\org\apache\rocketmq\rocketmq-client\4.1.0-incubating-SNAPSHOT\rocketmq-client-4.1.0-incubating-SNAPSHOT.jar -Durl=http://10.1.253.238:8081/nexus/content/repositories/thirdparty/ -DrepositoryId=thirdparty</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<a id="more"></a>
 <h2 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h2><ul>
 <li><p>compile 默认的scope，表示  dependency 都可以在生命周期中使用。而且，这些</p>
 </li>
@@ -146,6 +147,7 @@ at Pipe._handle.close (net.js:606:12)
 <li><p>表操作</p>
 </li>
 </ul>
+<a id="more"></a>
 <h2 id="DBA"><a href="#DBA" class="headerlink" title="DBA"></a>DBA</h2><ul>
 <li><p>创建用户</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$  create user &apos;imapp&apos;@&apos;%&apos; identified by &apos;imapp&apos;;</span><br></pre></td></tr></table></figure>
@@ -306,6 +308,7 @@ at Pipe._handle.close (net.js:606:12)
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <ul>
 <li><p>导入外部xml，@ImportResource({“classpath:abc.xml”})</p>
 </li>
@@ -329,6 +332,7 @@ at Pipe._handle.close (net.js:606:12)
     <title>webservice</title>
     <url>/2019/10/13/webservice/</url>
     <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Web service是一个低耦合的、自包含的、跨平台的、跨语言的web应用程序，可使用开放的XML标准来描述、发布、发现、协调和配置这些应用程序。Web Service为整个企业甚至多个组织之间的业务流程的集成提供了一个通用机制。（<em>参考百度百科</em>）</p>
+<a id="more"></a>
 <h1 id="wsdl"><a href="#wsdl" class="headerlink" title="wsdl"></a>wsdl</h1><h1 id="wsdl2java"><a href="#wsdl2java" class="headerlink" title="wsdl2java"></a>wsdl2java</h1><p><a href="https://cxf.apache.org/docs/wsdl-to-java.html" target="_blank" rel="noopener">CXF官网地址-wsdl2java</a></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Usage : wsdl2java -fe|-frontend &lt;front-end-name&gt; -db|-databinding &lt;data-binding-name&gt; </span><br><span class="line">-wv &lt;wsdl-version&gt; -p &lt;[wsdl-namespace =]package-name&gt;* -sn &lt;service-name&gt; </span><br><span class="line">-b &lt;binding-file-name&gt;* -reserveClass &lt;class-name&gt;* -catalog &lt;catalog-file-name&gt; </span><br><span class="line">-d &lt;output-directory&gt; -compile -classdir &lt;compile-classes-directory&gt; -impl -server</span><br><span class="line">-client -clientjar &lt;jar-file-name&gt; -all -autoNameResolution -allowElementReferences|-aer&lt;=true&gt; </span><br><span class="line">-defaultValues&lt;=class-name-for-DefaultValueProvider&gt; -ant </span><br><span class="line">-nexclude &lt;schema-namespace [= java-package-name]&gt;* -exsh &lt;(true, false)&gt; -noTypes</span><br><span class="line">-dns &lt;(true, false&gt; -dex &lt;(true, false)&gt; -validate -keep </span><br><span class="line">-wsdlLocation &lt;wsdlLocation&gt; -xjc&lt;xjc-arguments&gt;* -asyncMethods&lt;[=method1,method2,...]&gt;* </span><br><span class="line">-bareMethods&lt;[=method1,method2,...]&gt;* -mimeMethods&lt;[=method1,method2,...]&gt;* -noAddressBinding </span><br><span class="line">-faultSerialVersionUID &lt;fault-serialVersionUID&gt; -exceptionSuper &lt;exceptionSuper&gt; </span><br><span class="line">-mark-generated -suppress-generated-date -maxExtensionStackDepth &lt;maxExtensionStackDepth&gt;</span><br><span class="line">-h|-?|-help -version|-v -verbose|-V -quiet|-q|-Q </span><br><span class="line">-wsdlList &lt;wsdlurl&gt;</span><br></pre></td></tr></table></figure>
 <ul>

@@ -811,8 +811,7 @@ at Pipe._handle.close (net.js:606:12)
 
       
         
-          
-            <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
+          <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
 <li><p>查看包依赖<br>mvn dependency:tree  -Dverbose</p>
 </li>
 <li><p>跳过测试<br>mvn clean install -Dmaven.test.skip</p>
@@ -828,22 +827,13 @@ at Pipe._handle.close (net.js:606:12)
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=org.apache.rocketmq -DartifactId=rocketmq-client -Dversion=4.1.0-incubating-SNAPSHOT -Dpackaging=jar -Dfile=E:\MavenRep\org\apache\rocketmq\rocketmq-client\4.1.0-incubating-SNAPSHOT\rocketmq-client-4.1.0-incubating-SNAPSHOT.jar -Durl=http://10.1.253.238:8081/nexus/content/repositories/thirdparty/ -DrepositoryId=thirdparty</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h2><ul>
-<li><p>compile 默认的scope，表示  dependency 都可以在生命周期中使用。而且，这些</p>
-</li>
-<li><p>dependencies 会传递到依赖的项目中。适用于所有阶段，会随着项目一起发布  </p>
-</li>
-<li><p>provided 跟compile相似，但是表明了dependency 由JDK或者容器提供，例如Servlet  AP和一些Java EE APIs。这个scope 只能作用在编译和测试时，同时没有传递性。          </p>
-</li>
-<li><p>runtime 表示dependency不作用在编译时，但会作用在运行和测试时，如JDBC驱动，适用运行和测试阶段。  </p>
-</li>
-<li><p>test 表示dependency作用在测试时，不作用在运行时。  只在测试时使用，用于编译和运行测试代码。不会随项目发布。  </p>
-</li>
-<li><p>system 跟provided  相似，但是在系统中要以外部JAR包的形式提供，maven不会在repository查找它。 </p>
-</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/16/maven命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1003,8 +993,7 @@ at Pipe._handle.close (net.js:606:12)
 
       
         
-          
-            <h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">show variables like &apos;%log_bin%&apos;;</span><br><span class="line"></span><br><span class="line">show variables like &apos;%binlog%&apos;;</span><br><span class="line"></span><br><span class="line">show binary logs;</span><br></pre></td></tr></table></figure>
+          <h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">show variables like &apos;%log_bin%&apos;;</span><br><span class="line"></span><br><span class="line">show variables like &apos;%binlog%&apos;;</span><br><span class="line"></span><br><span class="line">show binary logs;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>强制修改root密码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ SET PASSWORD = PASSWORD(&apos;root&apos;);</span><br></pre></td></tr></table></figure>
@@ -1012,65 +1001,13 @@ at Pipe._handle.close (net.js:606:12)
 <li><p>表操作</p>
 </li>
 </ul>
-<h2 id="DBA"><a href="#DBA" class="headerlink" title="DBA"></a>DBA</h2><ul>
-<li><p>创建用户</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  create user &apos;imapp&apos;@&apos;%&apos; identified by &apos;imapp&apos;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看权限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ show grants for imapp;</span><br><span class="line">$ show grants for &apos;imapp&apos;@&apos;172.17.138.%&apos;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>授权</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ grant all on imtest1.* to &apos;imapp&apos;@&apos;%&apos;;</span><br><span class="line">$ flush privileges;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>权限回收</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ revoke all on imtest1.* from imapp;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编码格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ SHOW VARIABLES WHERE Variable_name LIKE &apos;character_set_%&apos; OR Variable_name LIKE &apos;collation%&apos;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看当前连接数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ show full processlist;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看mysql状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ show status;</span><br><span class="line">$ show status like &apos;%变量名%&apos;;</span><br></pre></td></tr></table></figure>
-<p>查用变量</p>
-<p>Aborted_clients 由于客户没有正确关闭连接已经死掉，已经放弃的连接数量。</p>
-<p>Aborted_connects 尝试已经失败的MySQL服务器的连接的次数。</p>
-<p>Connections 试图连接MySQL服务器的次数。</p>
-<p>Created_tmp_tables 当执行语句时，已经被创造了的隐含临时表的数量。</p>
-<p>Delayed_insert_threads 正在使用的延迟插入处理器线程的数量。</p>
-<p>Delayed_writes 用INSERT DELAYED写入的行数。</p>
-<p>Delayed_errors 用INSERT DELAYED写入的发生某些错误(可能重复键值)的行数。</p>
-<p>Flush_commands 执行FLUSH命令的次数。</p>
-<p>Handler_delete 请求从一张表中删除行的次数。</p>
-<p>Handler_read_first 请求读入表中第一行的次数。</p>
-<p>Handler_read_key 请求数字基于键读行。</p>
-<p>Handler_read_next 请求读入基于一个键的一行的次数。</p>
-<p>Handler_read_rnd 请求读入基于一个固定位置的一行的次数。</p>
-<p>Handler_update 请求更新表中一行的次数。</p>
-<p>Handler_write 请求向表中插入一行的次数。</p>
-<p>Key_blocks_used 用于关键字缓存的块的数量。</p>
-<p>Key_read_requests 请求从缓存读入一个键值的次数。</p>
-<p>Key_reads 从磁盘物理读入一个键值的次数。</p>
-<p>Key_write_requests 请求将一个关键字块写入缓存次数。</p>
-<p>Key_writes 将一个键值块物理写入磁盘的次数。</p>
-<p>Max_used_connections 同时使用的连接的最大数目。</p>
-<p>Not_flushed_key_blocks 在键缓存中已经改变但是还没被清空到磁盘上的键块。</p>
-<p>Not_flushed_delayed_rows 在INSERT DELAY队列中等待写入的行的数量。</p>
-<p>Open_tables 打开表的数量。</p>
-<p>Open_files 打开文件的数量。</p>
-<p>Open_streams 打开流的数量(主要用于日志记载）</p>
-<p>Opened_tables 已经打开的表的数量。</p>
-<p>Questions 发往服务器的查询的数量。</p>
-<p>Slow_queries 要花超过long_query_time时间的查询数量。</p>
-<p>Threads_connected 当前打开的连接的数量。</p>
-<p>Threads_running 不在睡眠的线程数量。</p>
-<p>Uptime 服务器工作了多少秒。</p>
-</li>
-<li></li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/16/Mysql命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1438,8 +1375,7 @@ at Pipe._handle.close (net.js:606:12)
 
       
         
-          
-            <h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h2 id="Auto-config"><a href="#Auto-config" class="headerlink" title="Auto-config"></a>Auto-config</h2><ul>
+          <h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h2 id="Auto-config"><a href="#Auto-config" class="headerlink" title="Auto-config"></a>Auto-config</h2><ul>
 <li><p><code>@SpringBootApplication</code></p>
 <p>SpringBootAppication一个注解相当于以下三个注解</p>
 <ul>
@@ -1456,15 +1392,13 @@ at Pipe._handle.close (net.js:606:12)
 </ul>
 </li>
 </ul>
-<ul>
-<li><p>导入外部xml，@ImportResource({“classpath:abc.xml”})</p>
-</li>
-<li><p><code>@Qualifier</code>限定描述符，用于细粒度选择候选者。使用场景Spring上下文中同一个接口有多个实现，即一个类型bean有多个</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Autowired   </span><br><span class="line">@Qualifier(&quot;userServiceImpl&quot;)   </span><br><span class="line">public IUserService userService;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/15/springboot/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1624,60 +1558,14 @@ at Pipe._handle.close (net.js:606:12)
 
       
         
-          
-            <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Web service是一个低耦合的、自包含的、跨平台的、跨语言的web应用程序，可使用开放的XML标准来描述、发布、发现、协调和配置这些应用程序。Web Service为整个企业甚至多个组织之间的业务流程的集成提供了一个通用机制。（<em>参考百度百科</em>）</p>
-<h1 id="wsdl"><a href="#wsdl" class="headerlink" title="wsdl"></a>wsdl</h1><h1 id="wsdl2java"><a href="#wsdl2java" class="headerlink" title="wsdl2java"></a>wsdl2java</h1><p><a href="https://cxf.apache.org/docs/wsdl-to-java.html" target="_blank" rel="noopener">CXF官网地址-wsdl2java</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Usage : wsdl2java -fe|-frontend &lt;front-end-name&gt; -db|-databinding &lt;data-binding-name&gt; </span><br><span class="line">-wv &lt;wsdl-version&gt; -p &lt;[wsdl-namespace =]package-name&gt;* -sn &lt;service-name&gt; </span><br><span class="line">-b &lt;binding-file-name&gt;* -reserveClass &lt;class-name&gt;* -catalog &lt;catalog-file-name&gt; </span><br><span class="line">-d &lt;output-directory&gt; -compile -classdir &lt;compile-classes-directory&gt; -impl -server</span><br><span class="line">-client -clientjar &lt;jar-file-name&gt; -all -autoNameResolution -allowElementReferences|-aer&lt;=true&gt; </span><br><span class="line">-defaultValues&lt;=class-name-for-DefaultValueProvider&gt; -ant </span><br><span class="line">-nexclude &lt;schema-namespace [= java-package-name]&gt;* -exsh &lt;(true, false)&gt; -noTypes</span><br><span class="line">-dns &lt;(true, false&gt; -dex &lt;(true, false)&gt; -validate -keep </span><br><span class="line">-wsdlLocation &lt;wsdlLocation&gt; -xjc&lt;xjc-arguments&gt;* -asyncMethods&lt;[=method1,method2,...]&gt;* </span><br><span class="line">-bareMethods&lt;[=method1,method2,...]&gt;* -mimeMethods&lt;[=method1,method2,...]&gt;* -noAddressBinding </span><br><span class="line">-faultSerialVersionUID &lt;fault-serialVersionUID&gt; -exceptionSuper &lt;exceptionSuper&gt; </span><br><span class="line">-mark-generated -suppress-generated-date -maxExtensionStackDepth &lt;maxExtensionStackDepth&gt;</span><br><span class="line">-h|-?|-help -version|-v -verbose|-V -quiet|-q|-Q </span><br><span class="line">-wsdlList &lt;wsdlurl&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>命令行生成java代码</p>
-<ol>
-<li><p>cfx</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; wsdl2java -client -p com.unionpay.spdbuim.user.esb -d F:\spdb\unionpay\code\spdbuim\user\src\main\java -verbose F:\spdb\unionpay\code\spdbuim\user\src\main\resources\WeatherWebService.wsdl</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>axis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; wsdl2java -t -or -g -o D:\programfiles\axis2-1.7.9\bin\test -p com.elf -uri http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl -sp</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>wsimport(maven插件执行的命令，直接在命令行需要修改)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsimport -keep, -s, &apos;F:\spdb\unionpay\code\spdbuim\user\target\generated-sources\wsimport&apos;, -d, &apos;F:\spdb\unionpay\code\spdbuim\user\target\classes&apos;, -encoding, UTF-8, -Xnocompile, -b, http://www.w3.org/2001/XMLSchema.xsd, -verbose, -s, F:\spdb\unionpay\code\spdbuim\user/src/main/java, -p, com.esb.ws, &quot;file:/F:/spdb/unionpay/code/spdbuim/user/src/main/resources/WeatherWebService-old.wsdl&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="cxf"><a href="#cxf" class="headerlink" title="cxf"></a>cxf</h2><h2 id="axis"><a href="#axis" class="headerlink" title="axis"></a>axis</h2><h3 id="idea插件生成代码"><a href="#idea插件生成代码" class="headerlink" title="idea插件生成代码"></a>idea插件生成代码</h3><ul>
-<li><p>Caused by: java.lang.ClassNotFoundException: org.apache.commons.discovery.tools.DiscoverSingleton</p>
-<p>缺少包，导入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;commons-discovery&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;commons-discovery&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;0.5&lt;/version&gt;</span><br><span class="line">			&lt;scope&gt;&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>xfire</p>
-<p>wsimport </p>
-<p>wsimport -b  <a href="http://www.w3.org/2001/XMLSchema.xsd" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema.xsd</a>  -b  customization.xjb  something.wsdl</p>
-<hr>
-<h2 id="maven插件"><a href="#maven插件" class="headerlink" title="maven插件"></a>maven插件</h2><ul>
-<li>mvn -X generate-sources</li>
-</ul>
-<ol>
-<li><p>wsimport</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;jaxws-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.4.1&lt;/version&gt;</span><br><span class="line">            &lt;executions&gt;</span><br><span class="line">                &lt;execution&gt;</span><br><span class="line">                    &lt;id&gt;periodictableaccessws&lt;/id&gt;</span><br><span class="line">                    &lt;goals&gt;</span><br><span class="line">                        &lt;goal&gt;wsimport&lt;/goal&gt;</span><br><span class="line">                    &lt;/goals&gt;</span><br><span class="line">                    &lt;configuration&gt;</span><br><span class="line">                        &lt;wsdlDirectory&gt;$&#123;basedir&#125;/src/main/resources/wsdl&lt;/wsdlDirectory&gt;</span><br><span class="line">                        &lt;args&gt;</span><br><span class="line">                            &lt;arg&gt;-b&lt;/arg&gt;&lt;arg&gt;http://www.w3.org/2001/XMLSchema.xsd&lt;/arg&gt;</span><br><span class="line">                        &lt;/args&gt;</span><br><span class="line">                        &lt;wsdlFiles&gt;</span><br><span class="line">                            &lt;wsdlFile&gt;doosdaas.wsdl&lt;/wsdlFile&gt;</span><br><span class="line">                        &lt;/wsdlFiles&gt;</span><br><span class="line">                        &lt;packageName&gt;com.dss.doosdaas&lt;/packageName&gt;</span><br><span class="line">                        &lt;vmArgs&gt;</span><br><span class="line">                            &lt;vmArg&gt;-Djavax.xml.accessExternalDTD=all&lt;/vmArg&gt;</span><br><span class="line">                            &lt;vmArg&gt;-Djavax.xml.accessExternalSchema=all&lt;/vmArg&gt;</span><br><span class="line">                        &lt;/vmArgs&gt;</span><br><span class="line">                     &lt;!--   &lt;bindingDirectory&gt;$&#123;basedir&#125;/src/main/resources/jaxb&lt;/bindingDirectory&gt;</span><br><span class="line">                        &lt;bindingFiles&gt;</span><br><span class="line">                            &lt;bindingFile&gt;jaxb_binding.xjb&lt;/bindingFile&gt;</span><br><span class="line">                        &lt;/bindingFiles&gt;--&gt;</span><br><span class="line">                    &lt;/configuration&gt;</span><br><span class="line">                &lt;/execution&gt;</span><br><span class="line">            &lt;/executions&gt;</span><br><span class="line">        &lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>cfx</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;   </span><br><span class="line">    &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;   </span><br><span class="line">    &lt;artifactId&gt;cxf-codegen-plugin&lt;/artifactId&gt;   </span><br><span class="line">    &lt;!--&lt;version&gt;$&#123;cxf.version&#125;&lt;/version&gt;--&gt;   </span><br><span class="line">    &lt;executions&gt;      </span><br><span class="line">        &lt;execution&gt;         </span><br><span class="line">            &lt;id&gt;generate-sources&lt;/id&gt;         </span><br><span class="line">            &lt;phase&gt;generate-sources&lt;/phase&gt;         </span><br><span class="line">            &lt;configuration&gt;           </span><br><span class="line">           &lt;sourceRoot&gt;$&#123;basedir&#125;/src/main/java/&lt;/sourceRoot&gt;            </span><br><span class="line">               &lt;wsdlOptions&gt;               </span><br><span class="line">                   &lt;wsdlOption&gt;                  </span><br><span class="line">                       &lt;wsdl&gt;$&#123;basedir&#125;/src/main/resources/WeatherWebService.wsdl&lt;/wsdl&gt;                  </span><br><span class="line">                       &lt;extraargs&gt;</span><br><span class="line">                           &lt;extraarg&gt;-impl&lt;/extraarg&gt;                            </span><br><span class="line">                           &lt;extraarg&gt;-verbose&lt;/extraarg&gt;                  </span><br><span class="line">                       &lt;/extraargs&gt;               </span><br><span class="line">                  &lt;/wsdlOption&gt;            </span><br><span class="line">              &lt;/wsdlOptions&gt;         </span><br><span class="line">          &lt;/configuration&gt;         </span><br><span class="line">          &lt;goals&gt;            </span><br><span class="line">              &lt;goal&gt;wsdl2java&lt;/goal&gt;         </span><br><span class="line">          &lt;/goals&gt;      </span><br><span class="line">      &lt;/execution&gt;   </span><br><span class="line">   &lt;/executions&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h1><h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><ol>
-<li><p>Cannot find any registered HttpDestinationFactory from the Bus.</p>
-<p>通常可能是因为没有引用cxf-rt-transports-http-jetty，pom文件中引入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;cxf-rt-transports-http-jetty&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;3.3.3&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<p><a href="https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http-jetty" target="_blank" rel="noopener">maven respository</a></p>
-</li>
-</ol>
-<h2 id="client"><a href="#client" class="headerlink" title="client"></a>client</h2><ol>
-<li><p>使用cfx wsdl2java时报：undefined element declaration ‘s:schema’</p>
-<p>s:schema 引用问题，网上资料提示需要将wsdl保存到本地，将其替换为&lt;s:any minOccurs=”2” maxOccurs=”2”/&gt;确实可行，但不知问题的本质</p>
-</li>
-</ol>
-
-          
+          <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Web service是一个低耦合的、自包含的、跨平台的、跨语言的web应用程序，可使用开放的XML标准来描述、发布、发现、协调和配置这些应用程序。Web Service为整个企业甚至多个组织之间的业务流程的集成提供了一个通用机制。（<em>参考百度百科</em>）</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/13/webservice/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
