@@ -635,8 +635,29 @@ IdentityFile ~/.ssh/id_rsa
       
         
           
-            <p>node npm 更新</p>
-<p>npm update -g</p>
+            <h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="Permission-denied-publickey"><a href="#Permission-denied-publickey" class="headerlink" title="Permission denied (publickey)."></a>Permission denied (publickey).</h2><ul>
+<li>可能是因为多个git用户以及秘钥对的原因，hexo目录下执行hexo d时，总是提示权限错误</li>
+</ul>
+<blockquote>
+<p>On branch master<br>nothing to commit, working tree clean<br><a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>: Permission denied (publickey).<br>fatal: Could not read from remote repository.</p>
+<p>Please make sure you have the correct access rights<br>and the repository exists.<br>FATAL Something’s wrong. Maybe you can find the solution here: <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">https://hexo.io/docs/troubleshooting.html</a><br>Error: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>: Permission denied (publickey).<br>fatal: Could not read from remote repository.</p>
+<p>Please make sure you have the correct access rights<br>and the repository exists.</p>
+<pre><code>at ChildProcess.&lt;anonymous&gt; (E:\blog\hexo\node_modules\hexo-util\lib\spawn.js:37:17)
+at ChildProcess.emit (events.js:198:13)
+at ChildProcess.cp.emit (E:\blog\hexo\node_modules\cross-spawn\lib\enoent.js:40:29)
+at maybeClose (internal/child_process.js:982:16)
+at Socket.stream.socket.on (internal/child_process.js:389:11)
+at Socket.emit (events.js:198:13)
+at Pipe._handle.close (net.js:606:12)
+</code></pre></blockquote>
+<ul>
+<li><p>需要重新加载git秘钥，但是似乎每次关了终端都得重新执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ eval &quot;$(ssh-agent -s)&quot;</span><br><span class="line">Agent pid 9516</span><br><span class="line"></span><br><span class="line">$ ssh-add -l</span><br><span class="line">The agent has no identities.</span><br><span class="line"></span><br><span class="line">$ ssh-add ~/.ssh/id4github</span><br><span class="line">Identity added: /c/Users/username/.ssh/id4github (/c/Users/elf/.ssh/id4github)</span><br><span class="line"></span><br><span class="line">$ ssh-add -l</span><br><span class="line">2048 SHA256:93OU/W/4NmDU0wckImk6p6Bm0WIikC3/fBNtZJYDjKU /c/Users/username/.ssh/id4github (RSA)</span><br><span class="line"></span><br><span class="line">$ ssh git@github.com</span><br><span class="line">PTY allocation request failed on channel 0</span><br><span class="line">Hi elfdemonster! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">Connection to github.com closed.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>再次执行hexo d成功上传</li>
+</ul>
+</li>
+</ul>
 
           
         
