@@ -427,8 +427,7 @@
 
       
         
-          
-            <h1 id="command"><a href="#command" class="headerlink" title="command"></a>command</h1><h2 id="设置全局用户信息"><a href="#设置全局用户信息" class="headerlink" title="设置全局用户信息"></a>设置全局用户信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git config --global user.name "elfdemonster"</span><br><span class="line"><span class="meta">$</span> git config --global user.email "elfdemonster001@gmail.com"</span><br></pre></td></tr></table></figure>
+          <h1 id="command"><a href="#command" class="headerlink" title="command"></a>command</h1><h2 id="设置全局用户信息"><a href="#设置全局用户信息" class="headerlink" title="设置全局用户信息"></a>设置全局用户信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git config --global user.name "elfdemonster"</span><br><span class="line"><span class="meta">$</span> git config --global user.email "elfdemonster001@gmail.com"</span><br></pre></td></tr></table></figure>
 <h2 id="设置目录下的用户信息"><a href="#设置目录下的用户信息" class="headerlink" title="设置目录下的用户信息"></a>设置目录下的用户信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git config user.name "elfdemonster"</span><br><span class="line"><span class="meta">$</span> git config user.email "elfdemonster001@gmail.com"</span><br></pre></td></tr></table></figure>
 <h2 id="查看全局用户信息"><a href="#查看全局用户信息" class="headerlink" title="查看全局用户信息"></a>查看全局用户信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name</span><br><span class="line">$ git config --global user.email</span><br></pre></td></tr></table></figure>
 <h2 id="查看当前目录用户信息"><a href="#查看当前目录用户信息" class="headerlink" title="查看当前目录用户信息"></a>查看当前目录用户信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config user.name</span><br><span class="line">$ git config user.email</span><br></pre></td></tr></table></figure>
@@ -457,24 +456,13 @@ IdentityFile ~/.ssh/id_rsa
 <p>  查看详情</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -vT git@github.com</span><br></pre></td></tr></table></figure>
 <p>  <a href="https://help.github.com/en/articles/connecting-to-github-with-ssh" target="_blank" rel="noopener">github秘钥参考地址</a></p>
-<h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="Could-not-open-a-connection-to-your-authentication-agent"><a href="#Could-not-open-a-connection-to-your-authentication-agent" class="headerlink" title="Could not open a connection to your authentication agent."></a>Could not open a connection to your authentication agent.</h2><ul>
-<li>出现场景</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh-add ~/.</span><br><span class="line"><span class="meta">$</span> ssh-add -l</span><br></pre></td></tr></table></figure>
-<ul>
-<li>解决方式，执行如下命令</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> eval "$(ssh-agent -s)"</span><br></pre></td></tr></table></figure>
-<h2 id="Permission-denied-publickey"><a href="#Permission-denied-publickey" class="headerlink" title="Permission denied (publickey)."></a>Permission denied (publickey).</h2><ul>
-<li><p>出现场景</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh git@github.com</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解决方式</p>
-<p>增加秘钥，参加上方增加秘钥步骤</p>
-</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/18/git/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -634,8 +622,7 @@ IdentityFile ~/.ssh/id_rsa
 
       
         
-          
-            <h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="Permission-denied-publickey"><a href="#Permission-denied-publickey" class="headerlink" title="Permission denied (publickey)."></a>Permission denied (publickey).</h2><ul>
+          <h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="Permission-denied-publickey"><a href="#Permission-denied-publickey" class="headerlink" title="Permission denied (publickey)."></a>Permission denied (publickey).</h2><ul>
 <li>可能是因为多个git用户以及秘钥对的原因，hexo目录下执行hexo d时，总是提示权限错误</li>
 </ul>
 <blockquote>
@@ -658,8 +645,13 @@ at Pipe._handle.close (net.js:606:12)
 </ul>
 </li>
 </ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/17/hexo/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1238,8 +1230,7 @@ at Pipe._handle.close (net.js:606:12)
 
       
         
-          
-            <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><ul>
+          <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><ul>
 <li><p>修改目录属主</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#  把目录/home/test及其下的所有文件以及子目录的属主改为tester，属组改为test </span><br><span class="line">$ chown -R test:test /home/test</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#把文件 test.ko的所有者改为test</span><br><span class="line">$ chown test test.ko</span><br></pre></td></tr></table></figure>
@@ -1259,49 +1250,13 @@ at Pipe._handle.close (net.js:606:12)
 <li><p>ctrl+r,输入命令起始，可以查找之前已经执行过的命令</p>
 </li>
 </ul>
-<h2 id="gourp-amp-user"><a href="#gourp-amp-user" class="headerlink" title="gourp&amp;user"></a>gourp&amp;user</h2><ul>
-<li><p>groups  goupname 查看组内所有用户</p>
-</li>
-<li><p>groups gliethttp 查看gliethttp用户所在的组,以及组内成员</p>
-</li>
-<li><p>查看组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/group | grep sql</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改用户密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ passwd username</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>群组用户增加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ groupadd -r groupname</span><br><span class="line">$ useradd -r -g groupname username</span><br></pre></td></tr></table></figure>
-<p><em>新增的用户切换时如果只是进入bash操作行，则拷贝 .bash_profile .bashrc .bash_logout 到用户目录下 /home/username/</em></p>
-</li>
-</ul>
-<h2 id="压缩建压缩"><a href="#压缩建压缩" class="headerlink" title="压缩建压缩"></a>压缩建压缩</h2><ul>
-<li><p>查看压缩包中内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -tf xx</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxf ...</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h2><ul>
-<li><p>新建命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s $basedir $upbasedir/mysql</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更新软连接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln –snf  $basedir $upbasedir/mysql</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="vi-amp-vim"><a href="#vi-amp-vim" class="headerlink" title="vi&amp;vim"></a>vi&amp;vim</h2><ul>
-<li><p>在Vim中可以直接查看文件编码<br>:set fileencoding</p>
-</li>
-<li><p>查看其它编码格式的文件或者想解决用Vim查看文件乱码的问题，那么你可以在<br>~/.vimrc 文件中添加以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>查找命令</p>
-<p><code>grep -rn &quot;appCfg&quot; ./</code></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/16/Linux常用命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
