@@ -5,6 +5,7 @@
     <url>/2019/10/18/git/</url>
     <content><![CDATA[<h1 id="command"><a href="#command" class="headerlink" title="command"></a>command</h1><h2 id="设置全局用户信息"><a href="#设置全局用户信息" class="headerlink" title="设置全局用户信息"></a>设置全局用户信息</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> git config --global user.name "elfdemonster"</span><br><span class="line"><span class="meta">$</span> git config --global user.email "elfdemonster001@gmail.com"</span><br></pre></td></tr></table></figure>
 <h2 id="设置目录下的用户信息"><a href="#设置目录下的用户信息" class="headerlink" title="设置目录下的用户信息"></a>设置目录下的用户信息</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> git config user.name "elfdemonster"</span><br><span class="line"><span class="meta">$</span> git config user.email "elfdemonster001@gmail.com"</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="查看全局用户信息"><a href="#查看全局用户信息" class="headerlink" title="查看全局用户信息"></a>查看全局用户信息</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name</span><br><span class="line">$ git config --global user.email</span><br></pre></td></tr></table></figure>
 <h2 id="查看当前目录用户信息"><a href="#查看当前目录用户信息" class="headerlink" title="查看当前目录用户信息"></a>查看当前目录用户信息</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config user.name</span><br><span class="line">$ git config user.email</span><br></pre></td></tr></table></figure>
 <h2 id="查看远程连接"><a href="#查看远程连接" class="headerlink" title="查看远程连接"></a>查看远程连接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git remote -v </span><br><span class="line">&gt; origin  git@github.com:USERNAME/REPOSITORY.git (fetch)</span><br><span class="line">&gt; origin  git@github.com:USERNAME/REPOSITORY.git (push)</span><br></pre></td></tr></table></figure>
@@ -26,13 +27,16 @@ IdentityFile ~/.ssh/id_rsa
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/xxid</span><br><span class="line">Identity added: /c/Users/elf/.ssh/id4github (/c/Users/elf/.ssh/id4github)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>  查看添加的秘钥信息</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh-add -l</span><br><span class="line">2048 SHA256:93OU/W/4NmDU0wckImk6p6Bm0WIikC3/fBNtZJYDjKU /c/Users/elf/.ssh/id4github (RSA)</span><br></pre></td></tr></table></figure>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">PTY allocation request failed on channel 0</span><br><span class="line">Hi elfdemonster! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">Connection to github.com closed.</span><br></pre></td></tr></table></figure>
-<p>  查看详情</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh -vT git@github.com</span><br></pre></td></tr></table></figure>
-<p>  <a href="https://help.github.com/en/articles/connecting-to-github-with-ssh" target="_blank" rel="noopener">github秘钥参考地址</a></p>
-<a id="more"></a>
+<ul>
+<li><p>查看添加的秘钥信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh-add -l</span><br><span class="line">2048 SHA256:93OU/W/4NmDU0wckImk6p6Bm0WIikC3/fBNtZJYDjKU /c/Users/elf/.ssh/id4github (RSA)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">PTY allocation request failed on channel 0</span><br><span class="line">Hi elfdemonster! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">Connection to github.com closed.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看详情</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh -vT git@github.com</span><br></pre></td></tr></table></figure>
+<p><a href="https://help.github.com/en/articles/connecting-to-github-with-ssh" target="_blank" rel="noopener">github秘钥参考地址</a></p>
 <h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="Could-not-open-a-connection-to-your-authentication-agent"><a href="#Could-not-open-a-connection-to-your-authentication-agent" class="headerlink" title="Could not open a connection to your authentication agent."></a>Could not open a connection to your authentication agent.</h2><ul>
 <li>出现场景</li>
 </ul>
