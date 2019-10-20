@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>maven-settings.xml</title>
+    <url>/2019/10/20/maven-settings-xml/</url>
+    <content><![CDATA[<p>maven运行是配置文件settings.xml</p>
+<h2 id="安装位置"><a href="#安装位置" class="headerlink" title="安装位置"></a>安装位置</h2><ol>
+<li>全局配置：${maven_home}/config/settings.xml</li>
+<li>用户配置：~/.m2/settings.xml</li>
+</ol>
+<p>如果全局配置与用户配置同时存在，会进行合并，相同配置则以用户配置优先。</p>
+<h2 id="配置节点"><a href="#配置节点" class="headerlink" title="配置节点"></a>配置节点</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/SETTINGS/1.0.0"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/SETTINGS/1.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                          https://maven.apache.org/xsd/settings-1.0.0.xsd"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">localRepository</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">interactiveMode</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">offline</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">pluginGroups</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servers</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mirrors</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">proxies</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">profiles</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">activeProfiles</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>localRepository 本地仓库路径，不配置则默认为${user.home}/.m2/repository</li>
+<li>interactiveMode 交互模式，是否接受用户输入，默认为true</li>
+<li>offline 是否在离线模式下运行，默认是false</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Maven</category>
+      </categories>
+      <tags>
+        <tag>Maven</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>git</title>
     <url>/2019/10/18/git/</url>
     <content><![CDATA[<h1 id="command"><a href="#command" class="headerlink" title="command"></a>command</h1><h2 id="设置全局用户信息"><a href="#设置全局用户信息" class="headerlink" title="设置全局用户信息"></a>设置全局用户信息</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> git config --global user.name "elfdemonster"</span><br><span class="line"><span class="meta">$</span> git config --global user.email "elfdemonster001@gmail.com"</span><br></pre></td></tr></table></figure>
