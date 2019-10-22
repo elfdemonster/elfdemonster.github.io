@@ -1137,31 +1137,11 @@ at Pipe._handle.close (net.js:606:12)
       
         
           <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
-<li><p>查看包依赖<br>mvn dependency:tree  -Dverbose</p>
-</li>
-<li><p>跳过测试<br>mvn clean install -Dmaven.test.skip</p>
-</li>
-<li><p>mvn compile –debug<br>mvn -Dfile.encoding=UTF-8 compile</p>
-</li>
-<li><p>mvn mybatis-generator:generate</p>
-</li>
-<li><p>手动安装jar包，<a href="https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html" target="_blank" rel="noopener">参见</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -Dfile=&lt;path-to-file&gt; -DgroupId=&lt;group-id&gt;  -DartifactId=&lt;artifact-id&gt; -Dversion=&lt;version&gt; -Dpackaging=&lt;packaging&gt;</span><br></pre></td></tr></table></figure>
-<p>举例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -DgroupId=com -DartifactId=appserv -Dversion=V0.0.1-SNAPSHOT -Dpackaging=jar -Dfile=D:/xxxx/appserv/target/appserv.jar</span><br></pre></td></tr></table></figure>
-<p>如果有pom文件，则可以使用如下命令安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -Dfile=&lt;path-to-file&gt; -DpomFile=&lt;path-to-pomfile&gt;</span><br></pre></td></tr></table></figure>
-<p>maven2.5开始，如果安装maven构建的jar包，并在jar包中的 META-INF下存在pom.xml，则可以使用如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -Dfile=&lt;path-to-file&gt;</span><br></pre></td></tr></table></figure>
-</li>
+<li>查看包依赖<br>mvn dependency:tree  -Dverbose</li>
+<li>跳过测试<br>mvn clean install -Dmaven.test.skip</li>
+<li>mvn compile –debug<br>mvn -Dfile.encoding=UTF-8 compile</li>
+<li>mvn mybatis-generator:generate</li>
 </ul>
-<ul>
-<li><p>手动发布Jar包，<a href="https://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html" target="_blank" rel="noopener">参见</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=&lt;group-id&gt; \</span><br><span class="line">  -DartifactId=&lt;artifact-id&gt; \</span><br><span class="line">  -Dversion=&lt;version&gt; \</span><br><span class="line">  -Dpackaging=&lt;type-of-packaging&gt; \</span><br><span class="line">  -Dfile=&lt;path-to-file&gt; \</span><br><span class="line">  -DrepositoryId=&lt;id-to-map-on-server-section-of-settings.xml&gt; \</span><br><span class="line">  -Durl=&lt;url-of-the-repository-to-deploy&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>  实例：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=org.apache.rocketmq -DartifactId=rocketmq-client -Dversion=4.1.0-incubating-SNAPSHOT -Dpackaging=jar -Dfile=E:\xxxx\org\apache\rocketmq\rocketmq-client\4.1.0-incubating-SNAPSHOT\rocketmq-client-4.1.0-incubating-SNAPSHOT.jar -Durl=http://ip:port/nexus/content/repositories/thirdparty/ -DrepositoryId=thirdparty</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/10/16/maven命令/#more" rel="contents">
@@ -1894,6 +1874,21 @@ at Pipe._handle.close (net.js:606:12)
       
         
           <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Web service是一个低耦合的、自包含的、跨平台的、跨语言的web应用程序，可使用开放的XML标准来描述、发布、发现、协调和配置这些应用程序。Web Service为整个企业甚至多个组织之间的业务流程的集成提供了一个通用机制。（<em>参考百度百科</em>）</p>
+<h2 id="Web-Service中几个重要的概念"><a href="#Web-Service中几个重要的概念" class="headerlink" title="Web Service中几个重要的概念"></a>Web Service中几个重要的概念</h2><h4 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h4><ul>
+<li>简单对象访问协议</li>
+<li>基于XML，通过HTTP交换信息</li>
+<li>独立于平台，独立于语言</li>
+<li>允许绕过防火墙</li>
+</ul>
+<h4 id="WSDL"><a href="#WSDL" class="headerlink" title="WSDL"></a>WSDL</h4><ul>
+<li>Web Service Description Language</li>
+<li>基于XML，对WEB Service的描述文件</li>
+</ul>
+<h4 id="UDDI"><a href="#UDDI" class="headerlink" title="UDDI"></a>UDDI</h4><ul>
+<li>Universal Description, Discovery and Integration</li>
+<li>一种目录服务，企业可以通过UUDI注册或发现Web Service服务</li>
+<li>由WSDL描述的网络服务接口目录</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/10/13/webservice/#more" rel="contents">
