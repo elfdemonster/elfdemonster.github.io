@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="命令 查看包依赖mvn dependency:tree  -Dverbose  跳过测试mvn clean install -Dmaven.test.skip  mvn compile –debugmvn -Dfile.encoding=UTF-8 compile  mvn mybatis-generator:generate  手动安装jar包 1mvn install:install-file">
+<meta name="description" content="命令 查看包依赖mvn dependency:tree  -Dverbose  跳过测试mvn clean install -Dmaven.test.skip  mvn compile –debugmvn -Dfile.encoding=UTF-8 compile  mvn mybatis-generator:generate  手动安装jar包，参见 1mvn install:install-f">
 <meta name="keywords" content="Maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="maven命令">
 <meta property="og:url" content="http://yoursite.com/2019/10/16/maven命令/index.html">
 <meta property="og:site_name" content="ElfShare">
-<meta property="og:description" content="命令 查看包依赖mvn dependency:tree  -Dverbose  跳过测试mvn clean install -Dmaven.test.skip  mvn compile –debugmvn -Dfile.encoding=UTF-8 compile  mvn mybatis-generator:generate  手动安装jar包 1mvn install:install-file">
+<meta property="og:description" content="命令 查看包依赖mvn dependency:tree  -Dverbose  跳过测试mvn clean install -Dmaven.test.skip  mvn compile –debugmvn -Dfile.encoding=UTF-8 compile  mvn mybatis-generator:generate  手动安装jar包，参见 1mvn install:install-f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-18T15:12:04.368Z">
+<meta property="og:updated_time" content="2019-10-22T14:11:43.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="maven命令">
-<meta name="twitter:description" content="命令 查看包依赖mvn dependency:tree  -Dverbose  跳过测试mvn clean install -Dmaven.test.skip  mvn compile –debugmvn -Dfile.encoding=UTF-8 compile  mvn mybatis-generator:generate  手动安装jar包 1mvn install:install-file">
+<meta name="twitter:description" content="命令 查看包依赖mvn dependency:tree  -Dverbose  跳过测试mvn clean install -Dmaven.test.skip  mvn compile –debugmvn -Dfile.encoding=UTF-8 compile  mvn mybatis-generator:generate  手动安装jar包，参见 1mvn install:install-f">
 
 
 
@@ -434,13 +434,23 @@
 </li>
 <li><p>mvn mybatis-generator:generate</p>
 </li>
-<li><p>手动安装jar包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -DgroupId=asiainfo -DartifactId=appserv -Dversion=V0.0.1-SNAPSHOT -Dpackaging=jar -Dfile=D:/Eclipse_self_workspace/appserv/target/appserv.jar</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>手动发布Jar包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=org.apache.rocketmq -DartifactId=rocketmq-client -Dversion=4.1.0-incubating-SNAPSHOT -Dpackaging=jar -Dfile=E:\MavenRep\org\apache\rocketmq\rocketmq-client\4.1.0-incubating-SNAPSHOT\rocketmq-client-4.1.0-incubating-SNAPSHOT.jar -Durl=http://10.1.253.238:8081/nexus/content/repositories/thirdparty/ -DrepositoryId=thirdparty</span><br></pre></td></tr></table></figure>
+<li><p>手动安装jar包，<a href="https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html" target="_blank" rel="noopener">参见</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -Dfile=&lt;path-to-file&gt; -DgroupId=&lt;group-id&gt;  -DartifactId=&lt;artifact-id&gt; -Dversion=&lt;version&gt; -Dpackaging=&lt;packaging&gt;</span><br></pre></td></tr></table></figure>
+<p>举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -DgroupId=com -DartifactId=appserv -Dversion=V0.0.1-SNAPSHOT -Dpackaging=jar -Dfile=D:/xxxx/appserv/target/appserv.jar</span><br></pre></td></tr></table></figure>
+<p>如果有pom文件，则可以使用如下命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -Dfile=&lt;path-to-file&gt; -DpomFile=&lt;path-to-pomfile&gt;</span><br></pre></td></tr></table></figure>
+<p>maven2.5开始，如果安装maven构建的jar包，并在jar包中的 META-INF下存在pom.xml，则可以使用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -Dfile=&lt;path-to-file&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<ul>
+<li><p>手动发布Jar包，<a href="https://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html" target="_blank" rel="noopener">参见</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=&lt;group-id&gt; \</span><br><span class="line">  -DartifactId=&lt;artifact-id&gt; \</span><br><span class="line">  -Dversion=&lt;version&gt; \</span><br><span class="line">  -Dpackaging=&lt;type-of-packaging&gt; \</span><br><span class="line">  -Dfile=&lt;path-to-file&gt; \</span><br><span class="line">  -DrepositoryId=&lt;id-to-map-on-server-section-of-settings.xml&gt; \</span><br><span class="line">  -Durl=&lt;url-of-the-repository-to-deploy&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  实例：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn deploy:deploy-file -DgroupId=org.apache.rocketmq -DartifactId=rocketmq-client -Dversion=4.1.0-incubating-SNAPSHOT -Dpackaging=jar -Dfile=E:\xxxx\org\apache\rocketmq\rocketmq-client\4.1.0-incubating-SNAPSHOT\rocketmq-client-4.1.0-incubating-SNAPSHOT.jar -Durl=http://ip:port/nexus/content/repositories/thirdparty/ -DrepositoryId=thirdparty</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h2><ul>
 <li><p>compile 默认的scope，表示  dependency 都可以在生命周期中使用。而且，这些</p>
