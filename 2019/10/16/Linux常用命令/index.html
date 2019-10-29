@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="ElfShare">
 <meta property="og:description" content="linux 修改目录属主 12#  把目录/home/test及其下的所有文件以及子目录的属主改为tester，属组改为test $ chown -R test:test /home/test 12#把文件 test.ko的所有者改为test$ chown test test.ko    chmod  修改文件句柄 12# 查看信息$ ulimit -a open file=65535 stack">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-18T15:09:50.132Z">
+<meta property="og:updated_time" content="2019-10-24T08:20:07.070Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令">
 <meta name="twitter:description" content="linux 修改目录属主 12#  把目录/home/test及其下的所有文件以及子目录的属主改为tester，属组改为test $ chown -R test:test /home/test 12#把文件 test.ko的所有者改为test$ chown test test.ko    chmod  修改文件句柄 12# 查看信息$ ulimit -a open file=65535 stack">
@@ -446,6 +446,46 @@
 </li>
 </ul>
 <a id="more"></a>
+<ul>
+<li><p>根据进程号查找程序路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> pwdx pid</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看端口</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> netstat -tunlp | grep prot</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计SFTP连接数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> netstat -antlp|grep sftp</span><br><span class="line"><span class="meta">$</span> netstat -antlp|grep sftp|wc -l</span><br><span class="line"><span class="meta">$</span> netstat -naltp|grep "10.1.253.239:22"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务器核数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cat /proc/cpuinfo |grep "processor"|wc -l</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看磁盘空间</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> df -h</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计文件中指定字符串出现的次数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> grep -o 'orderprice：200' nohup.log | wc -l</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="ls-amp-ll"><a href="#ls-amp-ll" class="headerlink" title="ls&amp;ll"></a>ls&amp;ll</h2><ul>
+<li><p>带文件大小单位显示</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ll -alh</span><br><span class="line"><span class="meta">$</span> ls -alh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计当前文件夹下文件的个数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ls -l |grep "^-"|wc -l</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计当前文件夹下目录的个数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ls -l |grep "^d"|wc -l</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计当前文件夹下文件的个数，包括子文件夹里的 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ls -lR|grep "^-"|wc -l</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计文件夹下目录的个数，包括子文件夹里的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ls -lR|grep "^d"|wc -l</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> grep -rn "appCfg" ./</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h2 id="gourp-amp-user"><a href="#gourp-amp-user" class="headerlink" title="gourp&amp;user"></a>gourp&amp;user</h2><ul>
 <li><p>groups  goupname 查看组内所有用户</p>
 </li>
@@ -485,8 +525,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>查找命令</p>
-<p><code>grep -rn &quot;appCfg&quot; ./</code></p>
+<h2 id="Time-Zone"><a href="#Time-Zone" class="headerlink" title="Time Zone"></a>Time Zone</h2><ul>
+<li><p>time zone存放路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ls -F /usr/share/zoneinfo/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
       
     </div>
@@ -624,7 +667,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -635,7 +678,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -646,7 +689,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -701,7 +744,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux"><span class="nav-number">1.</span> <span class="nav-text">linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gourp-amp-user"><span class="nav-number">1.1.</span> <span class="nav-text">gourp&amp;user</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩建压缩"><span class="nav-number">1.2.</span> <span class="nav-text">压缩建压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软连接"><span class="nav-number">1.3.</span> <span class="nav-text">软连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi-amp-vim"><span class="nav-number">1.4.</span> <span class="nav-text">vi&amp;vim</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux"><span class="nav-number">1.</span> <span class="nav-text">linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls-amp-ll"><span class="nav-number">1.1.</span> <span class="nav-text">ls&amp;ll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gourp-amp-user"><span class="nav-number">1.2.</span> <span class="nav-text">gourp&amp;user</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩建压缩"><span class="nav-number">1.3.</span> <span class="nav-text">压缩建压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软连接"><span class="nav-number">1.4.</span> <span class="nav-text">软连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi-amp-vim"><span class="nav-number">1.5.</span> <span class="nav-text">vi&amp;vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-Zone"><span class="nav-number">1.6.</span> <span class="nav-text">Time Zone</span></a></li></ol></li></ol></div>
             
 
           </div>

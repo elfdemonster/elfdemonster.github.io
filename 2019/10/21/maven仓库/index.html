@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="windows删除maven库中所有.lastUpdated（_maven.repositories/_remote.repositories）文件脚本 （网上搜到的，也不知道原出处是哪里，也有其他系统的版本，反正不是我自己写的，感谢大佬~） 12345678@echo offset REPOSITORY_PATH=maven_repository_pathrem 搜索中。。。。for /f &quot;d">
+<meta name="description" content="maven解析下载依赖的规则 如果依赖配置为system，则直接从本地路径解析，不会从远程库下载   记一次将maven本地仓库拷贝到其他机器的坑因为公司对安全要求较高，因此对网络的控制非常严格，BUT项目是与其他公司联合开发的，有很多依赖要么是内网上版本太低，要么是直接没有，把所有依赖放到私服又找不到管理私服的大佬（没办法，老牌企业的通病吧，找人干活要钱都难~），于是想到把原开发机器上的本地ma">
 <meta name="keywords" content="Maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="maven仓库">
 <meta property="og:url" content="http://yoursite.com/2019/10/21/maven仓库/index.html">
 <meta property="og:site_name" content="ElfShare">
-<meta property="og:description" content="windows删除maven库中所有.lastUpdated（_maven.repositories/_remote.repositories）文件脚本 （网上搜到的，也不知道原出处是哪里，也有其他系统的版本，反正不是我自己写的，感谢大佬~） 12345678@echo offset REPOSITORY_PATH=maven_repository_pathrem 搜索中。。。。for /f &quot;d">
+<meta property="og:description" content="maven解析下载依赖的规则 如果依赖配置为system，则直接从本地路径解析，不会从远程库下载   记一次将maven本地仓库拷贝到其他机器的坑因为公司对安全要求较高，因此对网络的控制非常严格，BUT项目是与其他公司联合开发的，有很多依赖要么是内网上版本太低，要么是直接没有，把所有依赖放到私服又找不到管理私服的大佬（没办法，老牌企业的通病吧，找人干活要钱都难~），于是想到把原开发机器上的本地ma">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-21T14:19:43.730Z">
+<meta property="og:updated_time" content="2019-10-24T06:49:09.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="maven仓库">
-<meta name="twitter:description" content="windows删除maven库中所有.lastUpdated（_maven.repositories/_remote.repositories）文件脚本 （网上搜到的，也不知道原出处是哪里，也有其他系统的版本，反正不是我自己写的，感谢大佬~） 12345678@echo offset REPOSITORY_PATH=maven_repository_pathrem 搜索中。。。。for /f &quot;d">
+<meta name="twitter:description" content="maven解析下载依赖的规则 如果依赖配置为system，则直接从本地路径解析，不会从远程库下载   记一次将maven本地仓库拷贝到其他机器的坑因为公司对安全要求较高，因此对网络的控制非常严格，BUT项目是与其他公司联合开发的，有很多依赖要么是内网上版本太低，要么是直接没有，把所有依赖放到私服又找不到管理私服的大佬（没办法，老牌企业的通病吧，找人干活要钱都难~），于是想到把原开发机器上的本地ma">
 
 
 
@@ -425,9 +425,10 @@
       
 
       
-        <p>windows删除maven库中所有.lastUpdated（_maven.repositories/_remote.repositories）文件脚本</p>
-<p><em>（网上搜到的，也不知道原出处是哪里，也有其他系统的版本，反正不是我自己写的，感谢大佬~）</em></p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">set</span> REPOSITORY_PATH=maven_repository_path</span><br><span class="line"><span class="comment">rem 搜索中。。。。</span></span><br><span class="line"><span class="keyword">for</span> /f "delims=" <span class="variable">%%i</span> <span class="keyword">in</span> ('<span class="built_in">dir</span> /b /s "<span class="variable">%REPOSITORY_PATH%</span>\*lastUpdated*"') <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">del</span> /s /q <span class="variable">%%i</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">rem 搜索完毕</span></span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
+        <h1 id="maven解析下载依赖的规则"><a href="#maven解析下载依赖的规则" class="headerlink" title="maven解析下载依赖的规则"></a>maven解析下载依赖的规则</h1><ul>
+<li>如果依赖配置为system，则直接从本地路径解析，不会从远程库下载</li>
+<li></li>
+</ul>
 <h1 id="记一次将maven本地仓库拷贝到其他机器的坑"><a href="#记一次将maven本地仓库拷贝到其他机器的坑" class="headerlink" title="记一次将maven本地仓库拷贝到其他机器的坑"></a>记一次将maven本地仓库拷贝到其他机器的坑</h1><p>因为公司对安全要求较高，因此对网络的控制非常严格，BUT项目是与其他公司联合开发的，有很多依赖要么是内网上版本太低，要么是直接没有，把所有依赖放到私服又找不到管理私服的大佬（没办法，老牌企业的通病吧，找人干活要钱都难~），于是想到把原开发机器上的本地maven仓库字节拷贝到内网环境，然鹅折磨人的事情开始了~</p>
 <p>由于内网还是架设有私服库的，本人入司也没几天，直接拷贝别人的settings.xml就开始，然后本地仓库已存在的依赖，却没法直接使用，始终在提示依赖找不到，而私服库上有没有对应版本。</p>
 <p>在maven官网上彻底的研究了一翻settings.xml，可以参见<a href="https://elfdemonster.github.io/2019/10/20/maven-settings-xml/" target="_blank" rel="noopener">另一篇文章</a>，对setting.xml进行了重新配置</p>
@@ -438,7 +439,8 @@
 </li>
 <li><p>删除maven仓库中所有.lastUpdated、_maven.repositories、_remote.repositories文件。这样maven就不会在进行验证，可以直接从本地库解析依赖。（为什么？参考上文maven仓库更新分析）</p>
 </li>
-<li><p>删除脚本，设置maven仓库路径，并修改对应的文件名即可</p>
+<li><p>windows删除脚本，设置maven仓库路径，并修改对应的文件名即可</p>
+<p><em>（网上搜到的，也不知道原出处是哪里，也有其他系统的版本，反正不是我自己写的，感谢大佬~）</em></p>
 <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">set</span> REPOSITORY_PATH=maven_repository_path</span><br><span class="line"><span class="comment">rem 搜索中。。。。</span></span><br><span class="line"><span class="keyword">for</span> /f "delims=" <span class="variable">%%i</span> <span class="keyword">in</span> ('<span class="built_in">dir</span> /b /s "<span class="variable">%REPOSITORY_PATH%</span>\*lastUpdated*"') <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">del</span> /s /q <span class="variable">%%i</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">rem 搜索完毕</span></span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -481,6 +483,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/24/jvm调优/" rel="prev" title="jvm调优">
+                jvm调优 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -575,7 +581,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -586,7 +592,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -597,7 +603,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -652,7 +658,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#记一次将maven本地仓库拷贝到其他机器的坑"><span class="nav-number">1.</span> <span class="nav-text">记一次将maven本地仓库拷贝到其他机器的坑</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#maven解析下载依赖的规则"><span class="nav-number">1.</span> <span class="nav-text">maven解析下载依赖的规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#记一次将maven本地仓库拷贝到其他机器的坑"><span class="nav-number">2.</span> <span class="nav-text">记一次将maven本地仓库拷贝到其他机器的坑</span></a></li></ol></div>
             
 
           </div>

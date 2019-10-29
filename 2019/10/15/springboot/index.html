@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="ElfShare">
 <meta property="og:description" content="注解Auto-config @SpringBootApplication SpringBootAppication一个注解相当于以下三个注解  @EnableAutoConfiguration: enable Spring Boot’s auto-configuration mechanism @ComponentScan: enable @Component scan on the packag">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-18T15:13:18.100Z">
+<meta property="og:updated_time" content="2019-10-24T10:33:44.141Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot">
 <meta name="twitter:description" content="注解Auto-config @SpringBootApplication SpringBootAppication一个注解相当于以下三个注解  @EnableAutoConfiguration: enable Spring Boot’s auto-configuration mechanism @ComponentScan: enable @Component scan on the packag">
@@ -472,6 +472,27 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Autowired   </span><br><span class="line">@Qualifier(&quot;userServiceImpl&quot;)   </span><br><span class="line">public IUserService userService;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>spring boot支持多种初始化方式，可以使用properties文件、YAML文件、环境变量、命令行、外部配置等方式。</p>
+<p>springboot不同的配置方式有不同的加载顺序，并且后加载的会覆盖前面加载的相同配置。</p>
+<h2 id="配置加载顺序"><a href="#配置加载顺序" class="headerlink" title="配置加载顺序"></a><a href="https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-external-config.html#boot-features-external-config-command-line-args" target="_blank" rel="noopener">配置加载顺序</a></h2><ol>
+<li><a href="https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/using-boot-devtools.html#using-boot-devtools-globalsettings" target="_blank" rel="noopener">Devtools的全局设置</a>,保存在用户目录下：~/.spring-boot-devtools.properties。（在devtools生效的情况下起作用）</li>
+<li>在测试中用<a href="https://docs.spring.io/spring/docs/5.1.10.RELEASE/javadoc-api/org/springframework/test/context/TestPropertySource.html" target="_blank" rel="noopener">@TestPropertySource</a>注解修饰</li>
+<li><a href="https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/api/org/springframework/boot/test/context/SpringBootTest.html" target="_blank" rel="noopener">@SpringbootTest</a>和<a href="https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-tests" target="_blank" rel="noopener">指定测试注解的测试用例</a>中设置的属性</li>
+<li>命令行声明</li>
+<li><code>SPRING_APPLICATION_JSON</code>中的属性（环境变量或系统属性中的JSON）</li>
+<li><code>ServletConfig</code>中初始化的参数</li>
+<li><code>ServletContext</code>中初始化的参数</li>
+<li>JNDI属性：<code>java:comp/env</code></li>
+<li>Java的系统参数（<code>System.getProperites</code>）</li>
+<li>操作系统环境变量</li>
+<li><code>random.*</code>中的随机值属性（<code>RandomValuePropertySource</code>）</li>
+<li>jar包外部根据指定环境的application配置文件，可以是<code>application-{profile}.properties</code>也可以是<code>application-{profile}.yml</code>。<a href="https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-external-config.html#boot-features-external-config-profile-specific-properties" target="_blank" rel="noopener">指定不同环境下的配置文件参考</a></li>
+<li>jar包内部根据指定环境的application配置文件，可以是<code>application-{profile}.properties</code>也可以是<code>application-{profile}.yml</code>。<a href="https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-external-config.html#boot-features-external-config-profile-specific-properties" target="_blank" rel="noopener">指定不同环境下的配置文件参考</a></li>
+<li>jar包外部的<code>application.properties</code>或者<code>application.yml</code></li>
+<li>jar包内部的<code>application.properties</code>或者<code>application.yml</code></li>
+<li><a href="https://docs.spring.io/spring/docs/5.1.10.RELEASE/javadoc-api/org/springframework/context/annotation/PropertySource.html" target="_blank" rel="noopener"><code>@PropertySource</code></a> 注解标注的<code>@Configuration</code>类.</li>
+<li>默认属性。必须在<code>SpringApplication.setDefaultProperties</code>中设置</li>
+</ol>
 
       
     </div>
@@ -611,7 +632,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -622,7 +643,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -633,7 +654,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -688,7 +709,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#注解"><span class="nav-number">1.</span> <span class="nav-text">注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Auto-config"><span class="nav-number">1.1.</span> <span class="nav-text">Auto-config</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#注解"><span class="nav-number">1.</span> <span class="nav-text">注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Auto-config"><span class="nav-number">1.1.</span> <span class="nav-text">Auto-config</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化"><span class="nav-number">2.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置加载顺序"><span class="nav-number">2.1.</span> <span class="nav-text">配置加载顺序</span></a></li></ol></li></ol></div>
             
 
           </div>
