@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,spring,webservice,">
+  <meta name="keywords" content="java,spring,webservice,spring-ws,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化； 将代码转成">
-<meta name="keywords" content="java,spring,webservice">
+<meta name="keywords" content="java,spring,webservice,spring-ws">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring-ws">
 <meta property="og:url" content="http://yoursite.com/2019/11/05/spring-ws/index.html">
@@ -88,7 +88,7 @@
 <meta property="og:description" content="spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化； 将代码转成">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/11/05/spring-ws/spring-deps.png">
-<meta property="og:updated_time" content="2019-11-08T06:26:39.021Z">
+<meta property="og:updated_time" content="2019-11-09T10:07:28.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring-ws">
 <meta name="twitter:description" content="spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化； 将代码转成">
@@ -398,17 +398,6 @@
 
                 
                 
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/JAVA/spring/springboot/" itemprop="url" rel="index">
-                    <span itemprop="name">springboot</span>
-                  </a>
-                </span>
-
-                
-                
               
             </span>
           
@@ -509,7 +498,63 @@
 <h3 id="Configration方式"><a href="#Configration方式" class="headerlink" title="@Configration方式"></a><code>@Configration</code>方式</h3><p>在创建MessageDispatcherServlet bean时，设置transformWsdlLocations为true即可</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public ServletRegistrationBean messageDispacherServlet(ApplicationContext applicationContext)&#123;</span><br><span class="line">    MessageDispatcherServlet servlet = new MessageDispatcherServlet();</span><br><span class="line">    servlet.setApplicationContext(applicationContext);</span><br><span class="line">    servlet.setTransformWsdlLocations(true);</span><br><span class="line">    return new ServletRegistrationBean(servlet, &quot;/services/*&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>两种方式都可以动态发布WSDL，即不需要手动编写WSDL，在浏览器中类似<code>http://localhost:8080/holidayService/holiday.wsdl</code>链接即可看到WSDL。</p>
-<h2 id="MessageDispacher"><a href="#MessageDispacher" class="headerlink" title="MessageDispacher"></a>MessageDispacher</h2><p>spring-ws接收并转发webservice请求的核心类。</p>
+<h2 id="共享组件"><a href="#共享组件" class="headerlink" title="共享组件"></a>共享组件</h2><p>在spring-ws中，在客户端和服务端会有很多共享的组件内容，它们共同展现了构建的webservice，这些组件可能我们并不会直接引用，但是理解它们十分有必要。</p>
+<h3 id="webservice-message"><a href="#webservice-message" class="headerlink" title="webservice message"></a>webservice message</h3><h4 id="WebServiceMessage"><a href="#WebServiceMessage" class="headerlink" title="WebServiceMessage"></a><code>WebServiceMessage</code></h4><p>spring-ws中的一个核心接口。<code>WebServiceMessage</code>展示了与协议无关的XML消息，接口代码很简单，只有定义了三个方法，返回消息载体的<code>javax.xml.transform.Source</code>和<code>javax.xml.transform.Result</code>以及一个写出消息流的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">WebServiceMessage</span> </span>&#123;</span><br><span class="line">    <span class="function">Source <span class="title">getPayloadSource</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Result <span class="title">getPayloadResult</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">writeTo</span><span class="params">(OutputStream var1)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>XML的操作方式有很多种，不通操作对<code>Source</code>和<code>Result</code>的包装如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>Source/Result的实现</th>
+<th>包装的XML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>javax.xml.transform.dom.DOMSource</code></td>
+<td><code>org.w3c.dom.Node</code></td>
+</tr>
+<tr>
+<td><code>javax.xml.transform.dom.DOMResult</code></td>
+<td><code>org.w3c.dom.Node</code></td>
+</tr>
+<tr>
+<td><code>javax.xml.transform.sax.SAXSource</code></td>
+<td><code>org.xml.sax.InputSource</code> and <code>org.xml.sax.XMLReader</code></td>
+</tr>
+<tr>
+<td><code>javax.xml.transform.sax.SAXResult</code></td>
+<td><code>org.xml.sax.ContentHandler</code></td>
+</tr>
+<tr>
+<td><code>javax.xml.transform.stream.StreamSource</code></td>
+<td><code>java.io.File</code>, <code>java.io.InputStream</code>, or <code>java.io.Reader</code></td>
+</tr>
+<tr>
+<td><code>javax.xml.transform.stream.StreamResult</code></td>
+<td><code>java.io.File</code>, <code>java.io.OutputStream</code>, or <code>java.io.Writer</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="SoapMessage"><a href="#SoapMessage" class="headerlink" title="SoapMessage"></a><code>SoapMessage</code></h4><p><code>SoapMessage</code>是<code>WebServiceMessage</code>的实现类，包含了SOAP的一些特性方法。一般情况下，不应当依赖或者直接使用<code>SoapMessage</code>，因为我们可以在<code>WebServiceMessage</code>中通过<code>getPayloadSource()</code>和<code>getPayloadResult()</code>获取到SOAP消息体的内容，因此只有在需要增加Header、获取附件等SOAP特定的动作时，才应当将<code>WebServiceMessage</code>转换为<code>SoapMessage</code>。</p>
+<h4 id="消息工厂"><a href="#消息工厂" class="headerlink" title="消息工厂"></a>消息工厂</h4><p>spring-ws的消息主要通过<code>WebServiceMessageFactory</code>来生产，该接口之定义了两个方法，一个送来生产空消息，一个通过消息流生产消息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">WebServiceMessageFactory</span> </span>&#123;</span><br><span class="line">	<span class="function">WebServiceMessage <span class="title">createWebServiceMessage</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">WebServiceMessage <span class="title">createWebServiceMessage</span><span class="params">(InputStream inputStream)</span> <span class="keyword">throws</span> InvalidXmlException, IOException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>WebServiceMessageFactor</code>主要有两个具体实现，SAAJ（SOAP with Attachments API for Java）和基于AXIS2的AXIOM（AXIS Object Model）。</p>
+<ul>
+<li><p><code>SaajSoapMessageFactory</code></p>
+<p>从J2EE1.4开始就存在，可以适用于大部分的应用服务器。</p>
+<p>SAAJ是基于DOM的，所有的SOAP消息都是保存在内存中的，因此<strong>如果消息体比较大或者内存紧张的情况，不适合使用SAAJ，而应当适用AXIOM</strong>。</p>
+<p>weblogic9实现SAAJ1.2有一个BUG，虽然它实现了SAAJ1.2的所有接口，但是在调用时会抛出<code>UnsupportedOperationException</code>,spring-ws在weblogic9中通过使用SAAJ1.1版本来解决这个问题。</p>
+</li>
+<li><p><code>AxiomSoapMessageFactory</code></p>
+<p><code>AxiomSoapMessageFactoyr</code>使用AXIS2 Object Model来创建Soap消息，它主要基于StAX（Stream API for XML）。</p>
+<p>StAX读取XML消息的时候采取拉取的机制，因此读取大消息的时候效率会更好。</p>
+<p>需要注意<code>payloadCaching</code>的设置，默认为true，表示消息只能读取一次。</p>
+<p>AXIOM支持在<code>StreamingWebServiceMessage</code>中定义的完整消息流，可以处理支持JAXB2的对象。</p>
+</li>
+</ul>
+<p><code>SaajSoapMessageFactor</code>和<code>AxiomSoapMessageFactory</code>都有<code>soapVersion</code>属性，默认是 1.1，也可以设置为1.2</p>
+<h2 id="MessageDispacher"><a href="#MessageDispacher" class="headerlink" title="MessageDispacher"></a>MessageDispacher</h2><h2 id="MessageDispacher-1"><a href="#MessageDispacher-1" class="headerlink" title="MessageDispacher"></a>MessageDispacher</h2><p>spring-ws接收并转发webservice请求的核心类。</p>
 
       
     </div>
@@ -532,6 +577,8 @@
             <a href="/tags/spring/" rel="tag"># spring</a>
           
             <a href="/tags/webservice/" rel="tag"># webservice</a>
+          
+            <a href="/tags/spring-ws/" rel="tag"># spring-ws</a>
           
         </div>
       
@@ -669,7 +716,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -724,7 +771,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#契约先行"><span class="nav-number">1.1.</span> <span class="nav-text">契约先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-ws整体结构图"><span class="nav-number">1.2.</span> <span class="nav-text">spring-ws整体结构图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSD"><span class="nav-number">2.</span> <span class="nav-text">XSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务契约"><span class="nav-number">3.</span> <span class="nav-text">服务契约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编写WSDL步骤"><span class="nav-number">3.1.</span> <span class="nav-text">编写WSDL步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpoint"><span class="nav-number">4.</span> <span class="nav-text">Endpoint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#路由-PayloadRoot"><span class="nav-number">4.1.</span> <span class="nav-text">路由@PayloadRoot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布WSDL"><span class="nav-number">5.</span> <span class="nav-text">发布WSDL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统XML配置方式"><span class="nav-number">5.1.</span> <span class="nav-text">传统XML配置方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configration方式"><span class="nav-number">5.2.</span> <span class="nav-text">@Configration方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MessageDispacher"><span class="nav-number">6.</span> <span class="nav-text">MessageDispacher</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#契约先行"><span class="nav-number">1.1.</span> <span class="nav-text">契约先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-ws整体结构图"><span class="nav-number">1.2.</span> <span class="nav-text">spring-ws整体结构图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSD"><span class="nav-number">2.</span> <span class="nav-text">XSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务契约"><span class="nav-number">3.</span> <span class="nav-text">服务契约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编写WSDL步骤"><span class="nav-number">3.1.</span> <span class="nav-text">编写WSDL步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpoint"><span class="nav-number">4.</span> <span class="nav-text">Endpoint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#路由-PayloadRoot"><span class="nav-number">4.1.</span> <span class="nav-text">路由@PayloadRoot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布WSDL"><span class="nav-number">5.</span> <span class="nav-text">发布WSDL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统XML配置方式"><span class="nav-number">5.1.</span> <span class="nav-text">传统XML配置方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configration方式"><span class="nav-number">5.2.</span> <span class="nav-text">@Configration方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享组件"><span class="nav-number">6.</span> <span class="nav-text">共享组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webservice-message"><span class="nav-number">6.1.</span> <span class="nav-text">webservice message</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WebServiceMessage"><span class="nav-number">6.1.1.</span> <span class="nav-text">WebServiceMessage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SoapMessage"><span class="nav-number">6.1.2.</span> <span class="nav-text">SoapMessage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息工厂"><span class="nav-number">6.1.3.</span> <span class="nav-text">消息工厂</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MessageDispacher"><span class="nav-number">7.</span> <span class="nav-text">MessageDispacher</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MessageDispacher-1"><span class="nav-number">8.</span> <span class="nav-text">MessageDispacher</span></a></li></ol></div>
             
 
           </div>
