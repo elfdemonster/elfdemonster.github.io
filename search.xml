@@ -3,7 +3,8 @@
   <entry>
     <title>spring-ws</title>
     <url>/2019/11/05/spring-ws/</url>
-    <content><![CDATA[<p><a href="https://spring.io/projects/spring-ws#overview" target="_blank" rel="noopener">spring webservice官网</a></p>
+    <content><![CDATA[<p>[TOC]</p>
+<p><a href="https://spring.io/projects/spring-ws#overview" target="_blank" rel="noopener">spring webservice官网</a></p>
 <p><a href="https://github.com/spring-projects/spring-ws" target="_blank" rel="noopener">源码库</a></p>
 <p>本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。</p>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。</p>
@@ -119,7 +120,35 @@
 </li>
 </ul>
 <p><code>SaajSoapMessageFactor</code>和<code>AxiomSoapMessageFactory</code>都有<code>soapVersion</code>属性，默认是 1.1，也可以设置为1.2</p>
-<h2 id="MessageDispacher"><a href="#MessageDispacher" class="headerlink" title="MessageDispacher"></a>MessageDispacher</h2><p>spring-ws接收并转发webservice请求的核心类。</p>
+<h3 id="MessageContext"><a href="#MessageContext" class="headerlink" title="MessageContext"></a><code>MessageContext</code></h3><p>在webservice中，消息通常是成对出现的。客户端创建请求消息，经过一系列的转换发送到服务端；服务端创建响应消息返回给客户端。</p>
+<p>spring-ws在一个请求链中存在一个上下文，即<code>MessageContext</code>，保存了请求和响应消息的属性。客户端的上下文是<code>WebServiceTemplate</code>创建的，服务端的上下文是从指定的输入流中读取的，比如HTTP是从<code>HttpServletRequest</code>中读取，<code>HttpServletResponse</code>中响应。</p>
+<h3 id="TransportContext"><a href="#TransportContext" class="headerlink" title="TransportContext"></a><code>TransportContext</code></h3><p>SOAP的一个关键信息是传输无关，因此spring-ws不支持HTTP通过URL请求，而是支持通过消息内容来请求。</p>
+<p>有时候可能需要获取客户端和服务端的底层传输信息，spring-ws中有一个传输上下文，及<code>TransportContext</code>，从<code>TransportContext</code>中可以获取底层的<code>WebServiceConnection</code>(在服务端实质上一般是<code>HttpServletConnetion</code>，客户端一般是<code>HttpUrlConnection</code>或者<code>CommonsHttpConnection</code>）。</p>
+<p>比如在服务端想获取请求的IP地址，可以如下方式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">TransportContext context = TransportContextHolder.getTransportContext();</span><br><span class="line">HttpServletConnection connection = (HttpServletConnection )context.getConnection();</span><br><span class="line">HttpServletRequest request = connection.getHttpServletRequest();</span><br><span class="line">String ipAddress = request.getRemoteAddr();</span><br></pre></td></tr></table></figure>
+<h2 id="消息记录与跟踪"><a href="#消息记录与跟踪" class="headerlink" title="消息记录与跟踪"></a>消息记录与跟踪</h2><p><em>保证Commons Logging是1.1或以上版本，不要集成Log4J的TRACE级别。</em></p>
+<p>服务端：</p>
+<p><code>org.springframework.ws.server.MessageTracing</code></p>
+<p><code>org.springframework.ws.server.MessageTracing.sent</code></p>
+<p><code>org.springframework.ws.server.MessageTracing.received</code></p>
+<p>客户端：</p>
+<p><code>org.springframework.ws.client.MessageTracing.sent</code></p>
+<p><code>org.springframework.ws.client.MessageTracing.received</code></p>
+<p>log4j.properties</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">log4j.rootCategory=INFO, stdout</span><br><span class="line">log4j.logger.org.springframework.ws.client.MessageTracing.sent=TRACE</span><br><span class="line">log4j.logger.org.springframework.ws.client.MessageTracing.received=DEBUG</span><br><span class="line"></span><br><span class="line">log4j.logger.org.springframework.ws.server.MessageTracing=DEBUG</span><br><span class="line"></span><br><span class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.stdout.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.stdout.layout.ConversionPattern=%p [%c&#123;3&#125;] %m%n</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="MessageDispatcher"><a href="#MessageDispatcher" class="headerlink" title="MessageDispatcher"></a>MessageDispatcher</h2><p>spring-ws服务端的核心是<code>MessageDispatcher</code>，它接收并转发webservice请求到<code>@Endpoint</code>上去。spring-ws处理XML极其灵活，一个endpoint可以处理DOM家族的W3C DOM，JDOM，dom4j，XOM，也可以处理性能较好的SAX和StAX，还可以处理通过XPath从消息中获取信息，甚至是像JAXB，Castor，XMLBeans，JiBX，XStream的编组技术实现对象与XML的互相转换。</p>
+<p><code>MessageDispatcher</code>的处理流程图</p>
+<p><img src="/2019/11/05/spring-ws/sequence.png" alt="MessageDispatcher流程图"></p>
+<ol>
+<li>通过搜索<code>EndpointMappings</code>找到合适的endpoint，执行调用链(pre-processors, post-processors, and endpoints) ；</li>
+<li>搜索Adaptor，<code>MessageDispatcher</code>委派Adaptor调用endpoint；</li>
+<li>原路径返回响应消息。</li>
+</ol>
+<p>消息转发运行在message context上，并不传输特定的输入输出流，因此特定的传输需要读入到<code>MessageContext</code>中。HTTP传输是通过一个Spring Web的<code>HandlerIntercepor</code>,<code>WebServiceMessageReceiverHandlerAdapter</code>来实现的，通过<code>MessageDispatcherServlet</code>来转发请求。</p>
+<h2 id="传输"><a href="#传输" class="headerlink" title="传输"></a>传输</h2><p>spring-ws支持多种传输协议，一般使用HTTP传输，也可以支持JMS和email。</p>
+<h3 id="MessageDispatcherServlet"><a href="#MessageDispatcherServlet" class="headerlink" title="MessageDispatcherServlet"></a><code>MessageDispatcherServlet</code></h3><p><code>MessageDispatcherServlet</code>是一个标准的<code>Servlet</code>，与spring web的<code>DispatcherServlet</code>的使用方式相同，它是<code>MessageDispather</code>的包装实现。</p>
+<p><code>MessageDispatcherServlet</code>可以通过设置transformWsdlLocations属性为true来动态发布WSDL。</p>
 ]]></content>
       <categories>
         <category>技术</category>
