@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="[TOC] spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化；">
+<meta name="description" content="spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化； 将代码转成">
 <meta name="keywords" content="java,spring,webservice,spring-ws">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring-ws">
 <meta property="og:url" content="http://yoursite.com/2019/11/05/spring-ws/index.html">
 <meta property="og:site_name" content="ElfShare">
-<meta property="og:description" content="[TOC] spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化；">
+<meta property="og:description" content="spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化； 将代码转成">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/11/05/spring-ws/spring-deps.png">
 <meta property="og:image" content="http://yoursite.com/2019/11/05/spring-ws/sequence.png">
-<meta property="og:updated_time" content="2019-11-14T12:24:20.077Z">
+<meta property="og:updated_time" content="2019-11-22T14:26:51.629Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring-ws">
-<meta name="twitter:description" content="[TOC] spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化；">
+<meta name="twitter:description" content="spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化； 将代码转成">
 <meta name="twitter:image" content="http://yoursite.com/2019/11/05/spring-ws/spring-deps.png">
 
 
@@ -439,8 +439,7 @@
       
 
       
-        <p>[TOC]</p>
-<p><a href="https://spring.io/projects/spring-ws#overview" target="_blank" rel="noopener">spring webservice官网</a></p>
+        <p><a href="https://spring.io/projects/spring-ws#overview" target="_blank" rel="noopener">spring webservice官网</a></p>
 <p><a href="https://github.com/spring-projects/spring-ws" target="_blank" rel="noopener">源码库</a></p>
 <p>本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。</p>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。</p>
@@ -585,7 +584,188 @@
 <h2 id="传输"><a href="#传输" class="headerlink" title="传输"></a>传输</h2><p>spring-ws支持多种传输协议，一般使用HTTP传输，也可以支持JMS和email。</p>
 <h3 id="MessageDispatcherServlet"><a href="#MessageDispatcherServlet" class="headerlink" title="MessageDispatcherServlet"></a><code>MessageDispatcherServlet</code></h3><p><code>MessageDispatcherServlet</code>是一个标准的<code>Servlet</code>，与spring web的<code>DispatcherServlet</code>的使用方式相同，它是<code>MessageDispather</code>的包装实现。</p>
 <p><code>MessageDispatcherServlet</code>可以通过设置transformWsdlLocations属性为true来动态发布WSDL。</p>
-
+<h3 id="嵌入式HTTP服务器"><a href="#嵌入式HTTP服务器" class="headerlink" title="嵌入式HTTP服务器"></a>嵌入式HTTP服务器</h3><p>spring-ws提供了一种基于JRE1.6的HTTP服务器的传输方式。这种方式使用比较简单，不需要任何外部的依赖，只需要定义一个服务器实例来处理请求即可。HTTP的一个关键工厂Bean是：<code>SimpleHttpServerFactoryBean</code>。</p>
+<p>spring-ws中两个处理htpp的重要类：<code>WsdlDefinitionHttpHandler</code>和<code>WebServiceMessageReceiverHttpHandler</code>。</p>
+<ul>
+<li><code>WsdlDefinitionHttpHandler</code>负责处理获取<code>WsdlDefinition</code>的GET请求</li>
+<li><code>WebServiceMessageReceiverHttpHandler</code>通过<code>WebServiceMessageFactory</code>（通常是<code>SaajSoapMessageFactory</code>）和<code>WebServiceMessageReceiver</code>（通常是<code>SoapMessageDispatcher</code>）来处理webservice请求。</li>
+</ul>
+<p>简单的配置实例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"messageFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.saaj.SaajSoapMessageFactory"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"messageReceiver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.server.SoapMessageDispatcher"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"endpointMappings"</span> <span class="attr">ref</span>=<span class="string">"endpointMapping"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"endpointMapping"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultEndpoint"</span> <span class="attr">ref</span>=<span class="string">"stockEndpoint"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"httpServer"</span> <span class="attr">class</span>=<span class="string">"org.springframework.remoting.support.SimpleHttpServerFactoryBean"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"contexts"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"/StockService.wsdl"</span> <span class="attr">value-ref</span>=<span class="string">"wsdlHandler"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"/StockService"</span> <span class="attr">value-ref</span>=<span class="string">"soapHandler"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">map</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"soapHandler"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.transport.http.WebServiceMessageReceiverHttpHandler"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"messageFactory"</span> <span class="attr">ref</span>=<span class="string">"messageFactory"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"messageReceiver"</span> <span class="attr">ref</span>=<span class="string">"messageReceiver"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"wsdlHandler"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.transport.http.WsdlDefinitionHttpHandler"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"definition"</span> <span class="attr">ref</span>=<span class="string">"wsdlDefinition"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="XMPP传输"><a href="#XMPP传输" class="headerlink" title="XMPP传输"></a>XMPP传输</h3><p>spring-ws2.0开始引入了XMPP（Jabber），基于<a href="https://www.igniterealtime.org/projects/smack/index.jsp" target="_blank" rel="noopener">Smack</a>类库。</p>
+<p>spring-ws XMPP使用方式类似于其他协议，<code>WebServiceTemplate</code>通过<code>XmppMessageSende</code>发送消息， <code>MessageDispatcher</code>转发消息给<code>XmppMessageReceiver</code>。</p>
+<p>简单配置实例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"messageFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.saaj.SaajSoapMessageFactory"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"connection"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.transport.xmpp.support.XmppConnectionFactoryBean"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"host"</span> <span class="attr">value</span>=<span class="string">"jabber.org"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"username"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"password"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"messagingReceiver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.transport.xmpp.XmppMessageReceiver"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"messageFactory"</span> <span class="attr">ref</span>=<span class="string">"messageFactory"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection"</span> <span class="attr">ref</span>=<span class="string">"connection"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"messageReceiver"</span> <span class="attr">ref</span>=<span class="string">"messageDispatcher"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"messageDispatcher"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.server.SoapMessageDispatcher"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"endpointMappings"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span></span></span><br><span class="line"><span class="tag">              <span class="attr">class</span>=<span class="string">"org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultEndpoint"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.example.MyEndpoint"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Endpoints"><a href="#Endpoints" class="headerlink" title="Endpoints"></a>Endpoints</h2><p>Endpoints是spring-ws服务端的核心概念，spring-ws通过Endpoints来定义服务端动作，来接收处理XML请求，并生成响应XML。spring-ws处理和响应XML方式有很多种方式。</p>
+<p>可以通过<code>@Endpoint</code>注解来创建endpoint，每一个endpoint都可以定义多个处理请求的方法（支持前面章节提到的所有xml），一般通过<code>@PayloadRoot</code>可以指定每一个方法处理哪一类的消息，</p>
+<p>实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> samples;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Element;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ws.server.endpoint.annotation.Endpoint;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ws.server.endpoint.annotation.PayloadRoot;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ws.soap.SoapHeader;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>                                                                                      </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationOrderEndpoint</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span>                                                                                   </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">AnnotationOrderEndpoint</span><span class="params">(OrderService orderService)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.orderService = orderService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@PayloadRoot</span>(localPart = <span class="string">"order"</span>, namespace = <span class="string">"http://samples"</span>)                              </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">order</span><span class="params">(@RequestPayload Element orderElement)</span> </span>&#123;                                    </span><br><span class="line">    Order order = createOrder(orderElement);</span><br><span class="line">    orderService.createOrder(order);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@PayloadRoot</span>(localPart = <span class="string">"orderRequest"</span>, namespace = <span class="string">"http://samples"</span>)                       </span><br><span class="line">  <span class="meta">@ResponsePayload</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Order <span class="title">getOrder</span><span class="params">(@RequestPayload OrderRequest orderRequest, SoapHeader header)</span> </span>&#123;        </span><br><span class="line">    checkSoapHeaderForSomething(header);</span><br><span class="line">    <span class="keyword">return</span> orderService.getOrder(orderRequest.getId());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>order方法通过<code>@RequestPayload</code>注解的<code>Element</code>为请求参数，是一个DOM的Element，该方法<code>void</code>即没有响应。</li>
+<li>getOrder请求参数是OrderRequest，OrderReqeust应当是一个通过<code>@XmlRootElement</code>注解的JAXB2对象，参数SoapHeader表示请求报文里面需要包含SOAP头信息。<code>ResponsePayload</code>表示getOrder会有个Order类型的响应。</li>
+</ul>
+<p>XML配置方式的spring项目，需要配置启用webserivce的驱动</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:sws</span>=<span class="string">"http://www.springframework.org/schema/web-services"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">      http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/web-services</span></span></span><br><span class="line"><span class="tag"><span class="string">      http://www.springframework.org/schema/web-services/web-services.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">sws:annotation-driven</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>@Configuration</code>配置方式，则增加<code>@EnableWs</code>注解即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWs</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringWsConfig</span>  <span class="keyword">extends</span> <span class="title">WsConfigurerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// @Bean definitions go here</span></span><br><span class="line">    </span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(List&lt;EndpointInterceptor&gt; interceptors)</span> </span>&#123;</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> MyInterceptor());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addArgumentResolvers</span><span class="params">(List&lt;MethodArgumentResolver&gt; argumentResolvers)</span> </span>&#123;</span><br><span class="line">    argumentResolvers.add(<span class="keyword">new</span> MyArgumentResolver());</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="comment">// More overridden methods ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Endpoints中的处理消息的方法"><a href="#Endpoints中的处理消息的方法" class="headerlink" title="Endpoints中的处理消息的方法"></a>Endpoints中的处理消息的方法</h3><p>通过<code>@RequestPayload</code>注解将请求消息映射到载体中。</p>
+<p>下表展示了消息处理支持的参数类型，以及是否应该被<code>@RequestPayload</code>注解修饰。</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Supported parameter types</th>
+<th><code>@RequestPayload</code> required?</th>
+<th>Additional notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TrAX</td>
+<td><code>javax.xml.transform.Source</code> and sub-interfaces (<code>DOMSource</code>, <code>SAXSource</code>, <code>StreamSource</code>, and <code>StAXSource</code>)</td>
+<td>Yes</td>
+<td>Enabled by default.</td>
+</tr>
+<tr>
+<td>W3C DOM</td>
+<td><code>org.w3c.dom.Element</code></td>
+<td>Yes</td>
+<td>Enabled by default</td>
+</tr>
+<tr>
+<td>dom4j</td>
+<td><code>org.dom4j.Element</code></td>
+<td>Yes</td>
+<td>Enabled when dom4j is on the classpath.</td>
+</tr>
+<tr>
+<td>JDOM</td>
+<td><code>org.jdom.Element</code></td>
+<td>Yes</td>
+<td>Enabled when JDOM is on the classpath.</td>
+</tr>
+<tr>
+<td>XOM</td>
+<td><code>nu.xom.Element</code></td>
+<td>Yes</td>
+<td>Enabled when XOM is on the classpath.</td>
+</tr>
+<tr>
+<td>StAX</td>
+<td><code>javax.xml.stream.XMLStreamReader</code> and <code>javax.xml.stream.XMLEventReader</code></td>
+<td>Yes</td>
+<td>Enabled when StAX is on the classpath.</td>
+</tr>
+<tr>
+<td>XPath</td>
+<td>Any boolean, double, <code>String</code>, <code>org.w3c.Node</code>, <code>org.w3c.dom.NodeList</code>, or type that can be converted from a <code>String</code> by a Spring 3 <a href="http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/validation.html#core-convert" target="_blank" rel="noopener">conversion service</a>, and that is annotated with <code>@XPathParam</code>.</td>
+<td>No</td>
+<td>Enabled by default, see <a href="https://docs.spring.io/spring-ws/docs/current/reference/#server-xpath-param" target="_blank" rel="noopener">the section called <code>XPathParam</code></a>.</td>
+</tr>
+<tr>
+<td>Message context</td>
+<td><code>org.springframework.ws.context.MessageContext</code></td>
+<td>No</td>
+<td>Enabled by default.</td>
+</tr>
+<tr>
+<td>SOAP</td>
+<td><code>org.springframework.ws.soap.SoapMessage</code>, <code>org.springframework.ws.soap.SoapBody</code>, <code>org.springframework.ws.soap.SoapEnvelope</code>, <code>org.springframework.ws.soap.SoapHeader</code>, and <code>org.springframework.ws.soap.SoapHeaderElement</code>s when used in combination with the <code>@SoapHeader</code> annotation.</td>
+<td>No</td>
+<td>Enabled by default.</td>
+</tr>
+<tr>
+<td>JAXB2</td>
+<td>Any type that is annotated with <code>javax.xml.bind.annotation.XmlRootElement</code>, and <code>javax.xml.bind.JAXBElement</code>.</td>
+<td>Yes</td>
+<td>Enabled when JAXB2 is on the classpath.</td>
+</tr>
+<tr>
+<td>OXM</td>
+<td>Any type supported by a Spring OXM <a href="http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/oxm.html#d0e26164" target="_blank" rel="noopener"><code>Unmarshaller</code></a>.</td>
+<td>Yes</td>
+<td>Enabled when the <code>unmarshaller</code> attribute of <code>&lt;sws:annotation-driven/&gt;</code> is specified.</td>
+</tr>
+</tbody>
+</table>
+<p>代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(@RequestPayload Element element)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(@RequestPayload DOMSource domSource, SoapHeader header)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(@RequestPayload MyJaxb2Object requestObject, @RequestPayload Element element, Message messageContext)</span></span></span><br></pre></td></tr></table></figure>
+<p>如需扩展自定义参数类型，则需要参见<code>DefaultMethodEndpointAdapter</code>和 <code>MethodArgumentResolver</code></p>
+<h4 id="XPathParam补充说明"><a href="#XPathParam补充说明" class="headerlink" title="@XPathParam补充说明"></a><code>@XPathParam</code>补充说明</h4><p>通过XPath标注指定节点，取得指定节点的值，以便完成相应的操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> samples;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Source;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.ws.server.endpoint.annotation.Endpoint;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ws.server.endpoint.annotation.Namespace;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ws.server.endpoint.annotation.PayloadRoot;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ws.server.endpoint.annotation.XPathParam;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationOrderEndpoint</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">AnnotationOrderEndpoint</span><span class="params">(OrderService orderService)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.orderService = orderService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@PayloadRoot</span>(localPart = <span class="string">"orderRequest"</span>, namespace = <span class="string">"http://samples"</span>)</span><br><span class="line">  <span class="meta">@Namespace</span>(prefix = <span class="string">"s"</span>, uri=<span class="string">"http://samples"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Order <span class="title">getOrder</span><span class="params">(@XPathParam(<span class="string">"/s:orderRequest/@id"</span>)</span> <span class="keyword">int</span> orderId) </span>&#123;</span><br><span class="line">    Order order = orderService.getOrder(orderId);</span><br><span class="line">    <span class="comment">// create Source from order and return it</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用<code>@XPathParam</code>注解的情况下，XPath支持的数据类型</p>
+<ul>
+<li><code>boolean</code> or <code>Boolean</code></li>
+<li><code>double</code> or <code>Double</code></li>
+<li><code>String</code></li>
+<li><code>Node</code></li>
+<li><code>NodeList</code></li>
+</ul>
+<h4 id="消息处理方法的返回类型"><a href="#消息处理方法的返回类型" class="headerlink" title="消息处理方法的返回类型"></a>消息处理方法的返回类型</h4><p>又返回消息的处理方法，需要明确指定返回类型，并使用<code>@ResponsePayload</code>注解该方法。</p>
+<p>下表展示了支持的返回类型，以及是否应该被<code>@ResponsePayload</code>注解标注。</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Supported return types</th>
+<th><code>@ResponsePayload</code> required?</th>
+<th>Additional notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No response</td>
+<td><code>void</code></td>
+<td>No</td>
+<td>Enabled by default.</td>
+</tr>
+<tr>
+<td>TrAX</td>
+<td><code>javax.xml.transform.Source</code> and sub-interfaces (<code>DOMSource</code>, <code>SAXSource</code>, <code>StreamSource</code>, and <code>StAXSource</code>)</td>
+<td>Yes</td>
+<td>Enabled by default.</td>
+</tr>
+<tr>
+<td>W3C DOM</td>
+<td><code>org.w3c.dom.Element</code></td>
+<td>Yes</td>
+<td>Enabled by default</td>
+</tr>
+<tr>
+<td>dom4j</td>
+<td><code>org.dom4j.Element</code></td>
+<td>Yes</td>
+<td>Enabled when dom4j is on the classpath.</td>
+</tr>
+<tr>
+<td>JDOM</td>
+<td><code>org.jdom.Element</code></td>
+<td>Yes</td>
+<td>Enabled when JDOM is on the classpath.</td>
+</tr>
+<tr>
+<td>XOM</td>
+<td><code>nu.xom.Element</code></td>
+<td>Yes</td>
+<td>Enabled when XOM is on the classpath.</td>
+</tr>
+<tr>
+<td>JAXB2</td>
+<td>Any type that is annotated with <code>javax.xml.bind.annotation.XmlRootElement</code>, and <code>javax.xml.bind.JAXBElement</code>.</td>
+<td>Yes</td>
+<td>Enabled when JAXB2 is on the classpath.</td>
+</tr>
+<tr>
+<td>OXM</td>
+<td>Any type supported by a Spring OXM <a href="http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/oxm.html#d0e26096" target="_blank" rel="noopener"><code>Marshaller</code></a>.</td>
+<td>Yes</td>
+<td>Enabled when the <code>marshaller</code> attribute of <code>&lt;sws:annotation-driven/&gt;</code> is specified.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Endpoint-mappings"><a href="#Endpoint-mappings" class="headerlink" title="Endpoint mappings"></a>Endpoint mappings</h2>
       
     </div>
     
@@ -801,7 +981,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#契约先行"><span class="nav-number">1.1.</span> <span class="nav-text">契约先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-ws整体结构图"><span class="nav-number">1.2.</span> <span class="nav-text">spring-ws整体结构图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSD"><span class="nav-number">2.</span> <span class="nav-text">XSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务契约"><span class="nav-number">3.</span> <span class="nav-text">服务契约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编写WSDL步骤"><span class="nav-number">3.1.</span> <span class="nav-text">编写WSDL步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpoint"><span class="nav-number">4.</span> <span class="nav-text">Endpoint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#路由-PayloadRoot"><span class="nav-number">4.1.</span> <span class="nav-text">路由@PayloadRoot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布WSDL"><span class="nav-number">5.</span> <span class="nav-text">发布WSDL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统XML配置方式"><span class="nav-number">5.1.</span> <span class="nav-text">传统XML配置方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configration方式"><span class="nav-number">5.2.</span> <span class="nav-text">@Configration方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享组件"><span class="nav-number">6.</span> <span class="nav-text">共享组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webservice-message"><span class="nav-number">6.1.</span> <span class="nav-text">webservice message</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WebServiceMessage"><span class="nav-number">6.1.1.</span> <span class="nav-text">WebServiceMessage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SoapMessage"><span class="nav-number">6.1.2.</span> <span class="nav-text">SoapMessage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息工厂"><span class="nav-number">6.1.3.</span> <span class="nav-text">消息工厂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageContext"><span class="nav-number">6.2.</span> <span class="nav-text">MessageContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TransportContext"><span class="nav-number">6.3.</span> <span class="nav-text">TransportContext</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息记录与跟踪"><span class="nav-number">7.</span> <span class="nav-text">消息记录与跟踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MessageDispatcher"><span class="nav-number">8.</span> <span class="nav-text">MessageDispatcher</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输"><span class="nav-number">9.</span> <span class="nav-text">传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageDispatcherServlet"><span class="nav-number">9.1.</span> <span class="nav-text">MessageDispatcherServlet</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#契约先行"><span class="nav-number">1.1.</span> <span class="nav-text">契约先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-ws整体结构图"><span class="nav-number">1.2.</span> <span class="nav-text">spring-ws整体结构图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSD"><span class="nav-number">2.</span> <span class="nav-text">XSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务契约"><span class="nav-number">3.</span> <span class="nav-text">服务契约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编写WSDL步骤"><span class="nav-number">3.1.</span> <span class="nav-text">编写WSDL步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpoint"><span class="nav-number">4.</span> <span class="nav-text">Endpoint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#路由-PayloadRoot"><span class="nav-number">4.1.</span> <span class="nav-text">路由@PayloadRoot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布WSDL"><span class="nav-number">5.</span> <span class="nav-text">发布WSDL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统XML配置方式"><span class="nav-number">5.1.</span> <span class="nav-text">传统XML配置方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configration方式"><span class="nav-number">5.2.</span> <span class="nav-text">@Configration方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享组件"><span class="nav-number">6.</span> <span class="nav-text">共享组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webservice-message"><span class="nav-number">6.1.</span> <span class="nav-text">webservice message</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WebServiceMessage"><span class="nav-number">6.1.1.</span> <span class="nav-text">WebServiceMessage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SoapMessage"><span class="nav-number">6.1.2.</span> <span class="nav-text">SoapMessage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息工厂"><span class="nav-number">6.1.3.</span> <span class="nav-text">消息工厂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageContext"><span class="nav-number">6.2.</span> <span class="nav-text">MessageContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TransportContext"><span class="nav-number">6.3.</span> <span class="nav-text">TransportContext</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息记录与跟踪"><span class="nav-number">7.</span> <span class="nav-text">消息记录与跟踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MessageDispatcher"><span class="nav-number">8.</span> <span class="nav-text">MessageDispatcher</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输"><span class="nav-number">9.</span> <span class="nav-text">传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageDispatcherServlet"><span class="nav-number">9.1.</span> <span class="nav-text">MessageDispatcherServlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌入式HTTP服务器"><span class="nav-number">9.2.</span> <span class="nav-text">嵌入式HTTP服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XMPP传输"><span class="nav-number">9.3.</span> <span class="nav-text">XMPP传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpoints"><span class="nav-number">10.</span> <span class="nav-text">Endpoints</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Endpoints中的处理消息的方法"><span class="nav-number">10.1.</span> <span class="nav-text">Endpoints中的处理消息的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#XPathParam补充说明"><span class="nav-number">10.1.1.</span> <span class="nav-text">@XPathParam补充说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息处理方法的返回类型"><span class="nav-number">10.1.2.</span> <span class="nav-text">消息处理方法的返回类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpoint-mappings"><span class="nav-number">11.</span> <span class="nav-text">Endpoint mappings</span></a></li></ol></div>
             
 
           </div>
