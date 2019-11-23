@@ -329,7 +329,10 @@
 </tr>
 </tbody>
 </table>
-<h2 id="Endpoint-mappings"><a href="#Endpoint-mappings" class="headerlink" title="Endpoint mappings"></a>Endpoint mappings</h2>]]></content>
+<h2 id="Endpoint-mappings"><a href="#Endpoint-mappings" class="headerlink" title="Endpoint mappings"></a>Endpoint mappings</h2><p>Endpoint mapping负责映射请求到对应的endpoints上。</p>
+<p>每一个<code>EndpointMapping</code>都会提供一个<code>EndpointInvocationChain</code>,即endpoint的调用链。<code>EndpointInvocationChain</code>持有endpoint的对应请求，以及请求和响应的拦截器列表。当一个请求进来时，<code>MessageDispacher</code>会让对应的endpoint mapping来检查请求并创建合适的<code>EndpointInvocationChain</code>，然后<code>MessageDispacher</code>调用endpoint和调用链上的所有拦截器。</p>
+<p>Interceptors拦截器，虽然是endpoint mapping的可选配置，但是它可以提供非常丰富的自定义功能。比如可以通过拦截器使得一个endpoint不仅仅支持基础消息处理，还可以按需制定SOAP消息头。</p>
+]]></content>
       <categories>
         <category>技术</category>
         <category>JAVA</category>

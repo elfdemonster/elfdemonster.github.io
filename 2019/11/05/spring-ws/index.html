@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/11/05/spring-ws/spring-deps.png">
 <meta property="og:image" content="http://yoursite.com/2019/11/05/spring-ws/sequence.png">
-<meta property="og:updated_time" content="2019-11-22T14:26:51.629Z">
+<meta property="og:updated_time" content="2019-11-23T01:37:43.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring-ws">
 <meta name="twitter:description" content="spring webservice官网 源码库 本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。 概述开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。 契约先行即先编写WSDL，XSD文件约定好接口，然后再编写代码。 契约先行：  WSDL是服务的定义，是一个需要多方遵守的规则，因此应当尽可能的保持WSDL的固化； 将代码转成">
@@ -765,7 +765,10 @@
 </tr>
 </tbody>
 </table>
-<h2 id="Endpoint-mappings"><a href="#Endpoint-mappings" class="headerlink" title="Endpoint mappings"></a>Endpoint mappings</h2>
+<h2 id="Endpoint-mappings"><a href="#Endpoint-mappings" class="headerlink" title="Endpoint mappings"></a>Endpoint mappings</h2><p>Endpoint mapping负责映射请求到对应的endpoints上。</p>
+<p>每一个<code>EndpointMapping</code>都会提供一个<code>EndpointInvocationChain</code>,即endpoint的调用链。<code>EndpointInvocationChain</code>持有endpoint的对应请求，以及请求和响应的拦截器列表。当一个请求进来时，<code>MessageDispacher</code>会让对应的endpoint mapping来检查请求并创建合适的<code>EndpointInvocationChain</code>，然后<code>MessageDispacher</code>调用endpoint和调用链上的所有拦截器。</p>
+<p>Interceptors拦截器，虽然是endpoint mapping的可选配置，但是它可以提供非常丰富的自定义功能。比如可以通过拦截器使得一个endpoint不仅仅支持基础消息处理，还可以按需制定SOAP消息头。</p>
+
       
     </div>
     
