@@ -578,7 +578,75 @@
 </tr>
 </tbody>
 </table>
-<h1 id="spring-ws的安全特性"><a href="#spring-ws的安全特性" class="headerlink" title="spring-ws的安全特性"></a>spring-ws的安全特性</h1>]]></content>
+<h1 id="spring-ws的安全特性"><a href="#spring-ws的安全特性" class="headerlink" title="spring-ws的安全特性"></a>spring-ws的安全特性</h1><p>spring-ws安全主要有三种方式</p>
+<ul>
+<li>认证授权，通过认证授权方式确认客户端的真实性。</li>
+<li>数字签名，通过用哈希和私钥对报文生成签名来保证安全。</li>
+<li>加解密，通过请求方加密，服务方解密的方式来保证安全。</li>
+</ul>
+<p>以上三种方式通过<code>XwsSecurityInterceptor</code> 或者<code>Wss4jSecurityInterceptor</code>来实现。</p>
+<h2 id="XwsSecurityInterceptor"><a href="#XwsSecurityInterceptor" class="headerlink" title="XwsSecurityInterceptor"></a><code>XwsSecurityInterceptor</code></h2><p><code>XwsSecurityInterceptor</code> 是一个enpoint拦截器，基于SUN的XML和Web Service Security package（XWSS），是Java Web Services Developer Pack (<a href="http://java.sun.com/webservices/" target="_blank" rel="noopener"><em>Java WSDP</em></a>)的一部分。<em>XWSS需要引用SUN 1.5 JDK 和 the SUN SAAJ ， 而<code>Wss4jSecurityInterceptor</code>不需要。</em></p>
+<p><code>XwsSecurityInterceptor</code>需要配置安全策略XML文件，拦截器通过这个文件知道对SOAP请求和响应的拦截切面，拦截策略可以通过spring source对 <code>policyConfiguration</code> 属性的设置来完成，策略文件可以包含多个元素，根元素是<code>SecurityConfiguration</code>。</p>
+<p>另外，<code>XwsSecurityInterceptor</code>需要一个或多个回调处理<code>CallbackHandler</code>，这些处理器用来获取证书和私钥，并验证用户凭证等操作。spring-ws提供常见的安全问题的处理器，比如通过Spring Security认证管理器进行认证，对相应消息进行基于X509证书的签名。通过 <code>callbackHandler</code> 或 <code>callbackHandlers</code>属性对拦截器设置一个或多个回调处理器。</p>
+<p>简单的配置示例</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"wsSecurityInterceptor"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.security.xwss.XwsSecurityInterceptor"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"policyConfiguration"</span> <span class="attr">value</span>=<span class="string">"classpath:securityPolicy.xml"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"callbackHandlers"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"certificateHandler"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"authenticationHandler"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>表示拦截器使用类路径中<code>securityPolicy.xml</code>文件作为策略配置文件，并有两个回调处理器。</p>
+<h4 id="KeyStores"><a href="#KeyStores" class="headerlink" title="KeyStores"></a>KeyStores</h4><p>大多是的加密操作，都会用到一个标准的<code>java.security.KeyStore</code>对象，这些操作包括证书验证、消息签名、签名验证、加密，但是不包括对用户名和时间戳的验证。</p>
+<p><code>java.security.KeyStore</code>对象是对秘钥和证书的存储，包含三种不同类型的元素：</p>
+<ul>
+<li>私钥，给自己使用的秘钥，和公钥在一条认证链上。在WS-Security中，涉及到对消息的签名和解密。</li>
+<li>对称秘钥，发送和接收双方使用相同的秘钥对消息进行加解密操作。</li>
+<li>受信证书，X509被称为受信证书是因为密钥库所有者相信证书中的公钥确实属于证书的所有者。在WS-Security中，这些证书用于证书验证，签名验证和加密操作。</li>
+</ul>
+<h5 id="KeyTool"><a href="#KeyTool" class="headerlink" title="KeyTool"></a>KeyTool</h5><p>Java虚拟机中包含了秘钥和证书的管理程序（<a href="https://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/keytool.html" target="_blank" rel="noopener">keytool</a>），可以通过该程序生成新的keysstore。</p>
+<h5 id="KeyStoreFactoryBean"><a href="#KeyStoreFactoryBean" class="headerlink" title="KeyStoreFactoryBean"></a>KeyStoreFactoryBean</h5><p><code>KeyStoreFactoryBean</code>可以使spring配置加载keystore更简单，可以通过<code>locaiton</code>属性设置keystore的路径（<em>如果不配置keystore路径，会生成一个空的keystore，无法匹配需求</em>）。<code>password</code>属性配置验证keystore数据的完整性（<em>不配置密码，则不进行完整性验证</em>）。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"keyStore"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.security.support.KeyStoreFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"password"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"location"</span> <span class="attr">value</span>=<span class="string">"classpath:org/springframework/ws/soap/security/xwss/test-keystore.jks"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="KeyStoreCallbackHandler"><a href="#KeyStoreCallbackHandler" class="headerlink" title="KeyStoreCallbackHandler"></a>KeyStoreCallbackHandler</h5><p>在<code>XwsSecurityInterceptor</code>中使用keystores时，需要定义回调处理器（<code>KeyStoreCallbackHandler</code>）。这个回调处理器包含三个属性<code>keyStore</code>，<code>trustStore</code>，<code>symmetricStore</code>，分别处理不同的加密方式，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Cryptographic operation</th>
+<th>Keystore used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certificate validation</td>
+<td>first the <code>keyStore</code>, then the <code>trustStore</code></td>
+</tr>
+<tr>
+<td>Decryption based on private key</td>
+<td><code>keyStore</code></td>
+</tr>
+<tr>
+<td>Decryption based on symmetric key</td>
+<td><code>symmetricStore</code></td>
+</tr>
+<tr>
+<td>Encryption based on public key certificate</td>
+<td><code>trustStore</code></td>
+</tr>
+<tr>
+<td>Encryption based on symmetric key</td>
+<td><code>symmetricStore</code></td>
+</tr>
+<tr>
+<td>Signing</td>
+<td><code>keyStore</code></td>
+</tr>
+<tr>
+<td>Signature verification</td>
+<td><code>trustStore</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>KeyStoreCallbackHandler</code>中的<code>privateKeyPassword</code>用来解锁keystore中的秘钥。</p>
+<p>如果<code>symmetricStore</code>没有配置,会寻找默认的 <code>keyStore</code>，如果key或者truststore没有设置，会使用Java标准的机制去加载或者创建。</p>
+<p> <code>KeyStoreCallbackHandler</code>验证请求的证书或者签名使用配置示例</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"keyStoreHandler"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.security.xwss.callback.KeyStoreCallbackHandler"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"trustStore"</span> <span class="attr">ref</span>=<span class="string">"trustStore"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"trustStore"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.security.support.KeyStoreFactoryBean"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"location"</span> <span class="attr">value</span>=<span class="string">"classpath:truststore.jks"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"changeit"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> <code>KeyStoreCallbackHandler</code>解密请求的证书或加密响应消息使用配置示例</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"keyStoreHandler"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.security.xwss.callback.KeyStoreCallbackHandler"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"keyStore"</span> <span class="attr">ref</span>=<span class="string">"keyStore"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"privateKeyPassword"</span> <span class="attr">value</span>=<span class="string">"changeit"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"keyStore"</span> <span class="attr">class</span>=<span class="string">"org.springframework.ws.soap.security.support.KeyStoreFactoryBean"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"location"</span> <span class="attr">value</span>=<span class="string">"classpath:keystore.jks"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"changeit"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h4><h2 id="Wss4jSecurityInterceptor"><a href="#Wss4jSecurityInterceptor" class="headerlink" title="Wss4jSecurityInterceptor"></a><code>Wss4jSecurityInterceptor</code></h2>]]></content>
       <categories>
         <category>技术</category>
         <category>JAVA</category>
