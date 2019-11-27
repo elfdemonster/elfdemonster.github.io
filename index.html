@@ -314,6 +314,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/nginx-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Elf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ElfShare">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/27/nginx-config/" itemprop="url">nginx-config</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-27T14:16:34+08:00">
+                2019-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/27/nginx-config/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/27/nginx-config/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://nginx.org/en/docs/" target="_blank" rel="noopener">nginx官方配置文档</a></p>
+<h2><span id="nginx-zhuan-fa-qing-qiu-guo-cheng">nginx转发请求过程</span><a href="#nginx-zhuan-fa-qing-qiu-guo-cheng" class="header-anchor">#</a></h2><p><a href="http://nginx.org/en/docs/http/request_processing.html" target="_blank" rel="noopener">How nginx processes a request</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen      80;</span><br><span class="line">    server_name example.org www.example.org;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen      80;</span><br><span class="line">    server_name example.net www.example.net;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen      80;</span><br><span class="line">    server_name example.com www.example.com;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种配置情况下，第一个server就是默认配置。请求通过Header中的”Host”来匹配到对应的服务，如果没有匹配到任何server_name，则路由到默认server（第一个server）处理。</p>
+<h3><span id="default-server"><code>default_server</code></span><a href="#default-server" class="header-anchor">#</a></h3><p>通过给<code>listen</code>增加 <code>default_server</code>参数明确指定哪个server是默认server（<code>default_server</code>参数从0.8.21版本开始有效）。<strong>注意：<code>default_server</code>是用作用于端口的，而不是<code>server_name</code>的</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">80</span> default_server;</span><br><span class="line">    <span class="attribute">server_name</span> example.net www.example.net;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="fang-zhi-shi-yong-wei-ding-yi-de-de-sever-name-chu-li-qing-qiu">防止使用未定义的的sever name处理请求</span><a href="#fang-zhi-shi-yong-wei-ding-yi-de-de-sever-name-chu-li-qing-qiu" class="header-anchor">#</a></h3><p>可以定义一个<code>server_name</code>属性为空的server来处理没有Host的请求（从0.8.48版本开始，<code>server_name</code>默认是””，之前的版本默认是hostname）。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> <span class="string">""</span>;</span><br><span class="line">    <span class="attribute">return</span>      <span class="number">444</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个配置标识请求Header中Host为空时，会返回“444”响应码，然后关闭链接。</p>
+<h3><span id="ji-yu-ming-cheng-he-ip-de-zu-he-server">基于名称和IP的组合server</span><a href="#ji-yu-ming-cheng-he-ip-de-zu-he-server" class="header-anchor">#</a></h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">192.168.1.1:80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.org www.example.org;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">192.168.1.1:80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.net www.example.net;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">192.168.1.2:80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com www.example.com;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请求Header中的Host匹配到<code>server_name</code>后，会转发到IP+端口上，如果为匹配到<code>server_name</code>，如前面所述，会转发到第一个server来处理请求，当然也可以通过<code>default_server</code>属性来指定端口的默认server。</p>
+<h3><span id="jian-dan-pei-zhi-shi-li">简单配置实例</span><a href="#jian-dan-pei-zhi-shi-li" class="header-anchor">#</a></h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.org www.example.org;</span><br><span class="line">    <span class="attribute">root</span>        /data/www;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">index</span>   index.html index.php;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> <span class="regexp">~* \.(gif|jpg|png)$</span> &#123;</span><br><span class="line">        <span class="attribute">expires</span> <span class="number">30d</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line">        <span class="attribute">fastcgi_pass</span>  localhost:<span class="number">9000</span>;</span><br><span class="line">        <span class="attribute">fastcgi_param</span> SCRIPT_FILENAME</span><br><span class="line">                      <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">        <span class="attribute">include</span>       fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上配置，处理请求流程如下：</p>
+<ul>
+<li>请求“<code>/logo.gif</code>”，首先匹配到”/“，然后匹配正则表达式“<code>\.(gif|jpg|png)$</code>”，匹配成功，因此进入“<code>\.(gif|jpg|png)$</code>”的location，使用指令<code>“root /data/www</code>”处理请求，请求映射到“<code>/data/www/logo.gif</code>”文件上返回给客户端；</li>
+<li>请求“<code>/index.php</code>”，首先匹配到”/“，然后匹配正则表达式“<code>\.(php)$</code>”，匹配成功，因此进入“<code>\.(php)$</code>”的location，请求转发到FastCGI服务器监听的localhost:9000上，<a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_param" target="_blank" rel="noopener">fastcgi_param</a>指令会将FastCGI的SCRIPT_FILENAME参数设置为“<code>/data/www/index.php</code>”，然后FastCGI服务器执行这个文件。<code>$document_root</code>参数会设置为<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#root" target="_blank" rel="noopener">root</a>指令的值，<code>$fastcgi_script_name</code> 会设置为请求的URI，这里就是“<code>/index.php</code>”；</li>
+<li>请求“<code>/about.html</code>”，首先匹配到“/”，其他匹配都不成功，因此由“/”的location来处理，使用指令“<code>root /data/www</code>”将请求映射到<code>/data/www/about.html</code>文件返回给客户端。</li>
+<li>请求“<code>/</code>”的处理会比较复杂，“/”只会匹配到“/”，因此由“/”的location来处理，<a href="http://nginx.org/en/docs/http/ngx_http_index_module.html#index" target="_blank" rel="noopener">index</a>指令会通过“<code>root /data/www</code>”指令验证index参数中的文件是否存在。如果<code>/data/www/index.html</code>存在，则转发到<code>/data/www/index.html</code>；如果<code>/data/www/index.html</code>不存在 <code>/data/www/index.php</code> 存在，则内部转发到 <code>/index.php</code> ，nginx会再次搜索配置的locations，如同客户端发起新的请求一样，那么请求将会如第二条所述，最终由FastGCI服务器处理；</li>
+</ul>
+<h3><span id="zong-jie">总结</span><a href="#zong-jie" class="header-anchor">#</a></h3><p>请求进来时，nginx会按照如下步骤来匹配请求（匹配请求只用URI不带参数的部分）</p>
+<ul>
+<li>在配置的<code>location</code>列表中搜索URI不带参数的最完整字符串，若果存在则停止匹配</li>
+<li>逐渐减短匹配串</li>
+<li>匹配”/“（如果匹配到”/“，不会停止匹配，会继续匹配正则表达式，正则表达式匹配到则执行正则表达式内的配置，正则表达未匹配到，则进入”/“。）</li>
+<li>匹配正则表达式</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/05/spring-ws/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1997,178 +2185,6 @@ at Pipe._handle.close (net.js:606:12)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/16/maven命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Elf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ElfShare">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/16/maven命令/" itemprop="url">maven命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-16T14:59:27+08:00">
-                2019-10-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/Maven/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/10/16/maven命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/16/maven命令/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
-<li>查看包依赖<br>mvn dependency:tree  -Dverbose</li>
-<li>跳过测试<br>mvn clean install -Dmaven.test.skip</li>
-<li>mvn compile –debug<br>mvn -Dfile.encoding=UTF-8 compile</li>
-<li>mvn mybatis-generator:generate</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/16/maven命令/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2221,7 +2237,7 @@ at Pipe._handle.close (net.js:606:12)
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2232,7 +2248,7 @@ at Pipe._handle.close (net.js:606:12)
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2243,7 +2259,7 @@ at Pipe._handle.close (net.js:606:12)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
