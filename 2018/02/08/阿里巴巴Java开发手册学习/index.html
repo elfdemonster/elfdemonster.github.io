@@ -436,7 +436,7 @@
       
 
       
-        <h2 id="一、编程规约"><a href="#一、编程规约" class="headerlink" title="一、编程规约"></a>一、编程规约</h2><h4 id="（一）命名风格"><a href="#（一）命名风格" class="headerlink" title="（一）命名风格"></a>（一）命名风格</h4><ol>
+        <h2><span id="yi-bian-cheng-gui-yue">一、编程规约</span><a href="#yi-bian-cheng-gui-yue" class="header-anchor">#</a></h2><h4><span id="yi-ming-ming-feng-ge">（一）命名风格</span><a href="#yi-ming-ming-feng-ge" class="header-anchor">#</a></h4><ol>
 <li>下划线和美元符号不能作为起始也不能结束；</li>
 <li>禁止拼音与英文混合，禁止直接使用中文；</li>
 <li>类名必须驼峰，除DO/BO/DTO/VO/AO外；</li>
@@ -451,7 +451,7 @@
 <li>枚举类名带上Enum后缀，成员名称全大写，单词间用下划线隔开；</li>
 </ol>
 <a id="more"></a>
-<h4 id="（二）常量定义"><a href="#（二）常量定义" class="headerlink" title="（二）常量定义"></a>（二）常量定义</h4><ol>
+<h4><span id="er-chang-liang-ding-yi">（二）常量定义</span><a href="#er-chang-liang-ding-yi" class="header-anchor">#</a></h4><ol>
 <li>不允许任何魔法值出现；</li>
 <li>如意混淆的字符少用，如long或者Long初始值时，使用L，不用l；</li>
 <li>不使用大而全的常量类，按功能归类；</li>
@@ -462,7 +462,7 @@
 <li>应用内共享常量：放置在一方库中，通常是modules中的constant目录下；</li>
 <li>子工程内部共享常量：在当前子工程的constant目录下；</li>
 <li>包内共享常量：在当前包下单独的constant目录下；</li>
-<li>类内共享常量：直接在类内部private static final定义。<br>5.变量值若果在一个范围内变化，且带有名称外的延申属性，定义为枚举类。<h4 id="（三）代码格式"><a href="#（三）代码格式" class="headerlink" title="（三）代码格式"></a>（三）代码格式</h4></li>
+<li>类内共享常量：直接在类内部private static final定义。<br>5.变量值若果在一个范围内变化，且带有名称外的延申属性，定义为枚举类。<h4><span id="san-dai-ma-ge-shi">（三）代码格式</span><a href="#san-dai-ma-ge-shi" class="header-anchor">#</a></h4></li>
 </ul>
 <ol>
 <li>大括号。如果内为空，则可以直接写成{}</li>
@@ -480,7 +480,7 @@
 <li>注释的双斜线与注释内容之间有且仅有一个空格；</li>
 <li>单行字符不超过120，否则换行。</li>
 <li>方法参数定义和传入时，多个参数逗号后边必须加空格；</li>
-<li>IDE的text file encoding设置为UTF-8；IDE中文件的换行符使用Unixgeshi ;<h4 id="（4）OOP规约"><a href="#（4）OOP规约" class="headerlink" title="（4）OOP规约"></a>（4）OOP规约</h4></li>
+<li>IDE的text file encoding设置为UTF-8；IDE中文件的换行符使用Unixgeshi ;<h4><span id="4-oop-gui-yue">（4）OOP规约</span><a href="#4-oop-gui-yue" class="header-anchor">#</a></h4></li>
 <li>避免通过一个类的对象引用访问此类的静态变量或静态方法，无畏增加编译器的解析成本，直接用类名访问；</li>
 <li>所有复写方法，必须加@override注解；</li>
 <li>相同参数类型，相同业务含义才可以使用Java的可变参数，放在参数列表最后，禁止使用Object，尽量不使用可变参数；</li>
@@ -499,7 +499,7 @@
 <li>定义DO/DTO/VO等POJO类时，不允许设置任何属性默认值；</li>
 <li>序列化类新增属性时，请不要修改serialVersionUID字段，避免反序列化失败；如果完全不兼容升级，避免发序列化混乱，请修改serialVersionUID值；</li>
 <li>构造方法禁止出现业务逻辑，如果有初始化逻辑，放在init方法中；</li>
-<li>POJO必须有toString方法；<h4 id="（5）集合处理"><a href="#（5）集合处理" class="headerlink" title="（5）集合处理"></a>（5）集合处理</h4></li>
+<li>POJO必须有toString方法；<h4><span id="5-ji-he-chu-li">（5）集合处理</span><a href="#5-ji-he-chu-li" class="header-anchor">#</a></h4></li>
 <li>关于hashCode和equals的处理，必须遵循：</li>
 </ol>
 <ul>
@@ -513,7 +513,7 @@
 <li>使用集合转数组的方法，必须使用集合的toArray（T[] array），传入的是类型完全一样的数组，大小就是list.size()；</li>
 <li>使用工具类Arrays.asList()把数组转成集合时，不能使用其修改集合相关的方法，它的add/remove/clear方法会抛出UnsupportedOperationException异常；</li>
 <li>泛型通配符&lt;? extends T&gt;来接收返回的数据，次写法的集合不能使用add方法，而&lt;? super T&gt;不能使用get方法，作为接口调用赋值时容易出错；</li>
-<li>不允许在foreach循环里进行元素的remove/add操作。remove元素请使用Iterator方式，如果兵法操作，需要对Iterator对象加锁。<h4 id="（6）并发处理"><a href="#（6）并发处理" class="headerlink" title="（6）并发处理"></a>（6）并发处理</h4></li>
+<li>不允许在foreach循环里进行元素的remove/add操作。remove元素请使用Iterator方式，如果兵法操作，需要对Iterator对象加锁。<h4><span id="6-bing-fa-chu-li">（6）并发处理</span><a href="#6-bing-fa-chu-li" class="header-anchor">#</a></h4></li>
 <li>获取单例对象需要保证线程安全，其中的方法也要保证线程安全；</li>
 <li>创建线程或线程池时，指定有意义的线程名称，方便出错时回溯；</li>
 <li>线程资源必须通过线程池提供，不允许在应用中自行显式创建线程；</li>
@@ -525,19 +525,19 @@
 <li>高并发时，同步调用应该考量锁的性能损耗。能用无锁数据结构，就不要用锁；能锁区块，就不要锁整个方法体；能用对象锁，就不要用类锁；避免在锁代码块中调用RPC方法；</li>
 <li>对多个资源、数据库表、对象同时加锁时，需要保持一致的加锁顺序，否则可能会造成死锁；</li>
 <li>并发修改统一记录时，避免更新丢失，需要加锁。要么在应用层加锁，要么在缓存加锁，要么在数据库层使用乐观锁，使用version作为更新依据；</li>
-<li>多线程并行处理定时任务时，Time运行多个TimeTask时，只要其中之一没有捕获抛出的异常，其他任务便会自动终止运行，使用ScheduleExecutorService则没有这个问题；<h4 id="（7）"><a href="#（7）" class="headerlink" title="（7）"></a>（7）</h4></li>
+<li>多线程并行处理定时任务时，Time运行多个TimeTask时，只要其中之一没有捕获抛出的异常，其他任务便会自动终止运行，使用ScheduleExecutorService则没有这个问题；<h4><span id="7">（7）</span><a href="#7" class="header-anchor">#</a></h4></li>
 <li>Math.random()这个方法返回的是dubble类型，注意取值的范围0&lt;= x &lt;=1（能够取到零值，注意除零异常），如果想获取整数类型的随机数，不允许将X放大10的若干倍数然后取整，直接使用Random对象的nextInt或者nextLong方法；</li>
 <li>获取当前毫秒数System.currentTimeMillis();而不是new Date().getTime();</li>
 </ol>
 <hr>
-<h2 id="二、异常日志"><a href="#二、异常日志" class="headerlink" title="二、异常日志"></a>二、异常日志</h2><h4 id="（1）异常处理"><a href="#（1）异常处理" class="headerlink" title="（1）异常处理"></a>（1）异常处理</h4><ol>
+<h2><span id="er-yi-chang-ri-zhi">二、异常日志</span><a href="#er-yi-chang-ri-zhi" class="header-anchor">#</a></h2><h4><span id="1-yi-chang-chu-li">（1）异常处理</span><a href="#1-yi-chang-chu-li" class="header-anchor">#</a></h4><ol>
 <li>Java类库中定义的一类RuntimeException可以通过预先检查进行规避，而不应该通过catch来处理；</li>
 <li>不允许用异常做流程控制，条件控制，因为异常的处理效率比条件分支低；</li>
 <li>不允许对打断代码进行try-catch，只对非稳定代码进行异常处理；</li>
 <li>不允许在finally块中使用return，finally块中的return返回后方法结束执行，不会再执行try块中的return语句；</li>
 </ol>
 <hr>
-<h2 id="三、MySQL数据库"><a href="#三、MySQL数据库" class="headerlink" title="三、MySQL数据库"></a>三、MySQL数据库</h2><h4 id="（1）建表规约"><a href="#（1）建表规约" class="headerlink" title="（1）建表规约"></a>（1）建表规约</h4><ol>
+<h2><span id="san-mysql-shu-ju-ku">三、MySQL数据库</span><a href="#san-mysql-shu-ju-ku" class="header-anchor">#</a></h2><h4><span id="1-jian-biao-gui-yue">（1）建表规约</span><a href="#1-jian-biao-gui-yue" class="header-anchor">#</a></h4><ol>
 <li>表达是与否概念的字段，必须使用is_xxx的方式命名，数据类型是unsigned tinyint（1表示是，0表示否）；</li>
 <li>表名、字段名必须使用小写字母或数字，禁止出现数字开头，禁止两个下划线中间只出现数字。数据库字段名的修改代价很大，因为无法进行预发布，所以字段名称需要慎重考虑；</li>
 <li>不允许表名使用复数名词；</li>
@@ -545,17 +545,17 @@
 <li>主键索引名为pk_字段名；唯一索引名为uk_字段名；普通索引名则为inx_字段名；</li>
 <li>小数类型为decimal，禁止使用float和duoble；</li>
 <li>如果存储的字符串长度几乎相等，使用char定长字符串类型；</li>
-<li>varchar是可变字符串，不预先分配存储空间，长度不要超过5000，如果存储长度大于此值，定义字段类型为text，独立出来一张表，用主键来对应，避免影响其他字段索引效率；<h4 id="（2）索引规约"><a href="#（2）索引规约" class="headerlink" title="（2）索引规约"></a>（2）索引规约</h4></li>
+<li>varchar是可变字符串，不预先分配存储空间，长度不要超过5000，如果存储长度大于此值，定义字段类型为text，独立出来一张表，用主键来对应，避免影响其他字段索引效率；<h4><span id="2-suo-yin-gui-yue">（2）索引规约</span><a href="#2-suo-yin-gui-yue" class="header-anchor">#</a></h4></li>
 <li>业务上具有唯一特性的字段，即使是多个字段的组合，也必须建成唯一索引；</li>
 <li>超过三个表禁止join，需要join的字段，数据类型必须绝对一致；多表关联查询时，保证被关联的字段需要有索引；</li>
 <li>在varchar字段上建立所以时，必须指定索引长度，没必要对全字段建立索引，根据实际文本区分度决定索引长度即可；</li>
 <li>页面所有禁止左模糊或者全模糊，如果需要请走搜索引擎来解决；</li>
-<li>如果有order by的场景，请注意利用索引的有序性。order by最后的字段是组合索引的一部分，并且放在组合顺序的最后，避免出现file_sort的情况，影响查询性能；<h4 id="（3）SQL语句"><a href="#（3）SQL语句" class="headerlink" title="（3）SQL语句"></a>（3）SQL语句</h4></li>
+<li>如果有order by的场景，请注意利用索引的有序性。order by最后的字段是组合索引的一部分，并且放在组合顺序的最后，避免出现file_sort的情况，影响查询性能；<h4><span id="3-sql-yu-ju">（3）SQL语句</span><a href="#3-sql-yu-ju" class="header-anchor">#</a></h4></li>
 <li>不要使用count(列名)或count(常量)来代替count(*)，count(*)是SQL92定义的标准统计行数的语法，跟数据库无关，跟null和非null无关；</li>
 <li>count(distinct col)计算改列除null之外的不重复行数，注意**count(distinct col1, col2)若果其中一列全为null，那么即使另一列有不同值，也返回0；</li>
 <li>当某列的值全是null时，count(col)的返回结果为0，但sum(col)的返回结果为null，因此sum()需注意NPE问题；</li>
 <li>使用ISNULL()来判断是否为NULL值。NULL与任何值比较结果都为NULL；</li>
-<li>代码中写分页查询逻辑时，若count不为0应直接返回，避免执行后面的分页语句；<h4 id="（4）ORM映射"><a href="#（4）ORM映射" class="headerlink" title="（4）ORM映射"></a>（4）ORM映射</h4></li>
+<li>代码中写分页查询逻辑时，若count不为0应直接返回，避免执行后面的分页语句；<h4><span id="4-orm-ying-she">（4）ORM映射</span><a href="#4-orm-ying-she" class="header-anchor">#</a></h4></li>
 <li>在表查询中，一律禁止使用*作为查询字段列表，需要哪些字段必须明确写明；</li>
 <li>POJO类的布尔属性不能加is，而数据库字段必须加is_，要求在resultMap中进行字段和属性之间的映射；</li>
 <li>不要使用resultClass当返回参数，即使所有类属性名与数据库字段一一对应，也需要定义，反过来，每一个表也必然有一个与之对应；</li>
@@ -778,7 +778,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、编程规约"><span class="nav-number">1.</span> <span class="nav-text">一、编程规约</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）命名风格"><span class="nav-number">1.0.1.</span> <span class="nav-text">（一）命名风格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）常量定义"><span class="nav-number">1.0.2.</span> <span class="nav-text">（二）常量定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（三）代码格式"><span class="nav-number">1.0.3.</span> <span class="nav-text">（三）代码格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）OOP规约"><span class="nav-number">1.0.4.</span> <span class="nav-text">（4）OOP规约</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（5）集合处理"><span class="nav-number">1.0.5.</span> <span class="nav-text">（5）集合处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（6）并发处理"><span class="nav-number">1.0.6.</span> <span class="nav-text">（6）并发处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（7）"><span class="nav-number">1.0.7.</span> <span class="nav-text">（7）</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#二、异常日志"><span class="nav-number">2.</span> <span class="nav-text">二、异常日志</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）异常处理"><span class="nav-number">2.0.1.</span> <span class="nav-text">（1）异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、MySQL数据库"><span class="nav-number">3.</span> <span class="nav-text">三、MySQL数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）建表规约"><span class="nav-number">3.0.1.</span> <span class="nav-text">（1）建表规约</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）索引规约"><span class="nav-number">3.0.2.</span> <span class="nav-text">（2）索引规约</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）SQL语句"><span class="nav-number">3.0.3.</span> <span class="nav-text">（3）SQL语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）ORM映射"><span class="nav-number">3.0.4.</span> <span class="nav-text">（4）ORM映射</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">一、编程规约#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.0.1.</span> <span class="nav-text">（一）命名风格#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.0.2.</span> <span class="nav-text">（二）常量定义#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.0.3.</span> <span class="nav-text">（三）代码格式#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.0.4.</span> <span class="nav-text">（4）OOP规约#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.0.5.</span> <span class="nav-text">（5）集合处理#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.0.6.</span> <span class="nav-text">（6）并发处理#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.0.7.</span> <span class="nav-text">（7）#</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">二、异常日志#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.0.1.</span> <span class="nav-text">（1）异常处理#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">三、MySQL数据库#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.0.1.</span> <span class="nav-text">（1）建表规约#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.0.2.</span> <span class="nav-text">（2）索引规约#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.0.3.</span> <span class="nav-text">（3）SQL语句#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.0.4.</span> <span class="nav-text">（4）ORM映射#</span></a></li></ol></li></div>
             
 
           </div>
