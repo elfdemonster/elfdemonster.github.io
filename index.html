@@ -439,12 +439,103 @@
       
         
           <blockquote>
-<p>因为工作需要，在基本没这么玩过web service的情况下，对接公司的ESB系统，由于项目基本是基于spring的，因此直接入手spring web service，虽然项目中功能简单，用到的内容也很少，在看文档的过程中，一时兴起，看完整个文档，并根据自己的理解基本做了翻译。然而由于个人技术水平和英文水平都不高，并且工作也比较繁忙，陆陆续续一个月时间才完成，质量也不是很高，有错误的地方欢迎指出，当然最好的方式还是直接查看官方文档，此文指望能让看到的人稍微有个了解。</p>
+<p>因为工作需要，在基本没这么玩过web service的情况下，对接公司的ESB（主要基于web service）系统，由于项目基本是基于spring的，因此直接入手spring web service，虽然项目中功能简单，用到的内容也很少，在看文档的过程中，一时兴起，看完整个文档，并根据自己的理解基本做了翻译。然而由于个人技术水平和英文水平都不高，并且工作也比较繁忙，陆陆续续一个月时间才完成，质量也不是很高，有错误的地方欢迎指出，当然最好的方式还是直接查看官方文档，此文只望能让看到的人对spring web service稍微有个了解。</p>
 </blockquote>
-<p>[TOC]</p>
-<p><a href="https://spring.io/projects/spring-ws#overview" target="_blank" rel="noopener">spring webservice官网</a></p>
+<div class="tocStart"></div>
+
+<!-- toc -->
+<ul>
+<li><a href="#gai-shu">概述</a><ul>
+<li><a href="#qi-yue-xian-xing">契约先行</a></li>
+<li><a href="#spring-ws-zheng-ti-jie-gou-tu">spring-ws整体结构图</a></li>
+</ul>
+</li>
+<li><a href="#xsd">XSD</a></li>
+<li><a href="#fu-wu-qi-yue">服务契约</a><ul>
+<li><a href="#bian-xie-wsdl-bu-zou">编写WSDL步骤</a></li>
+<li><a href="#endpoint">Endpoint</a><ul>
+<li><a href="#lu-you-payloadroot">路由<code>@PayloadRoot</code></a></li>
+</ul>
+</li>
+<li><a href="#fa-bu-wsdl">发布WSDL</a><ul>
+<li><a href="#chuan-tong-xml-pei-zhi-fang-shi">传统XML配置方式</a></li>
+<li><a href="#configration-fang-shi"><code>@Configration</code>方式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#gong-xiang-zu-jian">共享组件</a><ul>
+<li><a href="#webservice-message">webservice message</a><ul>
+<li><a href="#messagecontext"><code>MessageContext</code></a></li>
+<li><a href="#transportcontext"><code>TransportContext</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#xiao-xi-ji-lu-yu-gen-zong">消息记录与跟踪</a></li>
+<li><a href="#spring-ws-fu-wu-duan">spring-ws服务端</a><ul>
+<li><a href="#messagedispatcher">MessageDispatcher</a></li>
+<li><a href="#chuan-shu">传输</a><ul>
+<li><a href="#messagedispatcherservlet"><code>MessageDispatcherServlet</code></a></li>
+<li><a href="#qian-ru-shi-http-fu-wu-qi">嵌入式HTTP服务器</a></li>
+<li><a href="#xmpp-chuan-shu">XMPP传输</a></li>
+</ul>
+</li>
+<li><a href="#endpoints">Endpoints</a><ul>
+<li><a href="#endpoints-zhong-de-chu-li-xiao-xi-de-fang-fa">Endpoints中的处理消息的方法</a></li>
+</ul>
+</li>
+<li><a href="#endpoint-mappings">Endpoint mappings</a><ul>
+<li><a href="#ws-addressing">WS-Addressing</a></li>
+<li><a href="#endpointintercepor"><code>EndpointIntercepor</code></a></li>
+<li><a href="#yi-chang-chu-li">异常处理</a></li>
+</ul>
+</li>
+<li><a href="#fu-wu-duan-ce-shi">服务端测试</a><ul>
+<li><a href="#fu-wu-duan-ji-cheng-ce-shi">服务端集成测试</a></li>
+<li><a href="#requestcreator-he-requestcreators"><code>RequestCreator</code>和<code>RequestCreators</code></a></li>
+<li><a href="#responsematcher-he-responsematchers"><code>ResponseMatcher</code>和<code>ResponseMatchers</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#spring-ws-ke-hu-duan">spring-ws客户端</a><ul>
+<li><a href="#ke-hu-duan-api">客户端API</a><ul>
+<li><a href="#webservicetemplate"><code>WebServiceTemplate</code></a></li>
+</ul>
+</li>
+<li><a href="#ke-hu-duan-ce-shi">客户端测试</a><ul>
+<li><a href="#ke-hu-duan-ji-cheng-ce-shi">客户端集成测试</a></li>
+<li><a href="#requestmatcher-he-requestmatchers"><code>RequestMatcher</code> 和 <code>RequestMatchers</code></a></li>
+<li><a href="#responsecreator-he-responsecreators"><code>ResponseCreator</code> 和<code>ResponseCreators</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#spring-ws-de-an-quan-te-xing">spring-ws的安全特性</a><ul>
+<li><a href="#xwssecurityinterceptor"><code>XwsSecurityInterceptor</code></a><ul>
+<li><a href="#shu-zi-qian-ming">数字签名</a></li>
+<li><a href="#jia-jie-mi">加解密</a></li>
+<li><a href="#an-quan-zhong-de-yi-chang-chu-li">安全中的异常处理</a></li>
+</ul>
+</li>
+<li><a href="#wss4jsecurityinterceptor"><code>Wss4jSecurityInterceptor</code></a><ul>
+<li><a href="#wss4jsecurityinterceptor-pei-zhi"><code>Wss4jSecurityInterceptor</code>配置</a></li>
+<li><a href="#chu-li-shu-zi-zheng-shu">处理数字证书</a></li>
+<li><a href="#ren-zheng">认证</a></li>
+<li><a href="#an-quan-shi-jian-chuo">安全时间戳</a></li>
+<li><a href="#shu-zi-zheng-shu">数字证书</a></li>
+<li><a href="#jia-jie-mi-1">加解密</a></li>
+<li><a href="#an-quan-zhong-de-yi-chang-chu-li-1">安全中的异常处理</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<p>spring webservice官网](<a href="https://spring.io/projects/spring-ws#overview" target="_blank" rel="noopener">https://spring.io/projects/spring-ws#overview</a>)</p>
 <p><a href="https://github.com/spring-projects/spring-ws" target="_blank" rel="noopener">源码库</a></p>
-<p>本文参考spring-ws 2.4.6 GA版本，所有代码示例以及图片均来自官网。</p>
+<p>本文参考spring-ws 3.0.7.RELEASE版本，所有代码示例以及图片均来自<a href="https://docs.spring.io/spring-ws/docs/3.0.7.RELEASE/reference/#security-verifying-signatures" target="_blank" rel="noopener">官网</a>。</p>
 <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>开发webservice一般有两种方式，契约先行和契约后行。这里的契约指的是wsdl。</p>
 <h2 id="契约先行"><a href="#契约先行" class="headerlink" title="契约先行"></a>契约先行</h2><p>即先编写WSDL，XSD文件约定好接口，然后再编写代码。</p>
 <p>契约先行：</p>
