@@ -427,124 +427,26 @@
 
       
         
-          
-            <h1><span id="http-fu-zai-jun-heng">HTTP负载均衡</span><a href="#http-fu-zai-jun-heng" class="header-anchor">#</a></h1><h2><span id="chang-jian-zhi-ling">常见指令</span><a href="#chang-jian-zhi-ling" class="header-anchor">#</a></h2><h3><span id="ngx-http-proxy-module">ngx_http_proxy_module</span><a href="#ngx-http-proxy-module" class="header-anchor">#</a></h3><p>实现将请求转发到其他服务器。</p>
-<h4><span id="proxy-pass">proxy_pass</span><a href="#proxy-pass" class="header-anchor">#</a></h4><blockquote>
-<p>语法： <code>proxy_pass URL</code></p>
-<p>默认： <code>-</code></p>
-<p>上下文：locaiton，location中的if，limit_except</p>
-</blockquote>
-<p>为<code>location</code>映射的服务器设置协议、地址、URI。</p>
-<ul>
-<li><p>协议可以是<code>http</code>或者<code>https</code>；</p>
-</li>
-<li><p>地址可以是域名或者IP，可以同时指定端口；</p>
-</li>
-<li><p>地址也可以是以<code>unix</code>为前缀，包含在<code>:</code>中间的UNIX域名套接字路径；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_pass</span> http://unix:/tmp/backend.socket:/uri/;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果<code>proxy_pass</code>指令中带有URI，当请求被转发到服务器时，客户端原请求中标准的URI将会被指令中URI替换；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /name/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1/remote/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果<code>proxy_pass</code>指令中没有URI，当请求被转发到服务器时，将会使用客户端原请求中的URI；</p>
-</li>
-<li><p>不可替换URI的情况</p>
-<ul>
-<li><p><code>location</code>通过正字表达式定义；</p>
-</li>
-<li><p><code>location</code>内部通过<a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html#rewrite" target="_blank" rel="noopener">rewrite</a>指令修改过URI；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /name/ &#123;</span><br><span class="line">    <span class="attribute">rewrite</span>    /name/([^/]+) /users?name=<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>proxy_pass</code>指令中使用变量；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /name/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1<span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h4><span id="proxy-redirect">proxy_redirect</span><a href="#proxy-redirect" class="header-anchor">#</a></h4><blockquote>
-<p>语法：proxy_redirect default；</p>
-<p>​          proxy_redirect off;</p>
-<p>​          proxy_redirect redirect replacement;</p>
-<p>默认：proxy_redirect default;</p>
-<p>上下文：http, server, location</p>
-</blockquote>
-<p>设置对代理服务器响应头中的<code>Location</code>和<code>Refresh</code>字段的重写。</p>
-<ul>
-<li><p>该指令实现将代理服务器响应头中的字段“<code>Location: http://localhost:8000/two/some/uri/</code>”重写为“<code>Location: http://frontend/one/some/uri/</code>”；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_redirect</span> http://localhost:8000/two/ http://frontend/one/;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果省略<code>repacement</code>字符串，如果默认服务器不是<code>80</code>端口，那么将会插入默认服务器的名称和端口；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_redirect</span> http://localhost:8000/two/ /;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>指定<code>default</code>参数的情况下，使用<code>location</code>和<code>proxy_pass</code>的参数。如下两个指令是等价的</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /one/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span>     http://upstream:port/two/;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> default;</span><br></pre></td></tr></table></figure>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /one/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span>     http://upstream:port/two/;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> http://upstream:port/two/ /one/;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>proxy_pass</code>指令中有变量的情况下，<code>proxy_redirect</code>指令不能指定<code>default</code>参数；</p>
-</li>
-<li><p><code>replacement</code>中可以使用变量，<code>redirect</code>从1.1.11版本开始也可以使用变量；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_redirect</span> http://localhost:8000/ http://<span class="variable">$host</span>:<span class="variable">$server_port</span>/;</span><br></pre></td></tr></table></figure>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_redirect</span> http://<span class="variable">$proxy_host</span>:8000/ /;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>从1.1.11版本开始<code>proxy_redirect</code>指令中允许使用正则表达式</p>
-<ul>
-<li><p>以<code>~</code>起始表示匹配时大小写敏感；</p>
-<ul>
-<li><p>以<code>~*</code>起始表示匹配时大小写不敏感；</p>
-</li>
-<li><p><code>redirect</code>中可以包含命名和positional captures，然后在<code>replacement</code>中引用；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_redirect</span> ~^(http://[^:]+):\d+(/.+)$ <span class="variable">$1</span><span class="variable">$2</span>;</span><br><span class="line"><span class="attribute">proxy_redirect</span> ~*/user/([^/]+)/(.+)$      http://<span class="variable">$1</span>.example.com/<span class="variable">$2</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>可以同时指定多个<code>proxy_redirect</code>，如果指定了<code>off</code>参数，表示当前级别下的所有<code>proxy_redirect</code>指令将失效；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line"><span class="attribute">proxy_redirect</span> default;</span><br><span class="line"><span class="attribute">proxy_redirect</span> http://localhost:8000/  /;</span><br><span class="line"><span class="attribute">proxy_redirect</span> http://www.example.com/ /;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下面指令实现给相对路径上增加主机名；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_redirect</span> / /;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4><span id="proxy-set-header">proxy_set_header</span><a href="#proxy-set-header" class="header-anchor">#</a></h4><blockquote>
-<p>语法： proxy_set_header field value;</p>
-<p>默认： proxy_set_header Host $proxy_host;</p>
-<p>​            proxy_set_header Connection close;</p>
-<p>上下文： http, server, location</p>
-</blockquote>
-<p>转发请求到代理服务器时该指令允许重新定义或者追加消息头中的字段。</p>
-<ul>
-<li><p><code>value</code>的内容可以使文本、变量或者二者的组合；</p>
-</li>
-<li><p>如果当前指令中没有定义<code>proxy_set_header</code>指令，则可以继承上一级别中的定义；</p>
-</li>
-<li><p>默认情况只重新定义两个字段；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_set_header</span> Host       <span class="variable">$proxy_host</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Connection close;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其中缓存的情况，原始请求中的“If-Modified-Since”, “If-Unmodified-Since”, “If-None-Match”, “If-Match”, “Range”, 和“If-Range”不会转发到代理服务器；</p>
-</li>
-<li><p>不改变请求头中的”Host”字段的设置</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_set_header</span> Host       <span class="variable">$http_host</span>;</span><br></pre></td></tr></table></figure>
-<p>如果客户端请求头中没有<code>http_host</code>字段，则不会转发到服务器，这种情况下使用<code>$host</code>变量相对更好，<code>$host</code>变量相当于请求头中<code>Host</code>字段中服务器名称，或者请求头中没有<code>Host</code>字段时等价于主服务器的名称；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_set_header</span> Host       <span class="variable">$host</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置将服务器器名称和端口一起转发到代理服务器；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_set_header</span> Host       <span class="variable">$host</span>:<span class="variable">$proxy_port</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果请求头中的字段<code>value</code>为空字符串，则不会转发到服务器；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_set_header</span> Accept-Encoding <span class="string">""</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4><span id="ngx-http-proxy-module-zi-dai-can-shu">ngx_http_proxy_module自带参数</span><a href="#ngx-http-proxy-module-zi-dai-can-shu" class="header-anchor">#</a></h4><p>自带参数可以通过<code>proxy_set_header</code>指令使用。</p>
-<p><code>$proxy_host</code></p>
-<p>在<code>proxy_pass</code>指令中定义的代理服务器的名称和端口</p>
-<p><code>$proxy_port</code></p>
-<p>在<code>proxy_pass</code>指令中定义的代理服务器的端口，或者是指定协议的默认端口</p>
-<p><code>$proxy_add_x_forwarded_for</code></p>
-<p>表示客户端请求头中的<code>X-Forwarded-For</code>字段，该字段中包含<code>$removte_addr</code>变量，通过逗号<code>,</code>分隔。如果客户端请求头中没有出现X-Forwarded-For<code>字段，</code>$proxy_add_x_forwarded_for<code>变量等价于</code>$remote_addr`。</p>
-<p><strong>ngx_http_proxy_module中的其他参数请参考<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html" target="_blank" rel="noopener">官方网站</a></strong></p>
+          <div class="tocStart"></div>
 
-          
+<!-- toc -->
+<ul>
+<li><a href="#http-fu-zai-jun-heng">HTTP负载均衡</a><ul>
+<li><a href="#chang-jian-zhi-ling">常见指令</a><ul>
+<li><a href="#ngx-http-proxy-module">ngx_http_proxy_module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/14/nginx-config之ngx-http-proxy-module/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

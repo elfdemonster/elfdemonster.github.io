@@ -3,7 +3,21 @@
   <entry>
     <title>nginx-config之ngx_http_proxy_module</title>
     <url>/2019/12/14/nginx-config%E4%B9%8Bngx-http-proxy-module/</url>
-    <content><![CDATA[<h1><span id="http-fu-zai-jun-heng">HTTP负载均衡</span><a href="#http-fu-zai-jun-heng" class="header-anchor">#</a></h1><h2><span id="chang-jian-zhi-ling">常见指令</span><a href="#chang-jian-zhi-ling" class="header-anchor">#</a></h2><h3><span id="ngx-http-proxy-module">ngx_http_proxy_module</span><a href="#ngx-http-proxy-module" class="header-anchor">#</a></h3><p>实现将请求转发到其他服务器。</p>
+    <content><![CDATA[<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#http-fu-zai-jun-heng">HTTP负载均衡</a><ul>
+<li><a href="#chang-jian-zhi-ling">常见指令</a><ul>
+<li><a href="#ngx-http-proxy-module">ngx_http_proxy_module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<a id="more"></a>
+<h1><span id="http-fu-zai-jun-heng">HTTP负载均衡</span><a href="#http-fu-zai-jun-heng" class="header-anchor">#</a></h1><h2><span id="chang-jian-zhi-ling">常见指令</span><a href="#chang-jian-zhi-ling" class="header-anchor">#</a></h2><h3><span id="ngx-http-proxy-module">ngx_http_proxy_module</span><a href="#ngx-http-proxy-module" class="header-anchor">#</a></h3><p>实现将请求转发到其他服务器。</p>
 <h4><span id="proxy-pass">proxy_pass</span><a href="#proxy-pass" class="header-anchor">#</a></h4><blockquote>
 <p>语法： <code>proxy_pass URL</code></p>
 <p>默认： <code>-</code></p>
