@@ -314,6 +314,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/21/maven仓库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Elf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ElfShare">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/21/maven仓库/" itemprop="url">maven仓库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-21T15:57:49+08:00">
+                2019-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/Maven/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/21/maven仓库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/21/maven仓库/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1><span id="maven-jie-xi-xia-zai-yi-lai-de-gui-ze">maven解析下载依赖的规则</span><a href="#maven-jie-xi-xia-zai-yi-lai-de-gui-ze" class="header-anchor">#</a></h1><ul>
+<li>如果依赖配置为system，则直接从本地路径解析，不会从远程库下载</li>
+<li></li>
+</ul>
+<h1><span id="ji-yi-ci-jiang-maven-ben-di-cang-ku-kao-bei-dao-qi-ta-ji-qi-de-keng">记一次将maven本地仓库拷贝到其他机器的坑</span><a href="#ji-yi-ci-jiang-maven-ben-di-cang-ku-kao-bei-dao-qi-ta-ji-qi-de-keng" class="header-anchor">#</a></h1><p>因为公司对安全要求较高，因此对网络的控制非常严格，BUT项目是与其他公司联合开发的，有很多依赖要么是内网上版本太低，要么是直接没有，把所有依赖放到私服又找不到管理私服的大佬（没办法，老牌企业的通病吧，找人干活要钱都难~），于是想到把原开发机器上的本地maven仓库字节拷贝到内网环境，然鹅折磨人的事情开始了~</p>
+<p>由于内网还是架设有私服库的，本人入司也没几天，直接拷贝别人的settings.xml就开始，然后本地仓库已存在的依赖，却没法直接使用，始终在提示依赖找不到，而私服库上有没有对应版本。</p>
+<p>在maven官网上彻底的研究了一翻settings.xml，可以参见<a href="https://elfdemonster.github.io/2019/10/20/maven-settings-xml/" target="_blank" rel="noopener">另一篇文章</a>，对setting.xml进行了重新配置</p>
+<ul>
+<li><p>offline默认配置是false，改为true，表示在离线模式下运行，不去远程仓库下载</p>
+</li>
+<li><p>去除所有镜像配置</p>
+</li>
+<li><p>删除maven仓库中所有.lastUpdated、_maven.repositories、_remote.repositories文件。这样maven就不会在进行验证，可以直接从本地库解析依赖。（为什么？参考上文maven仓库更新分析）</p>
+</li>
+<li><p>windows删除脚本，设置maven仓库路径，并修改对应的文件名即可</p>
+<p><em>（网上搜到的，也不知道原出处是哪里，也有其他系统的版本，反正不是我自己写的，感谢大佬~）</em></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">set</span> REPOSITORY_PATH=maven_repository_path</span><br><span class="line"><span class="comment">rem 搜索中。。。。</span></span><br><span class="line"><span class="keyword">for</span> /f "delims=" <span class="variable">%%i</span> <span class="keyword">in</span> ('<span class="built_in">dir</span> /b /s "<span class="variable">%REPOSITORY_PATH%</span>\*lastUpdated*"') <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">del</span> /s /q <span class="variable">%%i</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">rem 搜索完毕</span></span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/20/maven-settings-xml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1942,197 +2123,6 @@ at Pipe._handle.close (net.js:606:12)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/08/阿里巴巴Java开发手册学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Elf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ElfShare">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/08/阿里巴巴Java开发手册学习/" itemprop="url">阿里巴巴Java开发手册学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-08T14:45:39+08:00">
-                2018-02-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/JAVA/基础/" itemprop="url" rel="index">
-                    <span itemprop="name">基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/02/08/阿里巴巴Java开发手册学习/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/08/阿里巴巴Java开发手册学习/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、编程规约"><a href="#一、编程规约" class="headerlink" title="一、编程规约"></a>一、编程规约</h2><h4 id="（一）命名风格"><a href="#（一）命名风格" class="headerlink" title="（一）命名风格"></a>（一）命名风格</h4><ol>
-<li>下划线和美元符号不能作为起始也不能结束；</li>
-<li>禁止拼音与英文混合，禁止直接使用中文；</li>
-<li>类名必须驼峰，除DO/BO/DTO/VO/AO外；</li>
-<li>方法名、参数名、成员变量、局部变量必须使用lowerCameCase;</li>
-<li>常量全部大写，单词间用下划线，为了表达清楚，可以长一些；</li>
-<li>抽象类名使用Abstract或Base开头；异常类名使用Exception结尾；测试类名以它要测试的类的名称开始，以Test结尾；</li>
-<li>POJO类中布尔类型不加IS，可能引起部分框架序列化错误；</li>
-<li>包名用小写，包名使用单数形式，但类名如果有负数含义，类型可以使用复数形式；</li>
-<li>杜绝少用不规范缩写；命名时，使用完整单词；</li>
-<li>命名时体现设计模式；</li>
-<li>接口中方法和属性不加任何修饰符，加上Javadoc注释；接口中只定义与接口有关的变量；JDK8允许的default方法，是对所有实现类都有价值的默认实现；</li>
-<li>枚举类名带上Enum后缀，成员名称全大写，单词间用下划线隔开；</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/08/阿里巴巴Java开发手册学习/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2185,7 +2175,7 @@ at Pipe._handle.close (net.js:606:12)
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
