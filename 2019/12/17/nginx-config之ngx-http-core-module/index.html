@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nginx,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HTTP负载均衡 常见指令 ngx_http_core_module">
+<meta name="keywords" content="nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx-config之ngx_http_core_module">
+<meta property="og:url" content="http://yoursite.com/2019/12/17/nginx-config之ngx-http-core-module/index.html">
+<meta property="og:site_name" content="ElfShare">
+<meta property="og:description" content="HTTP负载均衡 常见指令 ngx_http_core_module">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-17T12:34:56.025Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx-config之ngx_http_core_module">
+<meta name="twitter:description" content="HTTP负载均衡 常见指令 ngx_http_core_module">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/17/nginx-config之ngx-http-core-module/">
+
+
+
+
+
+  <title>nginx-config之ngx_http_core_module | ElfShare</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c55fcfed6c3e0564b14084c229dcb11e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ElfShare</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-成长">
+          <a href="/life/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            成长
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/17/nginx-config之ngx-http-core-module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Elf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ElfShare">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nginx-config之ngx_http_core_module</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-17T15:16:35+08:00">
+                2019-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/17/nginx-config之ngx-http-core-module/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/17/nginx-config之ngx-http-core-module/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#http-fu-zai-jun-heng">HTTP负载均衡</a><ul>
+<li><a href="#chang-jian-zhi-ling">常见指令</a><ul>
+<li><a href="#ngx-http-core-module">ngx_http_core_module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<a id="more"></a>
+<h1><span id="http-fu-zai-jun-heng">HTTP负载均衡</span><a href="#http-fu-zai-jun-heng" class="header-anchor">#</a></h1><h2><span id="chang-jian-zhi-ling">常见指令</span><a href="#chang-jian-zhi-ling" class="header-anchor">#</a></h2><h3><span id="ngx-http-core-module">ngx_http_core_module</span><a href="#ngx-http-core-module" class="header-anchor">#</a></h3><h4><span id="http">http</span><a href="#http" class="header-anchor">#</a></h4><blockquote>
+<p>语法： http {…}</p>
+<p>默认： -</p>
+<p>上下文： main</p>
+</blockquote>
+<p>指定HTTP服务器指令配置的上下文。</p>
+<h4><span id="server">server</span><a href="#server" class="header-anchor">#</a></h4><blockquote>
+<p>语法： server {…}</p>
+<p>默认： -</p>
+<p>上下文： http</p>
+</blockquote>
+<p>虚拟服务器配置。可以基于IP配置，也可基于名称配置，二者没有明显的区分。<code>listen</code>指令描述server接收请求的所有地址和端口，<code>server_name</code>配置客户端可以请求到的所有服务器名称列表。</p>
+<h5><span id="listen">listen</span><a href="#listen" class="header-anchor">#</a></h5><p>为虚拟服务器接收请求设置IP和端口或者UNIX-domain套接字的路径。</p>
+<ul>
+<li><p>可以同时指定IP地址和端口；</p>
+</li>
+<li><p>也可以只指定IP地址或只指定端口；</p>
+</li>
+<li><p>只指定IP地址情况，端口默认是<code>80</code>；</p>
+</li>
+<li><p>地址也可以是主机名（hosts）；</p>
+</li>
+<li><p>0.7.36版本开始可以通过中括号指定IPV6地址；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">listen</span> [::]:<span class="number">8000</span>;</span><br><span class="line"><span class="attribute">listen</span> [::<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>0.8.21版本开始可通过<code>unix:</code>前缀指定UNIX-domain套接字路径；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">listen</span> unix:/var/run/nginx.sock;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>没有显式配置<code>listen</code>指定的情况下，如果nginx是以超级权限用户运行的，则默认端口是<code>80</code>，否则默认是端口是<code>8000</code>。</p>
+</li>
+</ul>
+<h6><span id="yu-fa">语法</span><a href="#yu-fa" class="header-anchor">#</a></h6><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">listen</span> address[:port] [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=<span class="literal">on</span>|<span class="literal">off</span>] [reuseport] [so_keepalive=<span class="literal">on</span>|<span class="literal">off</span>|[keepidle]:[keepintvl]:[keepcnt]];</span><br><span class="line"></span><br><span class="line"><span class="attribute">listen</span> port [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=<span class="literal">on</span>|<span class="literal">off</span>] [reuseport] [so_keepalive=<span class="literal">on</span>|<span class="literal">off</span>|[keepidle]:[keepintvl]:[keepcnt]];</span><br><span class="line"></span><br><span class="line"><span class="attribute">listen</span> unix:path [default_server] [ssl] [http2 | spdy] [proxy_protocol] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [so_keepalive=<span class="literal">on</span>|<span class="literal">off</span>|[keepidle]:[keepintvl]:[keepcnt]];</span><br></pre></td></tr></table></figure>
+<h6><span id="mo-ren-zhi">默认值</span><a href="#mo-ren-zhi" class="header-anchor">#</a></h6><p><code>listen *:80 | *:8000;</code>    </p>
+<h6><span id="parameters-lie-biao">parameters列表</span><a href="#parameters-lie-biao" class="header-anchor">#</a></h6><p><code>default_server</code></p>
+<ul>
+<li>指定当前服务器是指定地址和端口的默认服务器；</li>
+<li>如果所以的<code>listen</code>指令都没有配置<code>default_server</code>指令，则配置列表中的一个服务器为默认服务器；</li>
+<li>0.8.21版本之前<code>default_server</code>是<code>default</code>。</li>
+</ul>
+<p><code>ssl</code></p>
+<p>指定当前端口下的所有请求都工作在SSL模式下（从0.7.14版本开始起用）。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>         www.example.com;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>     www.example.com.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> www.example.com.key;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表示服务器可以同时处理HTTP和HTTPS请求。</p>
+<p><code>http2</code></p>
+<p>配置当前端口是接受<a href="http://nginx.org/en/docs/http/ngx_http_v2_module.html" target="_blank" rel="noopener">HTTP/2</a> 请求连接的，一般情况下应当同时指定<code>ssl</code>参数（可不指定）。（从1.9.5版本开始起用）</p>
+<p><code>spdy</code></p>
+<p>配置当前端口是接受<a href="http://nginx.org/en/docs/http/ngx_http_spdy_module.html" target="_blank" rel="noopener">SPDY</a>请求链接的，一般情况下应当同时指定<code>ssl</code>参数（可不指定）。（在1.3.15-1.9.4版本中使用）</p>
+<p><code>listen</code>指令还有一些针对套接字调用相关的参数，<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#listen" target="_blank" rel="noopener">参考官网指导手册</a></p>
+<h5><span id="server-name">server_name</span><a href="#server-name" class="header-anchor">#</a></h5><p>配置虚拟服务器的名称列表。</p>
+<p>通过名称搜索虚拟服务器时，遵循以下规则：</p>
+<ol>
+<li>确切名称匹配</li>
+<li>以“*”起始的最长通配符名称匹配</li>
+<li>以“*”结尾的最长通配符名称陪陪</li>
+<li>第一个正则匹配（匹配顺序与配置顺序有关，匹配到第一个正则停止）</li>
+</ol>
+<h6><span id="tong-pei-fu-ming-cheng">通配符名称</span><a href="#tong-pei-fu-ming-cheng" class="header-anchor">#</a></h6><p>通配符名称是指在虚拟服务器名称前面或者后面配置一个“*”，紧接着“*”的是点（<code>.</code>）。</p>
+<p>“*.example.org”可以匹配到“<a href="http://www.example.org”，也可以匹配到“www.sub.example.org”。" target="_blank" rel="noopener">www.example.org”，也可以匹配到“www.sub.example.org”。</a></p>
+<p>“.example.org”可以当做是“example.org”和“*.example.org”的组合。</p>
+<p>类似“www.*.example.org”或者“w*.example.org”的配置是无效的。</p>
+<h6><span id="zheng-ze-biao-da-shi-ming-cheng">正则表达式名称</span><a href="#zheng-ze-biao-da-shi-ming-cheng" class="header-anchor">#</a></h6><p>正则表达式配置虚拟服务器名称需满足以下条件：</p>
+<ul>
+<li>一定要以波浪线（<code>~</code>）作为起始符号</li>
+<li>表达式放在在（<code>^</code>）和（<code>$</code>）之间</li>
+<li>正则表达式中的点（<code>.</code>）需要用反斜杠（<code>\</code>）转义</li>
+<li>如果正则表达式中有花括号（<code>{}</code>），正则表达式需要用引号（<code>&quot;&quot;</code>）括起来</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">server_name</span>  ~^www\d+\.example\.net$;</span><br><span class="line"><span class="attribute">server_name</span>  <span class="string">"~^(?&lt;name&gt;\w\d&#123;1,3&#125;+)\.example\.net$"</span>;</span><br></pre></td></tr></table></figure>
+<h6><span id="hun-he-ming-cheng">混合名称</span><a href="#hun-he-ming-cheng" class="header-anchor">#</a></h6><p>如果需要处理请求投中没有”Host”字段的请求，server_name中可以指定空引号（<code>&quot;&quot;</code>）。（从0.8.48版本开始，<code>server_name</code>默认是””，之前的版本默认是hostname）</p>
+<p>也可以指定为具体的IP地址</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  example.org</span><br><span class="line">                 www.example.org</span><br><span class="line">                 <span class="string">""</span></span><br><span class="line">                 <span class="number">192.168.1.1</span></span><br><span class="line">                 ;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>_</code>符号表示可以匹配所有的名称，无论是正规域名，还是形如“<code>!@#</code>”或者“<code>--</code>” 等不正规的名称皆可匹配。（这种方式不推荐使用）</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>  default_server;</span><br><span class="line">    <span class="attribute">server_name</span>  _;</span><br><span class="line">    <span class="attribute">return</span>       <span class="number">444</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以在<code>server_name</code>指令中通过使用ASCII (Punycode) 表示国际化域名(<a href="https://en.wikipedia.org/wiki/Internationalized_domain_name" target="_blank" rel="noopener">IDNs</a>)</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  xn--e1afmkfd.xn--80akhbyknj4f;  </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6><span id="zui-jia-shi-jian">最佳实践</span><a href="#zui-jia-shi-jian" class="header-anchor">#</a></h6><p>确切名称、以星号起始的通配符名称、以星号结尾的通配符名称分别存储在绑定于端口的三张哈希表中，哈希表搜索顺序如前面所述</p>
+<ol>
+<li>确切名称</li>
+<li>以星号起始的通配符名称</li>
+<li>以星号结束的通配符名称</li>
+<li>正则表达式</li>
+</ol>
+<p>搜索速度由快到慢顺序</p>
+<ol>
+<li>确切名称</li>
+<li>通配符</li>
+<li>正则表达式</li>
+</ol>
+<p>因此，尽可能的配置确切名称。比如请求exmaple.org和<a href="http://www.example.org的频率较高，那么如下第一种配置明显优于第二种配置" target="_blank" rel="noopener">www.example.org的频率较高，那么如下第一种配置明显优于第二种配置</a></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  example.org  www.example.org  <span class="regexp">*.example.org</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  .example.org;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果配置服务器名称过多或者长度过长，可能需要调整<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#server_names_hash_max_size" target="_blank" rel="noopener">server_names_hash_max_size</a><br>和 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#server_names_hash_bucket_size" target="_blank" rel="noopener">server_names_hash_bucket_size</a>指令。</p>
+<h4><span id="location">location</span><a href="#location" class="header-anchor">#</a></h4><blockquote>
+<p>语法： location [ = | ~ | ~* | ^~ ] uri { … }</p>
+<p>​            location @name { … }</p>
+<p>默认： -</p>
+<p>上下文： server, location</p>
+</blockquote>
+<p>配置请求URI。</p>
+<h5><span id="shuo-ming">说明</span><a href="#shuo-ming" class="header-anchor">#</a></h5><ul>
+<li><p>匹配是针对规范化URI执行的，对形如“%XX”的编码文本会进行解码操作，对<code>.</code>或者<code>..</code>的相对路径引用会进行解析，对相邻的两个或多个斜杠会压缩成一个；</p>
+</li>
+<li><p><code>location</code>可以通过前缀串定义，也可以通过正则表达式定义；</p>
+</li>
+<li><p>通过正则表达式定义时，<code>~*</code>作为前修饰符表示大小写不敏感，<code>~</code>作为前修饰符表示大小写敏感；</p>
+</li>
+<li><p>根据请求匹配<code>location</code>的过程</p>
+<ol>
+<li>在配置的<code>location</code>列表中搜索URI不带参数的最完整字符串，逐渐减短匹配串，最长的成功匹配将会被选择并保存；</li>
+<li>根据配置顺序匹配正则表达式，匹配成功则停止；</li>
+<li>如果正则表达式匹配成功，则使用正则表达式匹配成功的<code>location</code>，否则使用第一步匹配到的<code>location</code>；</li>
+</ol>
+</li>
+<li><p>前缀匹配中匹配到的最长<code>location</code>如果有<code>^~</code>作为前修饰符，则不会进行正则匹配；</p>
+</li>
+<li><p>如果使用<code>=</code>修饰，会进行确切值的匹配，且匹配成功停止继续匹配；该<code>location</code>不可嵌套其他<code>location</code>；</p>
+</li>
+<li><p>在0.7.1版本到0.8.41版本中，匹配打的前缀<code>location</code>即使没有<code>=</code>或者<code>^~</code>作为前修饰符，也会停止匹配；</p>
+</li>
+<li><p><code>@</code>作为前缀定义的<code>lcation</code>，不用来处理常规请求，而是用来重定向请求；这种<code>location</code>不能被嵌套，也不能其它<code>location</code>；</p>
+</li>
+<li><p>如果一个前缀字符串定义到<code>location</code>以斜杠（<code>/</code>）结尾，请求被<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass" target="_blank" rel="noopener">proxy_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_pass" target="_blank" rel="noopener">fastcgi_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html#uwsgi_pass" target="_blank" rel="noopener">uwsgi_pass</a>,<br><a href="http://nginx.org/en/docs/http/ngx_http_scgi_module.html#scgi_pass" target="_blank" rel="noopener">scgi_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_memcached_module.html#memcached_pass" target="_blank" rel="noopener">memcached_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_grpc_module.html#grpc_pass" target="_blank" rel="noopener">grpc_pass</a>处理，请求会转向原请求串不带后斜杠的请求上，301（永久重定向）码会返回给带有后斜杠的请求。可以通过下面的方式配置完全匹配来解决：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /user/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://user.example.com;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">location</span> = /user &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://login.example.com;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4><span id="default-type">default_type</span><a href="#default-type" class="header-anchor">#</a></h4><blockquote>
+<p>语法： default_type mime-type;</p>
+<p>默认： default_type text/plain;</p>
+<p>上下文： http, server, location</p>
+</blockquote>
+<p>定义响应的默认MIME（Multipurpose nternet Mail Extensions 描述消息内容类型的因特网标准) 类型，可以通过<code>types</code>指令将文件名扩展和MIME类型进行相互映射。</p>
+<h4><span id="types">types</span><a href="#types" class="header-anchor">#</a></h4><blockquote>
+<p>语法： types {…}</p>
+<p>默认： types { </p>
+<p>​    text/html html;</p>
+<p>​    image/gif gif;</p>
+<p>​    image/jpeg jpg;</p>
+<p> }</p>
+<p>上下文： http, server, location</p>
+</blockquote>
+<p>为响应映射文件名扩展到MIME类型。</p>
+<ul>
+<li><p>扩展是大小写敏感的；</p>
+</li>
+<li><p>可以将多个扩展映射到同一个类型；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">types</span> &#123;</span><br><span class="line">    application/octet-stream bin exe dll;</span><br><span class="line">    application/octet-stream deb;</span><br><span class="line">    application/octet-stream dmg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在nginx的conf/mime.types文件中有完整映射；</p>
+</li>
+</ul>
+<h4><span id="error-page">error_page</span><a href="#error-page" class="header-anchor">#</a></h4><blockquote>
+<p>语法： error_page code … [=[response]] uri;</p>
+<p>默认： -</p>
+<p>上下文： http, server, location, location中的if</p>
+</blockquote>
+<p>定义指定指定错误的URI，URI中可以包含变量。</p>
+<ul>
+<li><p>进入<code>error_page</code>指令，会将客户端的请求方法改变为<code>GET</code>（出<code>GET</code>和<code>HEAD</code>方法以外）；</p>
+</li>
+<li><p>使用<code>=response</code>语法可以改变响应码；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">error_page</span> <span class="number">404</span> =<span class="number">200</span> /empty.gif;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果错误响应是经过代理服务器或者FastCGI/uwsgi/SCGI/gRPC服务器处理的，服务器可能返回不同的响应码，如果要奖这些错误码作为响应码返回给客户端，可以通过如下语法设置；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">error_page</span> <span class="number">404</span> = /<span class="number">404</span>.php;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果在内部重定向过程中不需要改变URI和方法，可以将错误处理流程转发给命名好的location；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="attribute">error_page</span> <span class="number">404</span> = <span class="variable">@fallback</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">location</span> <span class="variable">@fallback</span> &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://backend;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果URI的处理过程中出现错误，最后一个错误的状态码会返回给客户端；</p>
+</li>
+<li><p>可以通过URL重定向错误；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">error_page</span> <span class="number">403</span>      http://example.com/forbidden.html;</span><br><span class="line"><span class="attribute">error_page</span> <span class="number">404</span> =<span class="number">301</span> http://example.com/notfound.html;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当前指令中如果未定义<code>error_page</code>，会从上一级别继承。</p>
+</li>
+</ul>
+<h4><span id="zi-dai-can-shu">自带参数</span><a href="#zi-dai-can-shu" class="header-anchor">#</a></h4><p><code>$http_user_agent</code></p>
+<p> <code>$http_cookie</code></p>
+<p><code>$arg_</code><em>name</em></p>
+<p>请求中的参数名称</p>
+<p><code>$args</code></p>
+<p>请求中的参数</p>
+<p><code>$binary_remote_addr</code></p>
+<p>客户端地址的二进制形式，IPv4值的长度为4字节，IPv6值的长度为16字节</p>
+<p><code>$body_bytes_sent</code></p>
+<p>发往客户端的字节数，不包含响应头；改变量与apache模块的<code>mod_log_config</code>的<code>%B</code>参数兼容</p>
+<p><code>$bytes_sent</code></p>
+<p>发往客户端的自己数(1.3.8, 1.2.5)</p>
+<p><code>$connection</code></p>
+<p>连接号 (1.3.8, 1.2.5)</p>
+<p><code>$connection_requests</code></p>
+<p>通过当前连接发出的请求书(1.3.8, 1.2.5)</p>
+<p><code>$content_length</code></p>
+<p>请求头中的“Content-Length”字段</p>
+<p><code>$content_type</code></p>
+<p>请求头中的“Content-Type”字段</p>
+<p><code>$cookie_</code><em>name</em></p>
+<p>cookie名称</p>
+<p><code>$document_root</code></p>
+<p>当前请求的根（<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#root" target="_blank" rel="noopener">root</a>）或别名（<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#alias" target="_blank" rel="noopener">alias</a> ）指令的值</p>
+<p><code>$document_uri</code>和<code>$uri</code></p>
+<p>当前请求中的标准URI，内部转发中可能会发生改变</p>
+<p><code>$host</code></p>
+<p>按照如下顺序取值：</p>
+<ul>
+<li>请求连接中的hostname</li>
+<li>请求头中”Host”字段的hostname</li>
+<li>请求匹配到的server name</li>
+</ul>
+<p><code>$hostname</code></p>
+<p><code>$http_</code><em>name</em></p>
+<p>任意请求头中的字段，<em>name</em>是转换为小写的字段名称，并用中划线代替下划线</p>
+<p><code>$https</code></p>
+<p>SSL模式下是”on”，否则是空字符串</p>
+<p><code>$is_args</code></p>
+<p>请求连接中有参数是”?”，否则是空字符串</p>
+<p><code>$limit_rate</code></p>
+<p>设置此变量将启用响应速率限制，参见<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#limit_rate" target="_blank" rel="noopener">limit_rate</a></p>
+<p><code>$msec</code></p>
+<p>毫秒级的当前时间(1.3.9, 1.2.6)</p>
+<p><code>$nginx_version</code></p>
+<p>nginx版本</p>
+<p><code>$pid</code></p>
+<p>worker进程号</p>
+<p><code>$pipe</code></p>
+<p>pipelined请求是”p”，否则是”.”(1.3.12, 1.2.7)</p>
+<p><code>$proxy_protocol_addr</code></p>
+<p>PROXY协议头中的客户端地址 (1.5.12)，PROXY 协议必须已经在<code>listen</code>指令的<code>proxy_protocol</code>参数中启用</p>
+<p><code>$proxy_protocol_port</code></p>
+<p>PROXY协议头中的客户端端口 (1.11.0)，PROXY 协议必须已经在<code>listen</code>指令的<code>proxy_protocol</code>参数中启用</p>
+<p><code>$proxy_protocol_server_addr</code></p>
+<p>PROXY协议头中的服务端地址 (1.17.6)，PROXY 协议必须已经在<code>listen</code>指令的<code>proxy_protocol</code>参数中启用</p>
+<p><code>$proxy_protocol_server_port</code></p>
+<p>PROXY协议头中的服务端端口 (1.17.6)，PROXY 协议必须已经在<code>listen</code>指令的<code>proxy_protocol</code>参数中启用</p>
+<p><code>$query_string</code></p>
+<p>相同于<code>$args</code></p>
+<p><code>$realpath_root</code></p>
+<p>与当前请求的根指令或别名指令的值相对应的绝对路径名，所有符号链接都解析为真实路径</p>
+<p><code>$remote_addr</code></p>
+<p>客户端地址</p>
+<p><code>$remote_port</code></p>
+<p>客户端端口</p>
+<p><code>$remote_user</code></p>
+<p>用户认证的用户名</p>
+<p><code>$request</code></p>
+<p>原始的完整请求链接</p>
+<p><code>$request_body</code></p>
+<p>请求消息体，值读入内存后，可以在<code>location</code>流程中的<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass" target="_blank" rel="noopener">proxy_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_pass" target="_blank" rel="noopener">fastcgi_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html#uwsgi_pass" target="_blank" rel="noopener">uwsgi_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_scgi_module.html#scgi_pass" target="_blank" rel="noopener">scgi_pass</a>指令中使用</p>
+<p><code>$request_body_file</code></p>
+<p>请求消息中临时文件名，流程结束后，文件会被移除。<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#client_body_in_file_only" target="_blank" rel="noopener">client_body_in_file_only</a>指令启用允许将请求写入文件，如果临时文件转发到代理服务器或者FastCGI/uwsgi/SCGI服务器，那么应当分别通过<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass_request_body" target="_blank" rel="noopener"> proxy_pass_request_body off</a>，<a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_pass_request_body" target="_blank" rel="noopener">fastcgi_pass_request_body off</a>，<a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html#uwsgi_pass_request_body" target="_blank" rel="noopener">uwsgi_pass_request_body off</a>， <a href="http://nginx.org/en/docs/http/ngx_http_scgi_module.html#scgi_pass_request_body" target="_blank" rel="noopener">scgi_pass_request_body off</a>指令关闭对请求消息体的转发。</p>
+<p><code>$request_completion</code></p>
+<p>请求完成是”OK”，否则是空字符串</p>
+<p><code>$request_filename</code></p>
+<p>当前请求基于<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#root" target="_blank" rel="noopener">root</a>或<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#alias" target="_blank" rel="noopener">alias</a>指令，请求URI的文件路径</p>
+<p><code>$request_id</code></p>
+<p>当前请求的唯一id</p>
+<p><code>$request_length</code></p>
+<p>包含request line, header, 和request body的请求长度(1.3.12, 1.2.7)</p>
+<p><code>$request_method</code></p>
+<p>请求方法，比如“<code>GET</code>” 或 “<code>POST</code>”</p>
+<p><code>$request_time</code></p>
+<p>毫秒级的请求处理时间</p>
+<p><code>$request_uri</code></p>
+<p>带有参数的原始完整请求URI</p>
+<p><code>$scheme</code></p>
+<p>请求scheme, “<code>http</code>” or “<code>https</code>”</p>
+<p><code>$sent_http_</code><em>name</em></p>
+<p>任意的响应头字段，<em>name</em>是转换为小写的字段名称，并用中划线代替下划线</p>
+<p><code>$sent_trailer_</code><em>name</em></p>
+<p>发送响应的最后字段(1.13.2)，<em>name</em>是转换为小写的字段名称，并用中划线代替下划线</p>
+<p><code>$server_addr</code></p>
+<p>接收请求的服务点地址，计算此变量的值通常需要一个系统调用。为避免系统调用，listen伪指令必须指定地址并使用bind参数。</p>
+<p><code>$server_name</code></p>
+<p>接口请求的服务器名称</p>
+<p><code>$server_port</code></p>
+<p>接口请求的服务器端口</p>
+<p><code>$server_protocol</code></p>
+<p>接收请求的协议，通常是“<code>HTTP/1.0</code>”，“<code>HTTP/1.1</code>”，“<a href="http://nginx.org/en/docs/http/ngx_http_v2_module.html" target="_blank" rel="noopener">HTTP/2.0</a>”</p>
+<p><code>$status</code></p>
+<p>响应状态(1.3.2, 1.2.2)</p>
+<p><code>$tcpinfo_rtt</code>,<code>$tcpinfo_rttvar</code>,<code>$tcpinfo_snd_cwnd</code>,<code>$tcpinfo_rcv_space</code></p>
+<p>TCP链接的客户端信息，在支持TCP_INFO套接字选项的系统上可用</p>
+<p><code>$time_iso8601</code></p>
+<p>ISO 8601标准格式的当地时间 (1.3.12, 1.2.7)</p>
+<p><code>$time_local</code></p>
+<p> (1.3.12, 1.2.7)</p>
+<p>更多其他指令请参考<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html" target="_blank" rel="noopener">官方网站</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/15/IT从业者应该知道的概念/" rel="next" title="IT从业者应该知道的概念">
+                <i class="fa fa-chevron-left"></i> IT从业者应该知道的概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </div></article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/head.jpg" alt="Elf">
+            
+              <p class="site-author-name" itemprop="name">Elf</p>
+              <p class="site-description motion-element" itemprop="description">���� ��͸ ����</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/elfdemonster" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:elfdemonster001@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/elfdemonster" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">HTTP负载均衡#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text">常见指令#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.</span> <span class="nav-text">ngx_http_core_module#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">http#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">server#</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">listen#</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.1.1.</span> <span class="nav-text">语法#</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.1.2.</span> <span class="nav-text">默认值#</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.1.3.</span> <span class="nav-text">parameters列表#</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">server_name#</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.2.1.</span> <span class="nav-text">通配符名称#</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.2.2.</span> <span class="nav-text">正则表达式名称#</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.2.3.</span> <span class="nav-text">混合名称#</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.2.2.4.</span> <span class="nav-text">最佳实践#</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">location#</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.3.1.</span> <span class="nav-text">说明#</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">default_type#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">types#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">error_page#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">自带参数#</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Elf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://elf.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/12/17/nginx-config之ngx-http-core-module/';
+          this.page.identifier = '2019/12/17/nginx-config之ngx-http-core-module/';
+          this.page.title = 'nginx-config之ngx_http_core_module';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://elf.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

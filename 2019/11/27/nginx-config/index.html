@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="官方网站 nginx转发请求过程 default_server 防止使用未定义的的sever name处理请求 基于名称和IP的组合server 简单配置实例 总结   HTTP负载均衡 代理HTTP请求到服务器组 负载均衡算法 服务器权重 服务器慢启动（Slow-Start） 常见指令 upstream server">
+<meta name="description" content="官方网站 nginx转发请求过程 default_server 防止使用未定义的的sever name处理请求 基于名称和IP的组合server 简单配置实例 总结   HTTP负载均衡 代理HTTP请求到服务器组 负载均衡算法 服务器权重 服务器慢启动（Slow-Start） 常见指令 upstream">
 <meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx-config">
 <meta property="og:url" content="http://yoursite.com/2019/11/27/nginx-config/index.html">
 <meta property="og:site_name" content="ElfShare">
-<meta property="og:description" content="官方网站 nginx转发请求过程 default_server 防止使用未定义的的sever name处理请求 基于名称和IP的组合server 简单配置实例 总结   HTTP负载均衡 代理HTTP请求到服务器组 负载均衡算法 服务器权重 服务器慢启动（Slow-Start） 常见指令 upstream server">
+<meta property="og:description" content="官方网站 nginx转发请求过程 default_server 防止使用未定义的的sever name处理请求 基于名称和IP的组合server 简单配置实例 总结   HTTP负载均衡 代理HTTP请求到服务器组 负载均衡算法 服务器权重 服务器慢启动（Slow-Start） 常见指令 upstream">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-14T09:01:05.732Z">
+<meta property="og:updated_time" content="2019-12-17T07:18:34.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx-config">
-<meta name="twitter:description" content="官方网站 nginx转发请求过程 default_server 防止使用未定义的的sever name处理请求 基于名称和IP的组合server 简单配置实例 总结   HTTP负载均衡 代理HTTP请求到服务器组 负载均衡算法 服务器权重 服务器慢启动（Slow-Start） 常见指令 upstream server">
+<meta name="twitter:description" content="官方网站 nginx转发请求过程 default_server 防止使用未定义的的sever name处理请求 基于名称和IP的组合server 简单配置实例 总结   HTTP负载均衡 代理HTTP请求到服务器组 负载均衡算法 服务器权重 服务器慢启动（Slow-Start） 常见指令 upstream">
 
 
 
@@ -445,7 +445,6 @@
 <li><a href="#fu-wu-qi-man-qi-dong-slow-start">服务器慢启动（Slow-Start）</a></li>
 <li><a href="#chang-jian-zhi-ling">常见指令</a><ul>
 <li><a href="#upstream">upstream</a></li>
-<li><a href="#server-1">server</a></li>
 </ul>
 </li>
 </ul>
@@ -627,116 +626,6 @@
 </li>
 </ul>
 <p>·<code>upstream</code>指令块中还有很多其它参数，如<code>zone</code>、<code>keepalive</code>等<a href="http://nginx.org/en/docs/http/ngx_http_upstream_module.html" target="_blank" rel="noopener">请参考官网</a>。</p>
-<h3><span id="server">server</span><a href="#server" class="header-anchor">#</a></h3><p>虚拟服务器配置。可以基于IP配置，也可基于名称配置，二者没有明显的区分。<code>listen</code>指令描述server接收请求的所有地址和端口，<code>server_name</code>配置客户端可以请求到的所有服务器名称列表。</p>
-<h4><span id="listen">listen</span><a href="#listen" class="header-anchor">#</a></h4><p>为虚拟服务器接收请求设置IP和端口或者UNIX-domain套接字的路径。</p>
-<ul>
-<li><p>可以同时指定IP地址和端口；</p>
-</li>
-<li><p>也可以只指定IP地址或只指定端口；</p>
-</li>
-<li><p>只指定IP地址情况，端口默认是<code>80</code>；</p>
-</li>
-<li><p>地址也可以是主机名（hosts）；</p>
-</li>
-<li><p>0.7.36版本开始可以通过中括号指定IPV6地址；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">listen</span> [::]:<span class="number">8000</span>;</span><br><span class="line"><span class="attribute">listen</span> [::<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>0.8.21版本开始可通过<code>unix:</code>前缀指定UNIX-domain套接字路径；</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">listen</span> unix:/var/run/nginx.sock;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>没有显式配置<code>listen</code>指定的情况下，如果nginx是以超级权限用户运行的，则默认端口是<code>80</code>，否则默认是端口是<code>8000</code>。</p>
-</li>
-</ul>
-<h5><span id="yu-fa">语法</span><a href="#yu-fa" class="header-anchor">#</a></h5><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">listen</span> address[:port] [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=<span class="literal">on</span>|<span class="literal">off</span>] [reuseport] [so_keepalive=<span class="literal">on</span>|<span class="literal">off</span>|[keepidle]:[keepintvl]:[keepcnt]];</span><br><span class="line"></span><br><span class="line"><span class="attribute">listen</span> port [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=<span class="literal">on</span>|<span class="literal">off</span>] [reuseport] [so_keepalive=<span class="literal">on</span>|<span class="literal">off</span>|[keepidle]:[keepintvl]:[keepcnt]];</span><br><span class="line"></span><br><span class="line"><span class="attribute">listen</span> unix:path [default_server] [ssl] [http2 | spdy] [proxy_protocol] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [so_keepalive=<span class="literal">on</span>|<span class="literal">off</span>|[keepidle]:[keepintvl]:[keepcnt]];</span><br></pre></td></tr></table></figure>
-<h5><span id="mo-ren-zhi">默认值</span><a href="#mo-ren-zhi" class="header-anchor">#</a></h5><p><code>listen *:80 | *:8000;</code>    </p>
-<h5><span id="parameters-lie-biao">parameters列表</span><a href="#parameters-lie-biao" class="header-anchor">#</a></h5><p><code>default_server</code></p>
-<ul>
-<li>指定当前服务器是指定地址和端口的默认服务器；</li>
-<li>如果所以的<code>listen</code>指令都没有配置<code>default_server</code>指令，则配置列表中的一个服务器为默认服务器；</li>
-<li>0.8.21版本之前<code>default_server</code>是<code>default</code>。</li>
-</ul>
-<p><code>ssl</code></p>
-<p>指定当前端口下的所有请求都工作在SSL模式下（从0.7.14版本开始起用）。</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>         www.example.com;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>     www.example.com.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> www.example.com.key;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>表示服务器可以同时处理HTTP和HTTPS请求。</p>
-<p><code>http2</code></p>
-<p>配置当前端口是接受<a href="http://nginx.org/en/docs/http/ngx_http_v2_module.html" target="_blank" rel="noopener">HTTP/2</a> 请求连接的，一般情况下应当同时指定<code>ssl</code>参数（可不指定）。（从1.9.5版本开始起用）</p>
-<p><code>spdy</code></p>
-<p>配置当前端口是接受<a href="http://nginx.org/en/docs/http/ngx_http_spdy_module.html" target="_blank" rel="noopener">SPDY</a>请求链接的，一般情况下应当同时指定<code>ssl</code>参数（可不指定）。（在1.3.15-1.9.4版本中使用）</p>
-<p><code>listen</code>指令还有一些针对套接字调用相关的参数，<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#listen" target="_blank" rel="noopener">参考官网指导手册</a></p>
-<h4><span id="server-name">server_name</span><a href="#server-name" class="header-anchor">#</a></h4><p>配置虚拟服务器的名称列表。</p>
-<p>通过名称搜索虚拟服务器时，遵循以下规则：</p>
-<ol>
-<li>确切名称匹配</li>
-<li>以“*”起始的最长通配符名称匹配</li>
-<li>以“*”结尾的最长通配符名称陪陪</li>
-<li>第一个正则匹配（匹配顺序与配置顺序有关，匹配到第一个正则停止）</li>
-</ol>
-<h5><span id="tong-pei-fu-ming-cheng">通配符名称</span><a href="#tong-pei-fu-ming-cheng" class="header-anchor">#</a></h5><p>通配符名称是指在虚拟服务器名称前面或者后面配置一个“*”，紧接着“*”的是点（<code>.</code>）。</p>
-<p>“*.example.org”可以匹配到“<a href="http://www.example.org”，也可以匹配到“www.sub.example.org”。" target="_blank" rel="noopener">www.example.org”，也可以匹配到“www.sub.example.org”。</a></p>
-<p>“.example.org”可以当做是“example.org”和“*.example.org”的组合。</p>
-<p>类似“www.*.example.org”或者“w*.example.org”的配置是无效的。</p>
-<h5><span id="zheng-ze-biao-da-shi-ming-cheng">正则表达式名称</span><a href="#zheng-ze-biao-da-shi-ming-cheng" class="header-anchor">#</a></h5><p>正则表达式配置虚拟服务器名称需满足以下条件：</p>
-<ul>
-<li>一定要以波浪线（<code>~</code>）作为起始符号</li>
-<li>表达式放在在（<code>^</code>）和（<code>$</code>）之间</li>
-<li>正则表达式中的点（<code>.</code>）需要用反斜杠（<code>\</code>）转义</li>
-<li>如果正则表达式中有花括号（<code>{}</code>），正则表达式需要用引号（<code>&quot;&quot;</code>）括起来</li>
-</ul>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">server_name</span>  ~^www\d+\.example\.net$;</span><br><span class="line"><span class="attribute">server_name</span>  <span class="string">"~^(?&lt;name&gt;\w\d&#123;1,3&#125;+)\.example\.net$"</span>;</span><br></pre></td></tr></table></figure>
-<h5><span id="hun-he-ming-cheng">混合名称</span><a href="#hun-he-ming-cheng" class="header-anchor">#</a></h5><p>如果需要处理请求投中没有”Host”字段的请求，server_name中可以指定空引号（<code>&quot;&quot;</code>）。（从0.8.48版本开始，<code>server_name</code>默认是””，之前的版本默认是hostname）</p>
-<p>也可以指定为具体的IP地址</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  example.org</span><br><span class="line">                 www.example.org</span><br><span class="line">                 <span class="string">""</span></span><br><span class="line">                 <span class="number">192.168.1.1</span></span><br><span class="line">                 ;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>_</code>符号表示可以匹配所有的名称，无论是正规域名，还是形如“<code>!@#</code>”或者“<code>--</code>” 等不正规的名称皆可匹配。（这种方式不推荐使用）</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>  default_server;</span><br><span class="line">    <span class="attribute">server_name</span>  _;</span><br><span class="line">    <span class="attribute">return</span>       <span class="number">444</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以在<code>server_name</code>指令中通过使用ASCII (Punycode) 表示国际化域名(<a href="https://en.wikipedia.org/wiki/Internationalized_domain_name" target="_blank" rel="noopener">IDNs</a>)</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  xn--e1afmkfd.xn--80akhbyknj4f;  </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5><span id="zui-jia-shi-jian">最佳实践</span><a href="#zui-jia-shi-jian" class="header-anchor">#</a></h5><p>确切名称、以星号起始的通配符名称、以星号结尾的通配符名称分别存储在绑定于端口的三张哈希表中，哈希表搜索顺序如前面所述</p>
-<ol>
-<li>确切名称</li>
-<li>以星号起始的通配符名称</li>
-<li>以星号结束的通配符名称</li>
-<li>正则表达式</li>
-</ol>
-<p>搜索速度由快到慢顺序</p>
-<ol>
-<li>确切名称</li>
-<li>通配符</li>
-<li>正则表达式</li>
-</ol>
-<p>因此，尽可能的配置确切名称。比如请求exmaple.org和<a href="http://www.example.org的频率较高，那么如下第一种配置明显优于第二种配置" target="_blank" rel="noopener">www.example.org的频率较高，那么如下第一种配置明显优于第二种配置</a></p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  example.org  www.example.org  <span class="regexp">*.example.org</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  .example.org;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果配置服务器名称过多或者长度过长，可能需要调整<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#server_names_hash_max_size" target="_blank" rel="noopener">server_names_hash_max_size</a><br>和 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#server_names_hash_bucket_size" target="_blank" rel="noopener">server_names_hash_bucket_size</a>指令。</p>
-<h4><span id="location">location</span><a href="#location" class="header-anchor">#</a></h4><p>配置请求URI。</p>
-<h5><span id="yu-fa">语法</span><a href="#yu-fa" class="header-anchor">#</a></h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location [ = | ~ | ~* | ^~ ] uri &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">location @name &#123; ... &#125;</span><br></pre></td></tr></table></figure>
-<h5><span id="mo-ren-zhi">默认值</span><a href="#mo-ren-zhi" class="header-anchor">#</a></h5><p><code>-</code></p>
-<h5><span id="shuo-ming">说明</span><a href="#shuo-ming" class="header-anchor">#</a></h5><ul>
-<li><p>匹配是针对规范化URI执行的，对形如“%XX”的编码文本会进行解码操作，对<code>.</code>或者<code>..</code>的相对路径引用会进行解析，对相邻的两个或多个斜杠会压缩成一个；</p>
-</li>
-<li><p><code>location</code>可以通过前缀串定义，也可以通过正则表达式定义；</p>
-</li>
-<li><p>通过正则表达式定义时，<code>~*</code>作为前修饰符表示大小写不敏感，<code>~</code>作为前修饰符表示大小写敏感；</p>
-</li>
-<li><p>根据请求匹配<code>location</code>的过程</p>
-<ol>
-<li>在配置的<code>location</code>列表中搜索URI不带参数的最完整字符串，逐渐减短匹配串，最长的成功匹配将会被选择并保存；</li>
-<li>根据配置顺序匹配正则表达式，匹配成功则停止；</li>
-<li>如果正则表达式匹配成功，则使用正则表达式匹配成功的<code>location</code>，否则使用第一步匹配到的<code>location</code>；</li>
-</ol>
-</li>
-<li><p>前缀匹配中匹配到的最长<code>location</code>如果有<code>^~</code>作为前修饰符，则不会进行正则匹配；</p>
-</li>
-<li><p>如果使用<code>=</code>修饰，会进行确切值的匹配，且匹配成功停止继续匹配；该<code>location</code>不可嵌套其他<code>location</code>；</p>
-</li>
-<li><p>在0.7.1版本到0.8.41版本中，匹配打的前缀<code>location</code>即使没有<code>=</code>或者<code>^~</code>作为前修饰符，也会停止匹配；</p>
-</li>
-<li><p><code>@</code>作为前缀定义的<code>lcation</code>，不用来处理常规请求，而是用来重定向请求；这种<code>location</code>不能被嵌套，也不能其它<code>location</code>；</p>
-</li>
-<li><p>如果一个前缀字符串定义到<code>location</code>以斜杠（<code>/</code>）结尾，请求被<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass" target="_blank" rel="noopener">proxy_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_pass" target="_blank" rel="noopener">fastcgi_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html#uwsgi_pass" target="_blank" rel="noopener">uwsgi_pass</a>,<br><a href="http://nginx.org/en/docs/http/ngx_http_scgi_module.html#scgi_pass" target="_blank" rel="noopener">scgi_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_memcached_module.html#memcached_pass" target="_blank" rel="noopener">memcached_pass</a>，<a href="http://nginx.org/en/docs/http/ngx_http_grpc_module.html#grpc_pass" target="_blank" rel="noopener">grpc_pass</a>处理，请求会转向原请求串不带后斜杠的请求上，301（永久重定向）码会返回给带有后斜杠的请求。可以通过下面的方式配置完全匹配来解决：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /user/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://user.example.com;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">location</span> = /user &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://login.example.com;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 
       
     </div>
@@ -864,7 +753,7 @@
               <img class="site-author-image" itemprop="image" src="/uploads/head.jpg" alt="Elf">
             
               <p class="site-author-name" itemprop="name">Elf</p>
-              <p class="site-description motion-element" itemprop="description">To code or Not to code is a question</p>
+              <p class="site-description motion-element" itemprop="description">���� ��͸ ����</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -874,7 +763,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -951,7 +840,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">官方网站#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">nginx转发请求过程#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">default_server#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.2.</span> <span class="nav-text">防止使用未定义的的sever name处理请求#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.3.</span> <span class="nav-text">基于名称和IP的组合server#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.4.</span> <span class="nav-text">简单配置实例#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.5.</span> <span class="nav-text">总结#</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">HTTP负载均衡#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">代理HTTP请求到服务器组#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">负载均衡算法#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.3.</span> <span class="nav-text">服务器权重#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.4.</span> <span class="nav-text">服务器慢启动（Slow-Start）#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.5.</span> <span class="nav-text">常见指令#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.</span> <span class="nav-text">upstream#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.</span> <span class="nav-text">server#</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.1.</span> <span class="nav-text">parameters列表#</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.1.1.</span> <span class="nav-text">在商用版本还增加的参数#</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.2.</span> <span class="nav-text">ngx_http_upstream_module 的自带参数#</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.</span> <span class="nav-text">server#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.1.</span> <span class="nav-text">listen#</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.1.1.</span> <span class="nav-text">语法#</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.1.2.</span> <span class="nav-text">默认值#</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.1.3.</span> <span class="nav-text">parameters列表#</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.2.</span> <span class="nav-text">server_name#</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.2.1.</span> <span class="nav-text">通配符名称#</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.2.2.</span> <span class="nav-text">正则表达式名称#</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.2.3.</span> <span class="nav-text">混合名称#</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.2.4.</span> <span class="nav-text">最佳实践#</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.3.</span> <span class="nav-text">location#</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.3.1.</span> <span class="nav-text">语法#</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.3.2.</span> <span class="nav-text">默认值#</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.2.3.3.</span> <span class="nav-text">说明#</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">官方网站#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">nginx转发请求过程#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">default_server#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.2.</span> <span class="nav-text">防止使用未定义的的sever name处理请求#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.3.</span> <span class="nav-text">基于名称和IP的组合server#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.4.</span> <span class="nav-text">简单配置实例#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.5.</span> <span class="nav-text">总结#</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">HTTP负载均衡#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">代理HTTP请求到服务器组#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">负载均衡算法#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.3.</span> <span class="nav-text">服务器权重#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.4.</span> <span class="nav-text">服务器慢启动（Slow-Start）#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.5.</span> <span class="nav-text">常见指令#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.</span> <span class="nav-text">upstream#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.</span> <span class="nav-text">server#</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.1.</span> <span class="nav-text">parameters列表#</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.1.1.</span> <span class="nav-text">在商用版本还增加的参数#</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.1.1.2.</span> <span class="nav-text">ngx_http_upstream_module 的自带参数#</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
