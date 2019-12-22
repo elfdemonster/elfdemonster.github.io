@@ -314,6 +314,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/25/jboss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Elf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ElfShare">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/25/jboss/" itemprop="url">jboss</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-25T12:11:54+08:00">
+                2019-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/Jboss/" itemprop="url" rel="index">
+                    <span itemprop="name">Jboss</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/25/jboss/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/25/jboss/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">11:53:30,703 WARN  [org.jboss.as.server.deployment] (MSC service thread 1-4) WFLYSRV0003: Could not index class module-info.class at /C:/Users/elf/content/upchat-user.war/WEB-INF/lib/txw2-2.3.1.jar: java.lang.IllegalStateException: Unknown tag! pos=4 poolCount = 18</span><br><span class="line">        at org.jboss.jandex.Indexer.processConstantPool(Indexer.java:1416)</span><br><span class="line">        at org.jboss.jandex.Indexer.index(Indexer.java:1450)</span><br><span class="line">        at org.jboss.as.server.deployment.annotation.ResourceRootIndexer.indexResourceRoot(ResourceRootIndexer.java:99)</span><br><span class="line">        at org.jboss.as.server.deployment.annotation.AnnotationIndexProcessor.deploy(AnnotationIndexProcessor.java:51)</span><br><span class="line">        at org.jboss.as.server.deployment.DeploymentUnitPhaseService.start(DeploymentUnitPhaseService.java:147)</span><br><span class="line">        at org.jboss.msc.service.ServiceControllerImpl$StartTask.startService(ServiceControllerImpl.java:1948)</span><br><span class="line">        at org.jboss.msc.service.ServiceControllerImpl$StartTask.run(ServiceControllerImpl.java:1881)</span><br><span class="line">        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)</span><br><span class="line">        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)</span><br><span class="line">        at java.lang.Thread.run(Thread.java:745)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">11:53:31,751 ERROR [org.jboss.as.controller.management-operation] (Controller Boot Thread) WFLYCTL0013: Operation (&quot;deploy&quot;) failed - address: ([(&quot;deployment&quot; =&gt; &quot;upchat-user.war&quot;)]) - failure description: &#123;</span><br><span class="line">    &quot;WFLYCTL0080: Failed services&quot; =&gt; &#123;&quot;jboss.deployment.unit.\&quot;upchat-user.war\&quot;.PARSE&quot; =&gt; &quot;org.jboss.msc.service.StartException in service jboss.deployment.unit.\&quot;upchat-user.war\&quot;.PARSE: WFLYSRV0153: Failed to process phase PARSE of deployment \&quot;upchat-user.war\&quot;</span><br><span class="line">    Caused by: org.jboss.as.server.deployment.DeploymentUnitProcessingException: WFLYWS0059: Apache CXF library (cxf-core-3.3.3.jar) detected in ws endpoint deployment; either provide a proper deployment replacing embedded libraries with container module dependencies or disable the webservices subsystem for the current deployment adding a proper jboss-deployment-structure.xml descriptor to it. The former approach is recommended, as the latter approach causes most of the webservices Java EE and any JBossWS specific functionality to be disabled.&quot;&#125;,</span><br><span class="line">    &quot;WFLYCTL0412: Required services that are not installed:&quot; =&gt; [&quot;jboss.deployment.unit.\&quot;upchat-user.war\&quot;.PARSE&quot;],</span><br><span class="line">    &quot;WFLYCTL0180: Services with missing/unavailable dependencies&quot; =&gt; undefined</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/25/jobss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -582,6 +746,181 @@
 <p>jstack pid</p>
 </li>
 </ul>
+<h2><span id="jstat">jstat</span><a href="#jstat" class="header-anchor">#</a></h2><p>监控jvm(Hotspot)性能统计信息，<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html" target="_blank" rel="noopener">查看官方网站</a></p>
+<h3><span id="yu-fa">语法</span><a href="#yu-fa" class="header-anchor">#</a></h3><p><strong>jstat</strong> [ <em>generalOption</em> | <em>outputOptions vmid</em> [ <em>interval</em>[s|ms] [ <em>count</em> ] ]</p>
+<h3><span id="generaloption">generalOption</span><a href="#generaloption" class="header-anchor">#</a></h3><p>单个常规命令 </p>
+<ul>
+<li><p><code>-help</code></p>
+<p>展示帮助信息</p>
+</li>
+<li><p><code>-options</code></p>
+<p>展示所有的静态列表选项</p>
+</li>
+</ul>
+<h3><span id="outputotions">outputOtions</span><a href="#outputotions" class="header-anchor">#</a></h3><p>输出选项决定了<code>jstat</code>命令输出的内容和格式，必须有一个<code>statOption</code>，后面可以任意追加<code>-h -t -j</code>参数。</p>
+<p>输出内容以表格形式展现，第一行表示每列的意思.</p>
+<ul>
+<li><p><code>-h n</code></p>
+<p>每多少行显示一次列表头，默认是0，表示只在第一行显示一次列表头</p>
+<p><img src="/2019/10/24/jvm调优/jstat-01.png" alt></p>
+<p><img src="/2019/10/24/jvm调优/jstat-02.png" alt></p>
+</li>
+<li><p><code>-t</code></p>
+<p>在输出内容的第一列显示<code>timestamp</code>列，表示当前JVM启动的时间</p>
+<p><img src="/2019/10/24/jvm调优/jstat-05.png" alt></p>
+</li>
+<li><p><code>-J</code><em>javaOptions</em></p>
+<p>将<code>javaOptions</code>参数传递给Java应用。<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html#CBBFHAJA" target="_blank" rel="noopener">查看完整Java参数</a></p>
+</li>
+</ul>
+<h4><span id="statoption"><code>statOption</code></span><a href="#statoption" class="header-anchor">#</a></h4><h5><span id="class"><code>class</code></span><a href="#class" class="header-anchor">#</a></h5><p>显示有关类加载器的信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -class 8144</span><br><span class="line">Loaded  Bytes  Unloaded  Bytes     Time</span><br><span class="line"> 80093 75156.4    20263 14311.9     373.09</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Loaded</code>：已加载的类个数</li>
+<li><code>Bytes</code>：已加载的字节数（kb）</li>
+<li><code>Unloaded</code>：未加载的类个数</li>
+<li><code>Bytes</code>：未加载的字节数（kb）</li>
+<li><p><code>Time</code>：Time spent performing class loading and unloading operations</p>
+</li>
+<li><p><code>compiler</code>Java HotSpot VM即时编译器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -compiler 8144 1s 20</span><br><span class="line">Compiled Failed Invalid   Time   FailedType FailedMethod</span><br><span class="line">  120670      6       0  2088.20          1 com/intellij/ide/ui/laf/darcula/ui/DarculaProgressBarUI paintIndeterminate</span><br><span class="line">  120670      6       0  2088.20          1 com/intellij/ide/ui/laf/darcula/ui/DarculaProgressBarUI paintIndeterminate</span><br><span class="line">  120670      6       0  2088.20          1 com/intellij/ide/ui/laf/darcula/ui/DarculaProgressBarUI paintIndeterminate</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Compiled</code>：已执行的编译数</li>
+<li><code>Failed</code>：失败的编译数</li>
+<li><code>Invalid</code>：无效的编译数</li>
+<li><code>Time</code>：执行编译的总时间</li>
+<li><code>FailedType</code>：最后一次失败编译的编译类型</li>
+<li><code>FailedMethod</code>：最后一次编译失败的类名和方法</li>
+</ul>
+</li>
+</ul>
+<h5><span id="gc"><code>gc</code></span><a href="#gc" class="header-anchor">#</a></h5><p> 堆垃圾收集的统计信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gc 8144</span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">17472.0 17472.0  0.0    0.0   139776.0 136633.8  349568.0   209736.5  221952.0 213554.6  0.0    0.0     4038  100.549  290   258.786  359.335</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>S0C</code>：survivor 0区的容量（kb）</li>
+<li><code>S1C</code>：survivor 1区的容量（kb）</li>
+<li><code>S0U</code>：survivor 0区的使用量（kb）</li>
+<li><code>S1U</code>：survivor 1区的使用量（kb）</li>
+<li><code>EC</code>：伊甸园（eden ）区的容量（kb）</li>
+<li><code>EU</code>：伊甸园（eden ）区的使用量（kb）</li>
+<li><code>OC</code>：老年代的容量（kb）</li>
+<li><code>OU</code>：老年代的使用量（kb）</li>
+<li><code>MC</code>：Metaspace 的容量（kb）</li>
+<li><code>MU</code>：Metaspace 的使用量（kb）</li>
+<li><code>CCSC</code>：压缩类空间容量Compressed class space capacity（kb）</li>
+<li><code>CCSU</code>：压缩类空间使用量Compressed class space used（kb）</li>
+<li><code>YGC</code>：青年代垃圾收集执行次数</li>
+<li><code>YGCT</code>：青年代垃圾收集的时间</li>
+<li><code>FGC</code>：full gc的执行册书</li>
+<li><code>FGCT</code>：full gc的执行时间</li>
+<li><code>GCT</code>：gc执行总时间</li>
+</ul>
+<h5><span id="gccapacity"><code>gccapacity</code></span><a href="#gccapacity" class="header-anchor">#</a></h5><p>各年代内存池和空间容量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gccapacity 8144</span><br><span class="line"> NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC</span><br><span class="line"> 43648.0 174720.0 174720.0 17472.0 17472.0 139776.0    87424.0   349568.0   349568.0   349568.0      0.0 222592.0 221952.0      0.0      0.0      0.0   4044   290</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>NGCMN</code>：最小青年代容量（kb）</li>
+<li><code>NGCMX</code>：最大青年代容量（kb）</li>
+<li><code>NGC</code>：当前青年代大小（kb）</li>
+<li><code>S0C</code>：survivor 0空间容量（kb）</li>
+<li><code>S1C</code>：survivor 1空间容量（kb）</li>
+<li><code>EC</code>：eden空间容量（kb）</li>
+<li><code>OGCMN</code>：最小老年代容量（kb）</li>
+<li><code>OGCMX</code>：最大老年代容量（kb）</li>
+<li><code>OGC</code>：当前老年代容量（kb）</li>
+<li><code>OC</code>：old空间容量（kb）</li>
+<li><code>MCMN</code>：最小metaspace 容量（kb）</li>
+<li><code>MCMX</code>：最大metaspace 容量（kb）</li>
+<li><code>MC</code>：metaspace 容量（kb）</li>
+<li><code>CCSMN</code>：最小压缩类空间容量（kb）</li>
+<li><code>CCSMX</code>：最大压缩类空间容量（kb）</li>
+<li><code>CCSC</code>：压缩类空间容量（kb）</li>
+<li><code>YGC</code>：年轻代GC次数</li>
+<li><code>FGC</code>：full GC次数</li>
+</ul>
+<h5><span id="gccause"><code>gccause</code></span><a href="#gccause" class="header-anchor">#</a></h5><p>这个参数展示的垃圾收集信息与<code>-gcutil</code>基本一致，只是多了最后两列</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gccause 8144</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC</span><br><span class="line">  0.00   1.30  89.02  61.17  96.22      -   4063  101.119   291  261.206  362.325 Allocation Failure   No GC</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>LGCC</code>：上一次垃圾收集发生的原因</li>
+<li><code>GCC</code>：本次垃圾收集发生的原因</li>
+</ul>
+<p>其他列查看<code>-gctuil</code></p>
+<h5><span id="gcnew"><code>gcnew</code></span><a href="#gcnew" class="header-anchor">#</a></h5><p>青年代统计信息（New generation statistics）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gcnew 8144</span><br><span class="line"> S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT</span><br><span class="line">17472.0 17472.0  316.7    0.0  6   6 8736.0 139776.0  88239.2   4064  101.137</span><br></pre></td></tr></table></figure>
+<p>其中 <code>S0C</code> <code>S1C</code> <code>S0U</code> <code>S1U</code> <code>YGC</code> <code>YGCT</code> 与前面所述一致</p>
+<ul>
+<li><code>TT</code>：晋升阈值（Tenuring threshold）</li>
+<li><code>MTT</code>：最大晋升阈值（Tenuring threshold）</li>
+<li><code>DSS</code>：期望servivor（幸存区）大小（kb）</li>
+<li><code>EC</code>：eden空间容量（kb）</li>
+<li><code>EU</code>：eden空间使用量（kb）</li>
+</ul>
+<h5><span id="gcnewcapacity"><code>gcnewcapacity</code></span><a href="#gcnewcapacity" class="header-anchor">#</a></h5><p>青年代空间大小统计信息（New generation space size statistics）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gcnewcapacity 8144</span><br><span class="line">  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC</span><br><span class="line">   43648.0   174720.0   174720.0  17472.0  17472.0  17472.0  17472.0   139776.0   139776.0  4072   291</span><br></pre></td></tr></table></figure>
+<p>其中 <code>NGCMN</code> <code>NGCMX</code> <code>NGC</code> <code>S0C</code> <code>S1C</code> <code>S0U</code> <code>S1U</code> <code>EC</code> <code>YGC</code> <code>YGCT</code> 与前面所述一致。</p>
+<ul>
+<li><code>S0CMX</code>：最大survivor 0 空间容量</li>
+<li><code>S1CMX</code>：最大survivor 1 空间容量</li>
+<li><code>ECMX</code>：最大eden空间容量</li>
+</ul>
+<h5><span id="gcold"><code>gcold</code></span><a href="#gcold" class="header-anchor">#</a></h5><p>老年代和metaspace behavior统计信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gcold 8144</span><br><span class="line">   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT</span><br><span class="line">221952.0 213554.9      0.0      0.0    349568.0    213839.2   4073   291  261.206  362.499</span><br></pre></td></tr></table></figure>
+<p>具体每列表示信息参考其他章节介绍</p>
+<h5><span id="gcoldcapacity"><code>gcoldcapacity</code></span><a href="#gcoldcapacity" class="header-anchor">#</a></h5><p>老年代大小统计信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gcoldcapacity 8144</span><br><span class="line">   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT</span><br><span class="line">    87424.0    349568.0    349568.0    349568.0  4073   292  264.125  365.418</span><br></pre></td></tr></table></figure>
+<p>具体每列表示信息参考其他章节介绍</p>
+<h5><span id="gcmetacapacity"><code>gcmetacapacity</code></span><a href="#gcmetacapacity" class="header-anchor">#</a></h5><p>metaspace大小统计信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gcmetacapacity 8144</span><br><span class="line">   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT</span><br><span class="line">       0.0   222592.0   221952.0        0.0        0.0        0.0  4073   292  264.125  365.418</span><br></pre></td></tr></table></figure>
+<h5><span id="gcutil"><code>gcutil</code></span><a href="#gcutil" class="header-anchor">#</a></h5><p>垃圾收集统计信息汇总。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -gcutil 8144</span><br><span class="line"> S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line"> 1.59   0.00  55.11  61.15  96.22      -   4074  101.313   292  264.125  365.437</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>S0</code>：survivor 0 空间使用百分比</li>
+<li><code>S1</code>：survivor 1 空间使用百分比</li>
+<li><code>E</code>： eden空间使用百分比</li>
+<li><code>M</code>：metaspace空间使用百分比</li>
+<li><code>CCS</code>：压缩类空间使用百分比</li>
+<li><code>YGC</code>：青年代垃圾收集次数</li>
+<li><code>YGCT</code>：青年代垃圾收集时间</li>
+<li><code>FGC</code>：full GC次数</li>
+<li><code>FGCT</code>：full GC时间</li>
+<li><code>GCT</code>：垃圾收集总时间</li>
+</ul>
+<h5><span id="printcompilation"><code>printcompilation</code></span><a href="#printcompilation" class="header-anchor">#</a></h5><p>Java HotSpot 虚拟机编译方法统计信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jstat -printcompilation 8144</span><br><span class="line">Compiled  Size  Type Method</span><br><span class="line">  120686     17    1 com/intellij/psi/impl/source/PsiEnumConstantImpl$MyReference &lt;init&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Compiled</code>：最近的编译方法执行的编译数（Number of compilation tasks performed by the most recently compiled method）</li>
+<li><code>Size</code>：最近编译的方法的字节码的字节数（ Number of bytes of byte code of the most recently compiled method）</li>
+<li><code>Type</code>：最近编译方法的编译类型</li>
+<li><code>Method</code>：最近编译方法的类名和方法。类路径中用<code>/</code>代替<code>.</code>，这个两个字段的格式与HotSpot的 <code>-XX:+PrintCompilation</code>参数一致。</li>
+</ul>
+<h2><span id="jps">jps</span><a href="#jps" class="header-anchor">#</a></h2><p>列出目标系统上的Java虚拟机，即Java进程。</p>
+<h3><span id="yu-fa">语法</span><a href="#yu-fa" class="header-anchor">#</a></h3><p><strong>jps</strong> [ <em>options</em> ] [ <em>hostid</em> ]</p>
+<h3><span id="jie-shi">解释</span><a href="#jie-shi" class="header-anchor">#</a></h3><ul>
+<li>用于列出HotSpot虚拟机；</li>
+<li>需要有访问权限才能显示在列表中；</li>
+<li>如果没有指定<code>hostid</code>，列出本机的JVMs；</li>
+<li>指定了<code>hostid</code>，则使用指定的协议和端口搜索目标主机上的JVMs；</li>
+<li><code>jps</code>命令为搜索到的JVMs会列出本地的JVM标识或者<code>lvmid</code>；如果没有任何指定，则是<code>lmid</code>，加上应用或者jar文件名称的简写（省略包信息或者jar的路径）；</li>
+<li><code>jps</code>通过Java启动器来查找main方法的类名和参数，如果JVM是自定义启动器，main方法的类或者jar文件的名称和参数不可用，输出 <code>Unknown</code>；</li>
+<li><code>jps</code>列出JVMs受执行该命令的用户权限限制；</li>
+</ul>
+<h3><span id="options">Options</span><a href="#options" class="header-anchor">#</a></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jps</span><br><span class="line">1040 Jps</span><br><span class="line">8144</span><br><span class="line">15176 JConsole</span><br><span class="line">16456 jar</span><br></pre></td></tr></table></figure>
+<h4><span id="q"><code>q</code></span><a href="#q" class="header-anchor">#</a></h4><p>禁止输出main方法的类或者jar文件的名称和参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jps -q</span><br><span class="line">8144</span><br><span class="line">13172</span><br><span class="line">15176</span><br><span class="line">16456</span><br></pre></td></tr></table></figure>
+<h4><span id="m"><code>m</code></span><a href="#m" class="header-anchor">#</a></h4><p>输出main方法的参数，JVM自带参数不会输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jps -m</span><br><span class="line">8144</span><br><span class="line">15176 JConsole</span><br><span class="line">16456 jar -Dabc.config.file=appCfg/abc-consumer.xml</span><br><span class="line">19240 Jps -m</span><br></pre></td></tr></table></figure>
+<h4><span id="l"><code>l</code></span><a href="#l" class="header-anchor">#</a></h4><p>输出应用主类的完整包路径名称或者jar文件的全路径名称</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jps -l</span><br><span class="line">8144</span><br><span class="line">11076 sun.tools.jps.Jps</span><br><span class="line">15176 sun.tools.jconsole.JConsole</span><br><span class="line">16456 ApacheJMeter.jar</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/10/24/jvm调优/jps-01.png" alt></p>
+<h4><span id="v"><code>v</code></span><a href="#v" class="header-anchor">#</a></h4><p>输出JVM的参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jps -v</span><br><span class="line">8144  -Xms128m -Xmx512m -XX:ReservedCodeCacheSize=240m -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -ea -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Dfile.encoding=UTF-8 -Djb.vmOptionsFile=D:\path\IntelliJIDEA2016.2.4\bin\idea.exe.vmoptions -Xbootclasspath/a:D:\path\IntelliJIDEA2016.2.4\lib\boot.jar -Didea.paths.selector=IntelliJIdea2016.2 -Didea.jre.check=true -XX:ErrorFile=C:\Users\elf\java_error_in_idea_%p.log -XX:HeapDumpPath=C:\Users\user\java_error_in_idea.hprof</span><br><span class="line">13752 Jps -Dapplication.home=D:\path\Java\java1.8\64_jdk1.8.0_40 -Xms8m</span><br><span class="line">15176 JConsole -Dapplication.home=D:\path\Java\java1.8\64_jdk1.8.0_40 -Xms8m -Djconsole.showOutputViewer</span><br><span class="line">16456 jar -XX:+HeapDumpOnOutOfMemoryError -Xms1g -Xmx1g -XX:MaxMetaspaceSize=256m -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:G1ReservePercent=20 -Djava.security.egd=file:/dev/urandom -Duser.language=en -Duser.region=EN</span><br></pre></td></tr></table></figure>
+<h4><span id="v"><code>V</code></span><a href="#v" class="header-anchor">#</a></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jps -V</span><br><span class="line">8144</span><br><span class="line">19332 Jps</span><br><span class="line">15176 JConsole</span><br><span class="line">16456 jar</span><br></pre></td></tr></table></figure>
+<p><code>-J</code><em>option</em></p>
+<p>将<code>options</code>参数传递给Java应用。<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html#CBBFHAJA" target="_blank" rel="noopener">查看完整Java参数</a></p>
+<h3><span id="host-identifier-hostid">Host Identifier（Hostid）</span><a href="#host-identifier-hostid" class="header-anchor">#</a></h3><p>语法：<code>[protocol:][[//]hostname][:port][/servername]</code></p>
+<h4><span id="protocol">protocol</span><a href="#protocol" class="header-anchor">#</a></h4><p>通信协议，如果<code>protocol</code>和<code>hostname</code>都不指定，默认是特定平台的、优化的、本地协议；如果不指定<code>protocol</code>，指定<code>hostname</code>，默认协议是<code>rmi</code>；</p>
+<h4><span id="hostname">hostname</span><a href="#hostname" class="header-anchor">#</a></h4><p>目标主机的主机名或者IP地址，不指定<code>hostname</code>，则默认是<code>localhost</code>；</p>
+<h4><span id="port">port</span><a href="#port" class="header-anchor">#</a></h4><p>与远程服务通信的端口。如果不指定<code>hostname</code>或者<code>protocol</code>指定为本地协议，那么忽略<code>port</code>；否则端口依赖于实现方式，对于默认的<code>rmi</code>协议，<code>port</code>是远程主机上的rmiregistry端口号；如果不指定<code>port</code>，<code>rmi</code>协议的默认端口是<code>1099</code>；</p>
+<h4><span id="servername">servername</span><a href="#servername" class="header-anchor">#</a></h4><p>依赖于实现方式。本地协议忽略<code>servername</code>；<code>rmi</code>协议，<code>servername</code>是一个字符串，代表远程主机上RMI对象的名称，更多信息请查看<code>jstatd</code>命令的<code>-n</code>说明。</p>
 
           
         
@@ -1860,211 +2199,6 @@ at Pipe._handle.close (net.js:606:12)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/springboot/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Elf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ElfShare">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/15/springboot/" itemprop="url">springboot</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-15T11:28:50+08:00">
-                2019-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/JAVA/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/JAVA/spring/springboot/" itemprop="url" rel="index">
-                    <span itemprop="name">springboot</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/10/15/springboot/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/15/springboot/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h2 id="Auto-config"><a href="#Auto-config" class="headerlink" title="Auto-config"></a>Auto-config</h2><ul>
-<li><p><code>@SpringBootApplication</code></p>
-<p>SpringBootAppication一个注解相当于以下三个注解</p>
-<ul>
-<li><code>@EnableAutoConfiguration</code>: enable <a href="https://docs.spring.io/spring-boot/docs/2.1.10.BUILD-SNAPSHOT/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Spring Boot’s auto-configuration mechanism</a></li>
-<li><code>@ComponentScan</code>: enable <code>@Component</code> scan on the package where the application is located (see <a href="https://docs.spring.io/spring-boot/docs/2.1.10.BUILD-SNAPSHOT/reference/html/using-boot-structuring-your-code.html" target="_blank" rel="noopener">the best practices</a>)</li>
-<li><code>@Configuration</code>：allow to register extra beans in the context or import additional configuration classes</li>
-</ul>
-</li>
-<li><p><code>@Configuration</code></p>
-<ul>
-<li><p>禁止指定配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.boot.autoconfigure.*;</span><br><span class="line">import org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line">import org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableAutoConfiguration(exclude=&#123;DataSourceAutoConfiguration.class&#125;)</span><br><span class="line">public class MyConfiguration &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/15/springboot/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2117,7 +2251,7 @@ at Pipe._handle.close (net.js:606:12)
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2139,7 +2273,7 @@ at Pipe._handle.close (net.js:606:12)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
