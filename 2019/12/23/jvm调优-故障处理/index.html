@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,jvm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="jmap 语法 解释 Options &amp;lt;no option&amp;gt; -dump:[live,] format=b, file=*filename* finalizerinfo heap histo[:live] clstats F h help -Jflag">
+<meta name="keywords" content="java,jvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElfShare">
+<meta property="og:url" content="http://yoursite.com/2019/12/23/jvm调优-故障处理/index.html">
+<meta property="og:site_name" content="ElfShare">
+<meta property="og:description" content="jmap 语法 解释 Options &amp;lt;no option&amp;gt; -dump:[live,] format=b, file=*filename* finalizerinfo heap histo[:live] clstats F h help -Jflag">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/12/23/jvm调优-故障处理/jmap-1.png">
+<meta property="og:updated_time" content="2019-12-27T06:22:39.040Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ElfShare">
+<meta name="twitter:description" content="jmap 语法 解释 Options &amp;lt;no option&amp;gt; -dump:[live,] format=b, file=*filename* finalizerinfo heap histo[:live] clstats F h help -Jflag">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/23/jvm调优-故障处理/jmap-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/23/jvm调优-故障处理/">
+
+
+
+
+
+  <title> | ElfShare</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c55fcfed6c3e0564b14084c229dcb11e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ElfShare</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-成长">
+          <a href="/life/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            成长
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/23/jvm调优-故障处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Elf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ElfShare">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-23T20:38:41+08:00">
+                2019-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/JAVA/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/23/jvm调优-故障处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/23/jvm调优-故障处理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#jmap">jmap</a><ul>
+<li><a href="#yu-fa">语法</a></li>
+<li><a href="#jie-shi">解释</a></li>
+<li><a href="#options">Options</a><ul>
+<li><a href="#no-option"><code>&lt;no option&gt;</code></a></li>
+<li><a href="#dump-live-format-b-file-filename"><code>-dump:[live,] format=b, file=*filename*</code></a></li>
+<li><a href="#finalizerinfo"><code>finalizerinfo</code></a></li>
+<li><a href="#heap">heap</a></li>
+<li><a href="#histo-live">histo[:live]</a></li>
+<li><a href="#clstats">clstats</a></li>
+<li><a href="#f">F</a></li>
+<li><a href="#h-help">h help</a></li>
+<li><a href="#j-flag">-J<em>flag</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<a id="more"></a>
+<h1><span id="jmap">jmap</span><a href="#jmap" class="header-anchor">#</a></h1><p>输出进程、核心文件或远程调试服务器的共享对象内存或者堆内训的相信信息。</p>
+<h2><span id="yu-fa">语法</span><a href="#yu-fa" class="header-anchor">#</a></h2><p><strong>jmap</strong> [ <em>options</em> ] <em>pid</em><br><strong>jmap</strong> [ <em>options</em> ] <em>executable</em> <em>core</em><br><strong>jmap</strong> [ <em>options</em> ] [ <em>pid</em> ] <em>server-id</em>@ ] <em>remote-hostname-or-IP</em></p>
+<h2><span id="jie-shi">解释</span><a href="#jie-shi" class="header-anchor">#</a></h2><ul>
+<li><p>executable</p>
+<p>产生核心转储的Java可执行文件</p>
+</li>
+<li><p>core</p>
+<p>打印内存信息的核心文件</p>
+</li>
+<li><p>remote-hostname-or-IP</p>
+<p>远程调试服务器的<code>hostname</code>或者<code>IP</code>地址。查看<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jsadebugd.html#BHBHHJCA" target="_blank" rel="noopener">jsadebug</a></p>
+</li>
+<li><p>server-id</p>
+<p>远程服务器上有多个调试服务器时，提供的调式服务器唯一ID</p>
+</li>
+<li><p>通过<code></code>-J-d64<code>可以指定</code>jmap`运行在64位JVM上</p>
+<p><code></code>jmap<code></code>-J-d64 -heap pid`</p>
+</li>
+</ul>
+<h2><span id="options">Options</span><a href="#options" class="header-anchor">#</a></h2><h3><span id="lt-no-option-gt"><code>&lt;no option&gt;</code></span><a href="#lt-no-option-gt" class="header-anchor">#</a></h3><p>没有option参数，<code>jmap</code>命令输出共享对象映射信息。会打印出JVM中所有共享对象的起始地址、映射大小、文件的全路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jmap 5208</span><br><span class="line">Attaching to process ID 5208, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.40-b25</span><br><span class="line">0x0000000056140000      8716K   D:\path\Java\java1.8\64_jdk1.8.0_40\jre\bin\server\jvm.dll</span><br><span class="line">0x00000000569d0000      840K    D:\path\Java\java1.8\64_jdk1.8.0_40\jre\bin\msvcr100.dll</span><br><span class="line">0x0000000056e10000      52K     D:\path\Java\java1.8\64_jdk1.8.0_40\jre\bin\management.dll</span><br><span class="line">0x0000000056e20000      68K     D:\path\Java\java1.8\64_jdk1.8.0_40\jre\bin\nio.dll</span><br><span class="line">0x0000000056e40000      104K    D:\path\Java\java1.8\64_jdk1.8.0_40\jre\bin\net.dll</span><br><span class="line">0x0000000056e60000      88K     D:\path\Java\java1.8\64_jdk1.8.0_40\jre\bin\zip.dll</span><br></pre></td></tr></table></figure>
+<h3><span id="dump-live-format-b-file-filename"><code>-dump:[live,] format=b, file=*filename*</code></span><a href="#dump-live-format-b-file-filename" class="header-anchor">#</a></h3><ul>
+<li>将Java堆信息存入filename指定文件名的<code>hprof</code>二进制文件中；</li>
+<li><code>live</code> 是可选操作，指定<code>live</code>表示只保存活跃对象；</li>
+<li>是<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jhat.html#CIHIEAEE" target="_blank" rel="noopener"><code>jhat</code></a>命令可以读取文件；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jmap -dump:live,format=b,file=test 5208</span><br><span class="line">Dumping heap to C:\user\username\Desktop\test ...</span><br><span class="line">Heap dump file created</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jhat  C:\\Users\\username\\Desktop\\test.hprof</span><br><span class="line">Reading from C:\Users\username\Desktop\test.hprof...</span><br><span class="line">Dump file created Fri Dec 27 13:20:01 CST 2019</span><br><span class="line">Snapshot read, resolving...</span><br><span class="line">Resolving 502739 objects...</span><br><span class="line">Chasing references, expect 100 dots....................................................................................................</span><br><span class="line">Eliminating duplicate references....................................................................................................</span><br><span class="line">Snapshot resolved.</span><br><span class="line">Started HTTP server on port 7000</span><br><span class="line">Server is ready.</span><br></pre></td></tr></table></figure>
+<p>访问<a href="localhost:7000" target="_blank" rel="noopener">localhost:7000</a>可以查看文件具体内容</p>
+<p><img src="/2019/12/23/jvm调优-故障处理/jmap-1.png" alt></p>
+<h3><span id="finalizerinfo"><code>finalizerinfo</code></span><a href="#finalizerinfo" class="header-anchor">#</a></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jmap -finalizerinfo 10864</span><br><span class="line">Attaching to process ID 10864, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.40-b25</span><br><span class="line">Number of objects pending for finalization: 0</span><br></pre></td></tr></table></figure>
+<h3><span id="heap">heap</span><a href="#heap" class="header-anchor">#</a></h3><p>输出堆垃圾回收的摘要信息，配置信息，哥年代的堆使用信息以及 interned Strings的是数量和大小。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jmap -heap 10864</span><br><span class="line">Attaching to process ID 10864, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.40-b25</span><br><span class="line"></span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Garbage-First (G1) GC with 4 thread(s)</span><br><span class="line"></span><br><span class="line">Heap Configuration:</span><br><span class="line">   MinHeapFreeRatio         = 40</span><br><span class="line">   MaxHeapFreeRatio         = 70</span><br><span class="line">   MaxHeapSize              = 1073741824 (1024.0MB)</span><br><span class="line">   NewSize                  = 1363144 (1.2999954223632812MB)</span><br><span class="line">   MaxNewSize               = 643825664 (614.0MB)</span><br><span class="line">   OldSize                  = 5452592 (5.1999969482421875MB)</span><br><span class="line">   NewRatio                 = 2</span><br><span class="line">   SurvivorRatio            = 8</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)</span><br><span class="line">   CompressedClassSpaceSize = 1073741824 (1024.0MB)</span><br><span class="line">   MaxMetaspaceSize         = 268435456 (256.0MB)</span><br><span class="line">   G1HeapRegionSize         = 1048576 (1.0MB)</span><br><span class="line"></span><br><span class="line">Heap Usage:</span><br><span class="line">G1 Heap:</span><br><span class="line">   regions  = 1024</span><br><span class="line">   capacity = 1073741824 (1024.0MB)</span><br><span class="line">   used     = 402117216 (383.4888610839844MB)</span><br><span class="line">   free     = 671624608 (640.5111389160156MB)</span><br><span class="line">   37.45008409023285% used</span><br><span class="line">G1 Young Generation:</span><br><span class="line">Eden Space:</span><br><span class="line">   regions  = 341</span><br><span class="line">   capacity = 572522496 (546.0MB)</span><br><span class="line">   used     = 357564416 (341.0MB)</span><br><span class="line">   free     = 214958080 (205.0MB)</span><br><span class="line">   62.45421245421245% used</span><br><span class="line">Survivor Space:</span><br><span class="line">   regions  = 31</span><br><span class="line">   capacity = 32505856 (31.0MB)</span><br><span class="line">   used     = 32505856 (31.0MB)</span><br><span class="line">   free     = 0 (0.0MB)</span><br><span class="line">   100.0% used</span><br><span class="line">G1 Old Generation:</span><br><span class="line">   regions  = 15</span><br><span class="line">   capacity = 468713472 (447.0MB)</span><br><span class="line">   used     = 10998368 (10.488861083984375MB)</span><br><span class="line">   free     = 457715104 (436.5111389160156MB)</span><br><span class="line">   2.34650136107033% used</span><br><span class="line"></span><br><span class="line">22533 interned Strings occupying 2048048 bytes.</span><br></pre></td></tr></table></figure>
+<h3><span id="histo-live">histo[:live]</span><a href="#histo-live" class="header-anchor">#</a></h3><ul>
+<li>将对信息以列表（histogram）的形式输出；</li>
+<li>输出每个类的信息：对象个数、内存字节数、全路径；</li>
+<li>如果指定<code>live</code>，只统计活跃对象信息（从以下输出可以看到对象数是不同的）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jmap -histo 10864</span><br><span class="line"></span><br><span class="line"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span><br><span class="line">   1:        887212      198868312  [C</span><br><span class="line">   2:        423381       89093320  [B</span><br><span class="line">   3:         46645       26477944  [I</span><br><span class="line">   4:        542764       13026336  java.lang.String</span><br><span class="line">   5:        128620       12347520  sun.util.calendar.Gregorian$Date</span><br><span class="line">   6:        128391       10271280  java.util.zip.ZipEntry</span><br><span class="line">   7:         92913        4668984  [Ljava.lang.Object;</span><br><span class="line">   8:        112727        2705448  java.util.Date</span><br><span class="line">   9:         46899        2626344  java.util.stream.ReferencePipeline$Head</span><br><span class="line">  10:         48749        1949960  java.security.AccessControlContext</span><br><span class="line">  11:         82135        1814832  [Ljava.lang.Class;</span><br><span class="line">  12:         14411        1632616  java.lang.Class</span><br><span class="line">  13:         50674        1621568  java.util.HashMap$Node</span><br><span class="line">  14:         46875        1500000  java.util.Spliterators$ArraySpliterator</span><br><span class="line">  15:         16237        1314488  [Ljava.util.HashMap$Node;</span><br><span class="line">  16:         14048        1236224  java.lang.reflect.Method</span><br><span class="line">  17:         35411        1133152  java.util.concurrent.ConcurrentHashMap$Node</span><br><span class="line">  18:         46864        1124736  java.util.stream.MatchOps$$Lambda$45/319558327</span><br><span class="line">  19:         40542         973008  java.lang.StringBuilder</span><br><span class="line">  20:         19482         935136  java.util.HashMap</span><br><span class="line">  21:         26831         870296  [Ljava.security.ProtectionDomain;</span><br><span class="line">  22:         33581         805944  org.apache.commons.collections.map.ListOrderedMap$ListOrderedMapEntry</span><br><span class="line">  23:          9684         772896  [S</span><br><span class="line">  24:         46864         749824  org.apache.jorphan.reflect.ClassFinder$ExtendsClassFilter$$Lambda$44/1397381784</span><br><span class="line">  25:         20407         653024  java.util.ArrayList$Itr</span><br><span class="line">  26:         10000         640000  java.awt.event.InvocationEvent</span><br><span class="line">  27:         18944         606208  java.util.concurrent.locks.AbstractQueuedSynchronizer$Node</span><br><span class="line">  28:         18127         580064  java.util.Hashtable$Entry</span><br><span class="line">  29:         17336         554752  java.beans.PropertyChangeEvent</span><br><span class="line">  30:         13686         547440  java.lang.ref.Finalizer</span><br><span class="line">  31:         31829         509264  java.lang.Object</span><br><span class="line">  32:         19459         467016  java.util.ArrayList</span><br><span class="line">....................</span><br><span class="line">3770:             1             16  sun.text.normalizer.NormalizerImpl$FCDTrieImpl</span><br><span class="line">3771:             1             16  sun.text.normalizer.NormalizerImpl$NormTrieImpl</span><br><span class="line">3772:             1             16  sun.util.CoreResourceBundleControl</span><br><span class="line">3773:             1             16  sun.util.calendar.Gregorian</span><br><span class="line">3774:             1             16  sun.util.locale.InternalLocaleBuilder$CaseInsensitiveChar</span><br><span class="line">3775:             1             16  sun.util.locale.provider.AuxLocaleProviderAdapter$NullProvider</span><br><span class="line">3776:             1             16  sun.util.locale.provider.CalendarDataUtility$CalendarFieldValueNamesMapGetter</span><br><span class="line">3777:             1             16  sun.util.locale.provider.CalendarDataUtility$CalendarWeekParameterGetter</span><br><span class="line">3778:             1             16  sun.util.locale.provider.CalendarNameProviderImpl$LengthBasedComparator</span><br><span class="line">3779:             1             16  sun.util.locale.provider.SPILocaleProviderAdapter</span><br><span class="line">3780:             1             16  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter</span><br><span class="line">3781:             1             16  sun.util.resources.LocaleData</span><br><span class="line">3782:             1             16  sun.util.resources.LocaleData$LocaleDataResourceBundleControl</span><br><span class="line">Total       3659918      405059648</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jmap -histo:live 10864</span><br><span class="line"></span><br><span class="line"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span><br><span class="line">   1:          7681        6404584  [B</span><br><span class="line">   2:         74426        6304912  [C</span><br><span class="line">   3:         13259        4714608  [I</span><br><span class="line">   4:         72674        1744176  java.lang.String</span><br><span class="line">   5:         14411        1632616  java.lang.Class</span><br><span class="line">   ......................</span><br><span class="line">   3034:             1             16  sun.util.locale.provider.SPILocaleProviderAdapter</span><br><span class="line">3035:             1             16  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter</span><br><span class="line">3036:             1             16  sun.util.resources.LocaleData</span><br><span class="line">3037:             1             16  sun.util.resources.LocaleData$LocaleDataResourceBundleControl</span><br><span class="line">Total        561269       36751776</span><br></pre></td></tr></table></figure>
+<h3><span id="clstats">clstats</span><a href="#clstats" class="header-anchor">#</a></h3><ul>
+<li>输出Java堆中类加载器的统计信息；</li>
+<li>输出每个类加载器的信息：名称，活动程度，地址，父类加载器，已加载的类的数量和大小；</li>
+<li>统计会比较耗费时间；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jmap -clstats 10864</span><br><span class="line">Attaching to process ID 10864, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.40-b25</span><br><span class="line">finding class loader instances ..done.</span><br><span class="line">computing per loader stat ..done.</span><br><span class="line">please wait.. computing liveness..........................................................liveness analysis may be inaccurate ...</span><br><span class="line">class_loader    classes bytes   parent_loader   alive?  type</span><br><span class="line"></span><br><span class="line">&lt;bootstrap&gt;     3835    6981748   null          live    &lt;internal&gt;</span><br><span class="line">0x00000000c02ccba8      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1aa4420      1       878     0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02cd820      1       1472    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c202e190      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1c3e350      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1dbe048      1       1472    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02ccd38      1       1472    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c134d6a0      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c03acea0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02cc7b0      10587   13944043        0x00000000c0300be8      live    org/apache/jmeter/DynamicClassLoader@0x0000000100060218</span><br><span class="line">0x00000000c1e0fe40      1       878     0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c10256a0      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02cc888      1       1481      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c19dc138      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c19dcb38      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c19e6fb8      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c19aa9b0      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1aa5000      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02cce00      1       1472      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c0fd55d0      12      37189   0x00000000c0300be8      live    sun/reflect/misc/MethodUtil@0x00000001001e1028</span><br><span class="line">0x00000000c0ef5fc0      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02cca18      1       1472    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c0270990      0       0       0x00000000c0300be8      live    java/util/ResourceBundle$RBClassLoader@0x00000001000f2f58</span><br><span class="line">0x00000000c0fd4ec0      1       878     0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c0ef6450      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1025440      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02cd8e8      1       1472    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c037f870      1       1471    0x00000000c02ccec8      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1eac520      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1fb10b0      1       878     0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02ccae0      1       1472    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c03d5370      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c10a22d8      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c23a9668      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c0300be8      37      144387  0x00000000c02ccec8      live    sun/misc/Launcher$AppClassLoader@0x000000010000f668</span><br><span class="line">0x00000000c02ccc70      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c13df1e0      1       1472      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1522db0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c202e8e0      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02ccec8      152     345291    null          live    sun/misc/Launcher$ExtClassLoader@0x000000010000fa10</span><br><span class="line">0x00000000c20611e0      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c0ef6108      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c19e2e70      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1fe6910      1       878     0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c206a068      1       878     0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c10a1ef8      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c0fd5088      1       889     0x00000000c0fd55d0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c13d75c8      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c1e25298      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c02cc950      1       1471    0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line">0x00000000c23c42c0      1       878     0x00000000c02cc7b0      dead    sun/reflect/DelegatingClassLoader@0x0000000100009df8</span><br><span class="line"></span><br><span class="line">total = 52      14669   21509096            N/A         alive=6, dead=46            N/A</span><br></pre></td></tr></table></figure>
+<h3><span id="f">F</span><a href="#f" class="header-anchor">#</a></h3><p>强制输出</p>
+<ul>
+<li>使用<code>jmap -dump</code>或者<code>jmap -histo</code>命令时，如果进程没有响应，可以使用<code>-F</code>强制输出；</li>
+<li><code>live</code>模式下不能使用<code>-F</code>强制输出；</li>
+</ul>
+<h3><span id="h-help">h help</span><a href="#h-help" class="header-anchor">#</a></h3><p><code>-h</code>与<code>-help</code>都是输出帮助信息的指令</p>
+<h3><span id="jflag">-J<em>flag</em></span><a href="#jflag" class="header-anchor">#</a></h3><p>将<code>flag</code>信息传递给运行<code>jamp</code>命令的虚拟机</p>
+</div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/18/Nginx-OpenResty-Kong/" rel="next" title="Nginx/OpenResty/Kong">
+                <i class="fa fa-chevron-left"></i> Nginx/OpenResty/Kong
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/23/jvm调优-监控/" rel="prev" title="jvm调优-监控">
+                jvm调优-监控 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/head.jpg" alt="Elf">
+            
+              <p class="site-author-name" itemprop="name">Elf</p>
+              <p class="site-description motion-element" itemprop="description">���� ��͸ ����</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/elfdemonster" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:elfdemonster001@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/elfdemonster" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">jmap#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text">语法#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.2.</span> <span class="nav-text">解释#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.3.</span> <span class="nav-text">Options#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.1.</span> <span class="nav-text">&lt;no option&gt;#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.2.</span> <span class="nav-text">-dump:[live,] format=b, file=*filename*#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.3.</span> <span class="nav-text">finalizerinfo#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.4.</span> <span class="nav-text">heap#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.5.</span> <span class="nav-text">histo[:live]#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.6.</span> <span class="nav-text">clstats#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.7.</span> <span class="nav-text">F#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.8.</span> <span class="nav-text">h help#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.9.</span> <span class="nav-text">-Jflag#</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Elf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://elf.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/12/23/jvm调优-故障处理/';
+          this.page.identifier = '2019/12/23/jvm调优-故障处理/';
+          this.page.title = '';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://elf.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
