@@ -314,6 +314,277 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/30/trains问题Java实现代码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Elf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ElfShare">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/30/trains问题Java实现代码/" itemprop="url">trains问题Java实现代码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-30T11:11:18+08:00">
+                2019-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/30/trains问题Java实现代码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/30/trains问题Java实现代码/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>The local commuter railroad services a number of towns in Kiwiland.  Because of monetary concerns, all of the tracks are ‘one-way.’  That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia.  In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!</p>
+<p>The purpose of this problem is to help the railroad provide its customers with information about the routes.  In particular, you will compute the distance along a certain route, the number of different routes between two towns, and the shortest route between two towns.</p>
+<p><strong><em>Input</em></strong>:  A directed graph where a node represents a town and an edge represents a route between two towns.  The weighting of the edge represents the distance between the two towns.  A given route will never appear more than once, and for a given route, the starting and ending town will not be the same town.</p>
+<p><strong><em>Output</em></strong>: For test input 1 through 5, if no such route exists, output ‘NO SUCH ROUTE’.  Otherwise, follow the route as given; do not make any extra stops!  For example, the first problem means to start at city A, then travel directly to city B (a distance of 5), then directly to city C (a distance of 4).</p>
+<ol>
+<li>The distance of the route A-B-C.</li>
+<li>The distance of the route A-D.</li>
+<li>The distance of the route A-D-C.</li>
+<li>The distance of the route A-E-B-C-D.</li>
+<li>The distance of the route A-E-D.</li>
+<li>The number of trips starting at C and ending at C with a maximum of 3 stops.  In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).</li>
+<li>The number of trips starting at A and ending at C with exactly 4 stops.  In the sample data below, there are three such trips: A to C (via B,C,D); A to C (via D,C,D); and A to C (via D,E,B).</li>
+<li>The length of the shortest route (in terms of distance to travel) from A to C.</li>
+<li>The length of the shortest route (in terms of distance to travel) from B to B.</li>
+<li><p>The number of different routes from C to C with a distance of less than 30.  In the sample data, the trips are: CDC, CEBC, CEBCDC, CDCEBC, CDEBC, CEBCEBC, CEBCEBCEBC.</p>
+<p><strong><em>Test Input:</em></strong></p>
+</li>
+</ol>
+<p>For the test input, the towns are named using the first few letters of the alphabet from A to D.  A route between two towns (A to B) with a distance of 5 is represented as AB5.</p>
+<p>Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7</p>
+<p>Expected Output:</p>
+<p>Output #1: 9</p>
+<p>Output #2: 5</p>
+<p>Output #3: 13</p>
+<p>Output #4: 22</p>
+<p>Output #5: NO SUCH ROUTE</p>
+<p>Output #6: 2</p>
+<p>Output #7: 3</p>
+<p>Output #8: 9</p>
+<p>Output #9: 9</p>
+<p>Output #10: 7</p>
+<h2><span id="shuo-ming">说明</span><a href="#shuo-ming" class="header-anchor">#</a></h2><h3><span id="ti-yi">题意</span><a href="#ti-yi" class="header-anchor">#</a></h3><p>这是一个路线问题。</p>
+<ul>
+<li>路线是单向的，比如有A-&gt;B的路线，并不表示有B-&gt;A的路线；即使同时存在A-&gt;B和B-&gt;A的路线，两条路线的距离也可能不同；</li>
+<li>计算给定的三个问题<ul>
+<li>给定路线的距离</li>
+<li>两个站点间的不同路线</li>
+<li>两个站点间的最短路线</li>
+</ul>
+</li>
+<li>输入<ul>
+<li>给定路线是有方向的，后面的数字表示两站点间的距离；</li>
+<li>路线不会出现多次；</li>
+<li>终点和起点不会相同；</li>
+</ul>
+</li>
+<li>输出：<ul>
+<li>1-5，如果路线不存在，输出“NO SUCH ROUTE”，否则输出路线距离；</li>
+<li>6，输出从C站点起始，结束也在C站点，最大经过3个站点的路线数（给定数据的结果：C-D-C，C-E-B-C）；</li>
+<li>7，从站点A起始，结束与C站点，经过4个站点的路线数（给定数据的结果：A-B-C-D-C, A-D-C-D-C, A-D-E-B-C）；</li>
+<li>8，从A站点到C站点的最短路线距离；</li>
+<li>9，从B站点到B站点的最短路线距离；</li>
+<li>10，从C站点到C站点，总距离小于30的不同路线（给定数据的结果：C-D-C, C-E-B-C, C-E-B-C-D-C, C-D-C-E-B-C, C-D-E-B-C, C-E-B-C-E-B-C, C-E-B-C-E-B-C-E-B-C）；</li>
+</ul>
+</li>
+</ul>
+<h3><span id="bao-jie-gou">包结构</span><a href="#bao-jie-gou" class="header-anchor">#</a></h3><ol>
+<li>com.tw.trains<ul>
+<li>Main.java 程序运行入口，负责构建测试数据，已经调用api；</li>
+<li>Maps.java 程序路主要功能提供类；</li>
+<li>Route.java 路线实体类信息；</li>
+<li>Town.java 车站实体类信息；</li>
+</ul>
+</li>
+<li>com.tw.trans.data<ul>
+<li>TownsEnum.java 程序测试路线初始化</li>
+</ul>
+</li>
+<li>com.tw.trans.exception<ul>
+<li>TransException 程序自定义异常，再需要的情况下抛出，程序捕获做适当的处理</li>
+</ul>
+</li>
+</ol>
+<h3><span id="zhu-yao-shi-xian-lei-maps">主要实现类Maps</span><a href="#zhu-yao-shi-xian-lei-maps" class="header-anchor">#</a></h3><ul>
+<li><p>该类中维护两个map</p>
+<ul>
+<li>directTownsMaps 直连的站点路线</li>
+<li>routeMaps 已经构建好的路线（完备的考虑应该路线构持久化或者缓存）</li>
+</ul>
+</li>
+<li><p>map初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">//Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == Maps.directTownsMaps)</span><br><span class="line">		&#123;</span><br><span class="line">			Maps.directTownsMaps = <span class="keyword">new</span> HashMap&lt;Town, Map&lt;String, Route&gt;&gt;();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == Maps.routeMaps)</span><br><span class="line">		&#123;</span><br><span class="line">			Maps.routeMaps = <span class="keyword">new</span> HashMap&lt;Town, Map&lt;String, Route&gt;&gt;();</span><br><span class="line">		&#125;</span><br><span class="line">		TownsEnum[] initData = TownsEnum.values();</span><br><span class="line">		<span class="keyword">for</span>(TownsEnum te : initData)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (Maps.directTownsMaps.containsKey(te.getStart())) &#123;</span><br><span class="line">				Maps.directTownsMaps.get(te.getStart()).put(</span><br><span class="line">						te.getEnd().getName(),</span><br><span class="line">						<span class="keyword">new</span> Route(te.getStart(), te.getEnd(), te.getRoutes(),</span><br><span class="line">								te.getDistance()));</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				Map&lt;String, Route&gt; diretTowns = <span class="keyword">new</span> HashMap&lt;String, Route&gt;();</span><br><span class="line">				diretTowns.put(te.getEnd().getName(), <span class="keyword">new</span> Route(te.getStart(),</span><br><span class="line">						te.getEnd(), te.getRoutes(), te.getDistance()));</span><br><span class="line">				Maps.directTownsMaps.put(te.getStart(), diretTowns);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//System.out.println("Maps.directTownsMaps init success! " +  Maps.directTownsMaps);</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给定路线计算距离</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getDistance</span><span class="params">(Route route)</span> <span class="keyword">throws</span> TrainsException</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == route)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		Town startTown = route.getStartTown();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 如果已缓存路线，可以直接取出结果</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != Maps.routeMaps &amp;&amp; Maps.routeMaps.containsKey(startTown)</span><br><span class="line">				&amp;&amp; Maps.routeMaps.get(startTown).containsKey(route.getRoutes())) &#123;</span><br><span class="line">			<span class="keyword">return</span> Maps.routeMaps.get(startTown).get(route.getRoutes())</span><br><span class="line">					.getDistance();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> distance = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> != Maps.directTownsMaps.get(startTown))</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			String[] allTowns = route.getRoutes().split(<span class="string">"-"</span>);</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span> (allTowns.length == <span class="number">2</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span> (<span class="keyword">null</span> == Maps.directTownsMaps.get(startTown).get(</span><br><span class="line">						route.getEndTown().getName())) &#123;</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> TrainsException(Maps.NO_SUCH_ROUTE);</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				distance += Maps.directTownsMaps.get(startTown)</span><br><span class="line">						.get(route.getEndTown().getName()).getDistance();</span><br><span class="line">			&#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (<span class="keyword">null</span> == Maps.directTownsMaps.get(startTown).get(allTowns[<span class="number">1</span>])) &#123;</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> TrainsException(Maps.NO_SUCH_ROUTE);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					Route tmp = <span class="keyword">new</span> Route(<span class="keyword">new</span> Town(allTowns[<span class="number">1</span>], allTowns[<span class="number">1</span>]),</span><br><span class="line">							<span class="keyword">new</span> Town(allTowns[<span class="number">2</span>], allTowns[<span class="number">2</span>]), route</span><br><span class="line">									.getRoutes().substring(<span class="number">2</span>));</span><br><span class="line">					distance += Maps.directTownsMaps.get(startTown).get(allTowns[<span class="number">1</span>])</span><br><span class="line">							.getDistance()</span><br><span class="line">							+ Maps.getDistance(tmp);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 将算好的路线缓存起来</span></span><br><span class="line">			cacheRoute(route, startTown, distance);</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">return</span> distance;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> TrainsException(Maps.NO_SUCH_ROUTE);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据给定起始站，以及允许最大站数，计算有多少种路线</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据给定起始站，以及允许最大站数，计算有多少种路线</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> route 带有起始站信息的路线</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> countTowns 跨站数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> max true：指定数最大跨站数 false：指定数为确定站数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getRoutesCount</span><span class="params">(Route route, <span class="keyword">int</span> countTowns, <span class="keyword">boolean</span> max)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">null</span> == route || <span class="number">0</span> == countTowns)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	Map&lt;String, Route&gt; routes = Maps.getRoutes(route, countTowns, max, <span class="keyword">false</span>, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span>(max)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span> == routes ? <span class="number">0</span> : routes.size();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> != routes &amp;&amp; !routes.isEmpty())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//System.out.println(routes);</span></span><br><span class="line">			Map&lt;String, Route&gt; result = <span class="keyword">new</span> HashMap&lt;String, Route&gt;();</span><br><span class="line">			Set&lt;String&gt; keys = routes.keySet();</span><br><span class="line">			Iterator&lt;String&gt; it = keys.iterator();</span><br><span class="line">			<span class="keyword">while</span>(it.hasNext())</span><br><span class="line">			&#123;</span><br><span class="line">				String key = it.next();</span><br><span class="line">				<span class="keyword">if</span>(key.split(Maps.ROUTE_JOINER).length == countTowns)</span><br><span class="line">				&#123;</span><br><span class="line">					result.put(key, routes.get(key));</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//System.out.println(result);</span></span><br><span class="line">			<span class="keyword">return</span> result.size();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取两站之间的最短距离</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取两站之间的最短距离</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> route</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getShortestDistance</span><span class="params">(Route route)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Map&lt;String, Route&gt; routes = Maps.getRoutes(route, <span class="number">100</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != routes &amp;&amp; !routes.isEmpty()) &#123;</span><br><span class="line">		<span class="comment">//System.out.println(routes);</span></span><br><span class="line">		List&lt;Route&gt; values = <span class="keyword">new</span> ArrayList&lt;Route&gt;(routes.values());</span><br><span class="line">		Route result = values.get(<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;values.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(values.get(i).getDistance() &lt; result.getDistance())</span><br><span class="line">			&#123;</span><br><span class="line">				result = values.get(i);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//System.out.println(result);</span></span><br><span class="line">		<span class="keyword">return</span> result.getDistance();</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取最大指定距离下的路线数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取最大指定距离下的路线数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> route</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> maxDistance</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getMaxDistanceRoutesCount</span><span class="params">(Route route, <span class="keyword">int</span> maxDistance)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Map&lt;String, Route&gt; result = Maps.getRoutes(route, <span class="number">0</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, maxDistance);</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">null</span> == result ? <span class="number">0</span> : result.size();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取最大指定距离下的路线</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取最大指定距离下的路线</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> route</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> maxDistance</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Route&gt; <span class="title">getMaxDistanceRoutes</span><span class="params">(Route route, <span class="keyword">int</span> maxDistance)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> Maps.getRoutes(route, <span class="number">0</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, maxDistance);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找路线</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 查找路线</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> route 带有起始站信息的路线</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> countTowns 跨站数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> max 跨站数是否是最大站数 true：指定数最大跨站数 false：指定数为确定站数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> shortest 是否寻找最短路线 true：最短路线</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> maxDistance 最大距离</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Route&gt; <span class="title">getRoutes</span><span class="params">(Route route, <span class="keyword">int</span> countTowns,</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="keyword">boolean</span> max, <span class="keyword">boolean</span> shortest, <span class="keyword">int</span> maxDistance)</span> </span>&#123;</span><br><span class="line">	Town startTown = route.getStartTown();</span><br><span class="line">	Town endTown = route.getEndTown();</span><br><span class="line">	</span><br><span class="line">	Map&lt;String, Route&gt; directTownsMap = Maps.directTownsMaps.get(startTown);</span><br><span class="line">	</span><br><span class="line">	Map&lt;String, Route&gt; result = <span class="keyword">new</span> HashMap&lt;String, Route&gt;();</span><br><span class="line">	</span><br><span class="line">	StringBuffer sb = <span class="keyword">new</span> StringBuffer(startTown.getName());</span><br><span class="line">	sb.append(<span class="string">"-"</span>);</span><br><span class="line">	</span><br><span class="line">	Set&lt;String&gt; keys = directTownsMap.keySet();</span><br><span class="line">	Iterator&lt;String&gt; it = keys.iterator();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 无论是否最短路径都给定次数，防止起始站相互通，造成死循环</span></span><br><span class="line">	<span class="keyword">while</span>(it.hasNext() &amp;&amp; (countTowns&gt;<span class="number">0</span> || (countTowns &gt; -<span class="number">1</span> &amp;&amp; shortest) || maxDistance&gt;<span class="number">0</span>) )</span><br><span class="line">	&#123;</span><br><span class="line">		String key = (String) it.next();</span><br><span class="line">		<span class="keyword">if</span>(key.equals(endTown.getName()))</span><br><span class="line">		&#123;</span><br><span class="line">			sb.append(key);</span><br><span class="line">			route.setRoutes(sb.toString());</span><br><span class="line">			route.setDistance(Maps.directTownsMaps.get(startTown).get(key)</span><br><span class="line">					.getDistance()</span><br><span class="line">					+ route.getDistance());</span><br><span class="line">			route.setCountTowns(<span class="number">2</span>);</span><br><span class="line">			result.put(sb.toString(), route);</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 最短路径 出现则停止</span></span><br><span class="line">			<span class="keyword">if</span>(shortest)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span>(maxDistance &gt; <span class="number">0</span> &amp;&amp; route.getDistance()&gt;maxDistance)</span><br><span class="line">			&#123;</span><br><span class="line">				result.remove(sb.toString());</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 不是指定最大站则允许继续往下找</span></span><br><span class="line">			<span class="keyword">if</span>(!max)</span><br><span class="line">			&#123;</span><br><span class="line">				Route tmp = <span class="keyword">new</span> Route(route.getStartTown(),</span><br><span class="line">						route.getEndTown(), route.getRoutes(),</span><br><span class="line">						route.getDistance()</span><br><span class="line">								- Maps.directTownsMaps.get(startTown)</span><br><span class="line">										.get(key).getDistance());</span><br><span class="line">  </span><br><span class="line">				innerIterator(tmp, countTowns, max, shortest, maxDistance,</span><br><span class="line">						startTown, endTown, directTownsMap, result, sb, key);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			innerIterator(route, countTowns, max, shortest, maxDistance,</span><br><span class="line">					startTown, endTown, directTownsMap, result, sb, key);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关键的迭代方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">innerIterator</span><span class="params">(Route route, <span class="keyword">int</span> countTowns, <span class="keyword">boolean</span> max,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">boolean</span> shortest, <span class="keyword">int</span> maxDistance, Town startTown, Town endTown,</span></span></span><br><span class="line"><span class="function"><span class="params">			Map&lt;String, Route&gt; directTownsMap, Map&lt;String, Route&gt; result,</span></span></span><br><span class="line"><span class="function"><span class="params">			StringBuffer sb, String key)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		Route tmp = <span class="keyword">new</span> Route(directTownsMap.get(key).getEndTown(), endTown);</span><br><span class="line">		tmp.setDistance(route.getDistance() + Maps.directTownsMaps.get(startTown).get(key).getDistance());</span><br><span class="line">		Map&lt;String, Route&gt; tmpResult = Maps.getRoutes(tmp, countTowns - <span class="number">1</span>, max, shortest, maxDistance);</span><br><span class="line">		Set&lt;String&gt; keystmp = tmpResult.keySet();</span><br><span class="line">		Iterator&lt;String&gt; ittmp = keystmp.iterator();</span><br><span class="line">		<span class="keyword">while</span>(ittmp.hasNext())</span><br><span class="line">		&#123;</span><br><span class="line">			String keytpm = ittmp.next();</span><br><span class="line">			Route routetmp = <span class="keyword">new</span> Route(startTown, tmpResult.get(keytpm).getEndTown());</span><br><span class="line">			routetmp.setRoutes(startTown.getName() + <span class="string">"-"</span> + keytpm);</span><br><span class="line">			routetmp.setCountTowns(tmpResult.get(keytpm).getCountTowns() + <span class="number">1</span>);</span><br><span class="line">			routetmp.setDistance(tmpResult.get(keytpm).getDistance());</span><br><span class="line">			</span><br><span class="line">			result.put(routetmp.getRoutes(), routetmp);</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span>(maxDistance &gt; <span class="number">0</span> &amp;&amp; routetmp.getDistance()&gt;maxDistance)</span><br><span class="line">			&#123;</span><br><span class="line">				result.remove(sb.toString());</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>缓存路线</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">cacheRoute</span><span class="params">(Route route, Town startTown, <span class="keyword">int</span> distance)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != Maps.routeMaps) &#123;</span><br><span class="line">			route.setDistance(distance);</span><br><span class="line">			<span class="keyword">if</span> (Maps.routeMaps.containsKey(startTown)) &#123;</span><br><span class="line">				Maps.routeMaps.get(startTown).put(route.getRoutes(), route);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				Map&lt;String, Route&gt; tmp = <span class="keyword">new</span> HashMap&lt;String, Route&gt;();</span><br><span class="line">				tmp.put(route.getRoutes(), route);</span><br><span class="line">				Maps.routeMaps.put(startTown, tmp);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://github.com/elfdemonster/Trains" target="_blank" rel="noopener">项目源码地址</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/27/我的2019/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1829,171 +2100,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/kong/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Elf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ElfShare">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/11/kong/" itemprop="url">kong</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-11T15:07:37+08:00">
-                2019-12-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/kong/" itemprop="url" rel="index">
-                    <span itemprop="name">kong</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/12/11/kong/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/11/kong/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1><span id="kong">Kong</span><a href="#kong" class="header-anchor">#</a></h1><p><img src="/2019/12/11/kong/kong中常见的几个要素关系图.png" alt="kong"></p>
-<h1><span id="nginx">Nginx</span><a href="#nginx" class="header-anchor">#</a></h1><p><img src="/2019/12/11/kong/nginx中常见的几个元素关系图.png" alt="nginx"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET --url http://172.17.138.238:8001/services </span><br><span class="line">curl -i -X POST http://172.17.138.238:8001/services/     -d 'name=ticket'     -d 'url=http://172.21.34.34:11100'</span><br><span class="line"></span><br><span class="line">curl -i -X PATCH http://172.17.138.238:8001/services/ticket     -d 'name=ticket'     -d 'url=http://172.21.34.34:11100' -d 'path='</span><br><span class="line"></span><br><span class="line">curl -i -X POST http://172.17.138.238:8001/routes/     -d 'paths[]=/upchatuser/api/getticket'     -d 'service.id=35962216-26ed-44fc-b738-34246161df09'</span><br><span class="line"></span><br><span class="line">curl -i -X PATCH http://172.17.138.238:8001/routes/ba742386-50df-4d5f-bd72-47f635ef466d     -d 'paths[]=/upchatuser/api/getticket'     -d 'service.id=35962216-26ed-44fc-b738-34246161df09'</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2046,7 +2152,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2068,7 +2174,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
